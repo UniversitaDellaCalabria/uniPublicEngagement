@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load pe_management_tags %}
+
+
+{% block top_content %}
+<h2>{{ event.title }}</h2>
+<h3 style="font-weight: lighter">{% trans "Other involved structures" %}</h3>
+{% endblock top_content %}
+
+{% block page_content %}
+{% include 'form_template.html' with form=form %}
+{% endblock page_content %}

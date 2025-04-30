@@ -1,0 +1,41 @@
+{% load i18n %}
+{% load static %}
+{% load generic_tags %}
+
+
+<div class="accordion accordion-left-icon" id="accordionExampleLft">
+    <div class="accordion-item">
+        <h2 class="accordion-header " id="heading1l">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1l" aria-expanded="false" aria-controls="collapse1l">
+                {% trans "Status updates (Logs)" %} ({{ logs|length }})
+            </button>
+        </h2>
+        <div id="collapse1l" class="accordion-collapse collapse" data-bs-parent="#accordionExampleLft" role="region" aria-labelledby="heading1l">
+            <div class="accordion-body">
+                {% if logs %}
+                <div class="it-list-wrapper">
+                    <ul class="it-list">
+                        {% for log in logs %}
+                            {% user_from_pk log.user_id as user %}
+                            <li>
+                                <div class="list-item">
+                                    <div class="it-right-zone">
+                                        <span class="text">
+                                            {{ log.get_change_message }}
+                                            <br>
+                                            <small style="font-weight: normal">{{ user }}</small>
+                                        </span>
+                                        <span class="metadata">{{ log.action_time }}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                    {% trans "There isn't any log" %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

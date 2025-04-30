@@ -1,0 +1,77 @@
+{% load static %}
+
+
+<div id="app_id_{{ widget.name }}" class="select-wrapper">
+    <div class="input-group">
+        <span class="input-group-text">
+            <svg class="icon icon-sm">
+                <use href="{% static 'svg/sprites.svg' %}#it-search"></use>
+            </svg>
+        </span>
+        <input type="text" class="form-control" id="{{ widget.name }}_search" @input="search" placeholder="Cerca...">
+    </div>
+    <select name="api_select_{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} @change="set_value" v-if="search_terms">
+        <option v-for="result in data" :value="result.id" {% include "django/forms/widgets/attrs.html" %}>
+            [[ result.title ]] ([[ result.structure ]])
+        </option>
+    </select>
+    <select name="api_select_{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} disabled v-else>
+        <option :value="initial_value" {% include "django/forms/widgets/attrs.html" %}>
+            [[ this.detail ]]
+        </option>
+    </select>
+    <input type="hidden" name="{{ widget.name }}" :value="initial_value" />
+</div>
+
+<script>
+const app_{{ widget.name }} = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data () {
+        return {
+            is_loading: true,
+            detail: null,
+            data: null,
+            list_url: '{% url "pe_management:api_generic_approved_events" %}',
+            search_terms: '',
+            initial_value: {{ widget.value|safe }}
+        }
+    },
+    mounted () {
+        {% if widget.value.0 %}this.getDetail(){% endif %}
+    },
+    methods: {
+        search(event){
+            if(event.target.value.trim().length > 0) {
+                this.search_terms = event.target.value
+                this.getList()
+            }
+            else {
+                this.data = null
+                this.search_terms = ''
+                this.initial_value = {{ widget.value|safe }}
+            }
+        },
+        set_value(event){
+            this.initial_value = event.target.value
+        },
+        getList() {
+            axios
+                .get(this.list_url + '?page_size=200&search=' + this.search_terms)
+                .then(response => {
+                    this.data = response.data.results
+                    this.initial_value = response.data.results[0].id
+                })
+                .catch(error => {})
+        },
+        getDetail() {
+            if(this.initial_value)
+                axios
+                    .get(this.list_url + this.initial_value + '/')
+                    .then(response => {
+                        this.detail = response.data.title + ' (' + response.data.structure +')'
+                    })
+                    .catch(error => {})
+        },
+    }
+}).mount('#app_id_{{ widget.name }}')
+</script>

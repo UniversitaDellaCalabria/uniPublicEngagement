@@ -1,0 +1,10 @@
+{% for group, options, index in widget.optgroups %}
+    {% for option in options %}
+    <div class="form-check form-check-group">
+        {% with widget=option %}
+        {% include "django/forms/widgets/input.html" %}
+        <label for="{{ widget.attrs.id }}">{{ widget.label }}</label>
+        {% endwith %}
+    </div>
+    {% endfor %}
+{% endfor %}

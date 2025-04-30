@@ -1,0 +1,81 @@
+{% extends 'events.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block top_content %}
+<h2>{% trans "Events" %}</h2>
+<p>
+    {% trans "In this section you can view the Public Engagement events for which you are referent or to which you have contributed. By clicking on the green button you can register a new initiative." %}
+</p>
+<div class="text-end mt-3 mb-5">
+    <a href="{% url 'pe_management:user_new_event_choose_referent' %}" class="btn btn-outline-success text-lg-end">
+        <svg class="icon icon-sm icon-success">
+            <use xlink:href="{% static 'svg/sprites.svg' %}#it-plus-circle"></use>
+        </svg> {% trans "Add new event" %}
+    </a>
+</div>
+{% endblock top_content %}
+
+{% block extra_th %}
+<th scope="col"></th>
+<th scope="col"></th>
+{% endblock extra_th %}
+
+{% block extra_td %}
+<td>
+    <svg class="icon icon-sm icon-info" data-bs-toggle="modal" :data-bs-target="'#clone_event' + event.id" style="cursor: pointer">
+        <use xlink:href="{% static 'svg/sprites.svg' %}#it-copy"></use>
+    </svg>
+    <div class="it-example-modal d-inline">
+       <div class="modal" tabindex="-1" role="dialog" :id="'delete_event' + event.id" :aria-labelledby="'delete_event' + event.id + '-Title'">
+          <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                <div class="modal-header">
+                   <h2 class="modal-title h5" :id="'delete_event' + event.id + '-Title'">{% trans "Confirm" %}</h2>
+                   <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                      <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+                   </button>
+                </div>
+                <div class="modal-body">
+                   <p>{% trans "Do you want to remove the event?" %}</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" :href="event.id + '/delete/'">
+                        {% trans 'Yes, proceed' %}
+                    </a>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+</td>
+<td>
+    <svg class="icon icon-sm icon-danger" data-bs-toggle="modal" :data-bs-target="'#delete_event' + event.id" style="cursor: pointer">
+        <use xlink:href="{% static 'svg/sprites.svg' %}#it-delete"></use>
+    </svg>
+    <div class="it-example-modal d-inline">
+       <div class="modal" tabindex="-1" role="dialog" :id="'clone_event' + event.id" :aria-labelledby="'clone_event' + event.id + '-Title'">
+          <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                <div class="modal-header">
+                   <h2 class="modal-title h5" :id="'clone_event' + event.id + '-Title'">{% trans "Confirm" %}</h2>
+                   <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                      <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+                   </button>
+                </div>
+                <div class="modal-body">
+                   <p>{% trans "Do you want to duplicate the event?" %}</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-warning" :href="event.id + '/clone/'">
+                        {% trans 'Yes, proceed' %}
+                    </a>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+</td>
+{% endblock extra_td %}

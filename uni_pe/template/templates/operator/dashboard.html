@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load pe_management_tags %}
+
+
+{% block top_content %}
+<h2>{% trans "Structures" %}</h2>
+<p>{% trans "Choose the structure to manage" %}</p>
+<small>{% trans "The counters only take charge of the events for which the monitoring year is still active" %}.</small>
+{% endblock top_content %}
+
+{% block clean_content %}
+<div class="row mt-5">
+    {% for structure in structures %}
+    <div class="col-12 col-lg-4">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ structure }}
+                    </h5>
+                    <hr>
+                    <p>
+                        <b>{% trans "To be handled" %}:</b>
+                        {% filter_events_per_structure_id event_counts structure.pk as structure_events %}
+                        {% if structure_events.0.to_handle_count  %}
+                        <span class="badge bg-info">{{ structure_events.0.to_handle_count }}</span>
+                        {% else %}
+                        0
+                        {% endif %}
+                        <br>
+                        <b>{% trans "To evaluate" %}:</b>
+                        {% if structure_events.0.to_evaluate_count %}
+                        <span class="badge bg-warning">{{ structure_events.0.to_evaluate_count }}</span>
+                        {% else %}
+                        0
+                        {% endif %}
+                    </p>
+                    <a class="read-more" href="{% url 'pe_management:operator_events' structure_slug=structure.slug %}">
+                        <span class="text text-primary">{% trans "Manage" %}</span>
+                        <svg class="icon">
+                            <use href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+    {% endfor %}
+</div>
+{% endblock clean_content %}

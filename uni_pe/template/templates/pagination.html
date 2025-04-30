@@ -1,0 +1,46 @@
+{% load i18n %}
+{% load static %}
+
+
+<nav class="pagination-wrapper float-end mt-2" aria-label="Esempio di navigazione con link testuali" v-if="data && data.total_pages>1">
+    <ul class="pagination">
+        <li class="page-item" v-if="data.previous">
+            <a class="page-link" @click="getData(data.page_number-1)" tabindex="-1" aria-hidden="true" style="cursor:pointer">
+            <svg class="icon icon-primary"><use href="{% static 'svg/sprites.svg' %}#it-chevron-left"></use></svg>
+            <span class="visually-hidden">{% trans "Previous page" %}</span>
+          </a>
+        </li>
+        <li class="page-item" :class="data.page_number == 1?active:''">
+            <a class="page-link" href="#" aria-current="page" v-if="data.page_number == 1">1</a>
+            <a class="page-link" @click="getData(1)" v-else style="cursor:pointer">1</a>
+        </li>
+
+        <li class="page-item" v-if="data.page_number -2 > 1">
+            <a class="page-link">...</a>
+        </li>
+        <li class="page-item" v-if="data.page_number -1 > 1">
+            <a class="page-link" @click="getData(data.page_number-1)" style="cursor:pointer">[[ data.page_number - 1 ]]</a>
+        </li>
+        <li class="page-item active" v-if="data.page_number != 1 && data.page_number != data.total_pages">
+            <a class="page-link" href="#" aria-current="page">[[ data.page_number ]]</a>
+        </li>
+        <li class="page-item" v-if="data.page_number + 1 < data.total_pages">
+            <a class="page-link" @click="getData(data.page_number+1)" style="cursor:pointer">[[ data.page_number + 1 ]]</a>
+        </li>
+        <li class="page-item" v-if="data.page_number + 2 < data.total_pages">
+            <a class="page-link">...</a>
+        </li>
+
+        <li class="page-item" :class="data.page_number == data.total_pages?active:''">
+            <a class="page-link" href="#" aria-current="page" v-if="data.page_number != 1 && data.page_number == data.total_pages">[[ data.total_pages ]]</a>
+            <a class="page-link" @click="getData(data.total_pages)" v-else-if="data.page_number < data.total_pages" style="cursor:pointer">[[ data.total_pages ]]</a>
+        </li>
+
+        <li class="page-item" v-if="data.next">
+            <a class="page-link" @click="getData(data.page_number+1)" tabindex="-1" aria-hidden="true" style="cursor:pointer">
+                <svg class="icon icon-primary"><use href="{% static 'svg/sprites.svg' %}#it-chevron-right"></use></svg>
+                <span class="visually-hidden">{% trans "Next page" %}</span>
+            </a>
+        </li>
+    </ul>
+</nav>

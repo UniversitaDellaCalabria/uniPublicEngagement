@@ -1,0 +1,31 @@
+{% extends 'events.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block top_content %}
+<h2>{% trans "Events" %}</h2>
+<h3 style="font-weight: lighter">{{ structure_slug|upper }}</h3>
+{% endblock top_content %}
+
+{% block custom_filters %}
+<div class="form-check form-check-inline">
+    <div class="toggles">
+      <label for="toggle3">
+        {% trans "Approved (singular)" %}
+        <input v-model="filter_evaluation_ok" type="checkbox" id="toggle3" @change="evaluation_ok($event.target.checked)">
+        <span class="lever"></span>
+      </label>
+    </div>
+</div>
+<div class="form-check form-check-inline">
+    <div class="toggles">
+      <label for="toggle4">
+        {% trans "Rejected (singular)" %}
+        <input v-model="filter_evaluation_ko" type="checkbox" id="toggle4" @change="evaluation_ko($event.target.checked)">
+        <span class="lever"></span>
+      </label>
+    </div>
+</div>
+{% endblock custom_filters %}

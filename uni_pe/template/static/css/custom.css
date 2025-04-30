@@ -1,0 +1,59 @@
+.dataTable { max-width: 100%; }
+
+@media (max-width: 767px) {
+  .btn {
+    display: block !important;
+    width: 100%;
+    margin: 3px 0; } }
+
+.collapse-header [data-toggle=collapse]:before,
+.collapse-header [data-toggle=collapse][aria-expanded=false] {
+    color: #19191a;
+}
+
+.toggles label input[type="checkbox"]:checked + .lever::after {
+    background-color: rgb(0, 127.5, 85);
+}
+
+input[type=date], input[type=datetime-local], input[type=email], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], textarea{
+    width: 100%;
+}
+
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--bordeaux_unical);
+  cursor: pointer;
+/*
+  vertical-align: middle;
+*/
+}
+
+.main-body, .messaggi {
+    background: #f9f9f9;
+}
+
+.form-check [type=checkbox]+label,
+.form-check [type=radio]+label {
+    font-weight: normal;
+}
+.form-check.form-check-group {
+    margin-bottom: 0;
+    margin-top: 1rem;
+}
+.accordion-header .accordion-button {
+    color: inherit !important;
+}
+
+.icon-primary {
+    fill: var(--bs-body-color) !important;
+}
+
+.pagination .page-item .page-link[aria-current]{
+    border: 1px solid var(--dark_grey_unical);
+    color: var(--bordeaux_unical);
+}
+
+.icon-primary {
+    fill: var(--dark_grey_unical) !important;
+}

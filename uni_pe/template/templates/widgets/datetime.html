@@ -1,0 +1,13 @@
+{% load generic_tags %}
+
+
+{% with widget.value|split:" " as date_time %}
+
+<input type="date" class="d-inline w-auto"
+       name="{{ widget.name }}_date"
+       {% if widget.value != None %}
+       value="{{ date_time.0 }}"
+       {% endif %}
+       {% include "django/forms/widgets/attrs.html" %}>
+<input class="d-inline w-auto" id="timeStandard" type="time" name="{{ widget.name }}_time" {% if widget.value != None %}value="{{ date_time.1 }}"{% endif %}>
+{% endwith %}

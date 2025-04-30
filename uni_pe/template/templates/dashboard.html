@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block top_content %}
+<h2>{% trans "UniCal.PE platform" %}</h2>
+<p>
+    {% trans "In this section you can register and manage the Public Engagement initiatives of the University of Calabria." %}
+</p>
+{% endblock top_content %}
+
+{% block clean_content %}
+<hr class="my-5">
+<p class="h5">
+    <svg class="icon">
+        <use href="{% static 'svg/sprites.svg' %}#it-tool"></use>
+    </svg> {% trans "Management tools" %}
+</p>
+<div class="row mt-5">
+    <div class="col-12 col-lg-4">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% trans 'Event referent or his delegate' %}
+                    </h5>
+                    <p class="card-text">
+                        {% trans 'To register or modify an event' %}
+                    </p>
+                    <a class="read-more" href="{% url 'pe_management:user_events'%}">
+                        <span class="text text-primary">{% trans "Manage" %}</span>
+                        <svg class="icon">
+                            <use href="/static/svg/sprites.svg#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+    <div class="col-12 col-lg-4">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% trans 'Structure operator' %}
+                    </h5>
+                    <p class="card-text">
+                        {% trans 'To manager structure events' %}
+                    </p>
+                    <a class="read-more" href="{% url 'pe_management:operator_dashboard'%}">
+                        <span class="text text-primary">{% trans "Evaluation" %}</span>
+                        <svg class="icon">
+                            <use href="/static/svg/sprites.svg#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
+                    <a class="read-more" style="left: 50%" href="{% url 'pe_management:patronage_operator_dashboard'%}">
+                        <span class="text text-primary">{% trans "Patronage" %}</span>
+                        <svg class="icon">
+                            <use href="/static/svg/sprites.svg#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+    <div class="col-12 col-lg-4">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% trans 'Manager' %}
+                    </h5>
+                    <p class="card-text">
+                        {% trans 'To manage all events' %}
+                    </p>
+                    <a class="read-more" href="{% url 'pe_management:manager_dashboard'%}">
+                        <span class="text text-primary">{% trans "Manage" %}</span>
+                        <svg class="icon">
+                            <use href="/static/svg/sprites.svg#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+</div>
+<hr class="my-5">
+<p class="h5">
+    <svg class="icon">
+        <use href="{% static 'svg/sprites.svg' %}#it-password-visible"></use>
+    </svg> {% trans "Read only access" %}
+</p>
+<div class="row mt-5">
+    <div class="col-12 col-lg-4">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% trans 'Other involved personnel' %}
+                    </h5>
+                    <p class="card-text">
+                        {% trans 'Access the data of the initiatives in which you have been included as "other involved personnel"' %}
+                    </p>
+                    <a class="read-more" href="{% url 'pe_management:involved_personnel_events'%}">
+                        <span class="text text-primary">{% trans "Enter" %}</span>
+                        <svg class="icon">
+                            <use href="/static/svg/sprites.svg#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+    <div class="col-12 col-lg-4">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% trans 'Other involved structures' %}
+                    </h5>
+                    <p class="card-text">
+                        {% trans 'Access the data of the initiatives in which your structure has been involved' %}
+                    </p>
+                    <a class="read-more" href="{% url 'pe_management:involved_structures_dashboard'%}">
+                        <span class="text text-primary">{% trans "Enter" %}</span>
+                        <svg class="icon">
+                            <use href="/static/svg/sprites.svg#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+</div>
+{% endblock clean_content %}

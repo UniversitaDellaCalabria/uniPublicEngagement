@@ -1,0 +1,330 @@
+{% extends 'event.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% load pe_management_tags %}
+
+
+{% block alerts %}
+{{ block.super }}
+
+{% pem_settings_value "EVALUATION_TIME_DELTA" as evaluation_time_delta %}
+
+{% if not event.data %}
+<div class="alert alert-danger" role="alert">
+    {% trans "Event data missing" %}
+</div>
+{% endif %}
+
+{% comment %}
+{% if event.data and not event.data.involved_personnel.all %}
+<div class="alert alert-danger" role="alert">
+    {% trans "Other involved personnel missing" %}
+</div>
+{% endif %}
+{% endcomment %}
+
+{% if not event.has_report_editable and event.evaluation_request_date %}
+<div class="alert alert-warning" role="alert">
+    {% trans "Unable to edit monitoring data" %}:
+    <ul style="font-size: 1rem">
+        {% comment %}
+        {% if not event.data or not event.data.involved_personnel.all %}
+        <li>{% trans "event data are incomplete" %}</li>
+        {% endcomment %}
+
+        {% if event.has_been_rejected %}
+        <li>{% trans "event rejected" %}</li>
+        {% else %}
+        <li>{% trans "event has not yet ended" %}.</li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
+
+{% if not event.to_evaluate %}
+    {% if not event.is_ready_for_request_evaluation %}
+    <div class="alert alert-info" role="alert">
+        Si ricorda che la richiesta di validazione può essere effettuata seguendo queste regole:
+        <ul style="font-size: 1rem">
+            <li>il monitoraggio per l'anno {{ event.start.year }} deve essere aperto;</li>
+            <li>nel caso di caricamento ex-post,
+                tutti i dati (anche quelli di monitoraggio) devono essere presenti.
+            </li>
+        </ul>
+    </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        {% trans "It is possible to request evaluation of submitted data" %}
+    </div>
+    {% endif %}
+{% endif %}
+{% endblock alerts %}
+
+{% block actions %}
+<div class="clearfix mt-5">
+    <div class="text-start float-lg-start">
+        {% if event.is_editable_by_user %}
+        <a class="btn btn-xs btn-outline-secondary" href="{% url 'pe_management:user_event_basic_info' event_id=event.pk %}">
+            <svg class="icon icon-sm icon-info">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
+            </svg> {% trans "General informations" %}
+        </a>
+        <a class="btn btn-xs btn-{% if event.data %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:user_event_data' event_id=event.pk %}">
+            <svg class="icon icon-sm icon-{% if event.data %}info{% else %}white{% endif %}">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-{% if event.data %}pencil{% else %}plus-circle{% endif %}"></use>
+            </svg> {% trans "Event data" %}
+        </a>
+        {% endif %}
+
+        {% if event.data and event.is_editable_by_user %}
+        <a class="btn btn-xs btn-outline-secondary" href="{% url 'pe_management:user_event_people' event_id=event.pk %}">
+            <svg class="icon icon-sm icon-info">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
+            </svg> {% trans "Other involved personnel" %}
+        </a>
+        <a class="btn btn-xs btn-outline-secondary" href="{% url 'pe_management:user_event_structures' event_id=event.pk %}">
+            <svg class="icon icon-sm icon-info">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
+            </svg> {% trans "Other involved structures" %}
+        </a>
+        {% endif %}
+
+        {% if event.has_report_editable %}
+        <a class="btn btn-xs btn-{% if event.report %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:user_event_report' event_id=event.pk %}">
+            <svg class="icon icon-sm icon-{% if event.report %}info{% else %}white{% endif %}">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-{% if event.report %}pencil{% else %}plus-circle{% endif %}"></use>
+            </svg> {% trans "Monitoring" %}
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="float-lg-end">
+        {% if event.is_ready_for_request_evaluation %}
+        <button type="button" class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#request_evaluation">
+            <svg class="icon icon-sm icon-white">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
+            </svg> {% trans "Request evaluation" %}
+        </button>
+        <div class="it-example-modal d-inline">
+           <div class="modal" tabindex="-1" role="dialog" id="request_evaluation" aria-labelledby="request_evaluation-Title">
+              <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                       <h2 class="modal-title h5" id="request_evaluation-Title">{% trans "Confirm" %}</h2>
+                       <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                          <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+                       </button>
+                    </div>
+                    <div class="modal-body">
+                       <p>{% trans "Do you want to confirm the evaluation request?" %}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="{% url 'pe_management:user_event_request_evaluation' event_id=event.pk %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-success" type="submit">
+                                {% trans 'Yes, proceed' %}
+                            </button>
+                        </form>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+        {% elif event.evaluation_request_can_be_reviewed %}
+        <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#cancel_request_evaluation">
+            <svg class="icon icon-sm icon-white">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
+            </svg> {% trans "Cancel evaluation request" %}
+        </button>
+        <div class="it-example-modal d-inline">
+           <div class="modal" tabindex="-1" role="dialog" id="cancel_request_evaluation" aria-labelledby="cancel_request_evaluation-Title">
+              <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                       <h2 class="modal-title h5" id="cancel_request_evaluation-Title">{% trans "Confirm" %}</h2>
+                       <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                          <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+                       </button>
+                    </div>
+                    <div class="modal-body">
+                       <p>{% trans "Do you want to cancel the evaluation request?" %}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="{% url 'pe_management:user_event_request_evaluation_cancel' event_id=event.pk %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-warning" type="submit">
+                                {% trans 'Yes, proceed' %}
+                            </button>
+                        </form>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+        {% endif %}
+
+        <button type="button" class="btn btn-xs btn-outline-primary" data-bs-toggle="modal" data-bs-target="#clone_event">
+            <svg class="icon icon-sm icon-info">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-copy"></use>
+            </svg>
+        </button>
+        <div class="it-example-modal d-inline">
+           <div class="modal" tabindex="-1" role="dialog" id="clone_event" aria-labelledby="clone_event-Title">
+              <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                       <h2 class="modal-title h5" id="clone_event-Title">{% trans "Confirm" %}</h2>
+                       <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                          <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+                       </button>
+                    </div>
+                    <div class="modal-body">
+                       <p>{% trans "Do you want to duplicate the event?" %}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-warning" href="{% url 'pe_management:user_event_clone' event_id=event.pk %}">
+                            {% trans 'Yes, proceed' %}
+                        </a>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+
+        {% if not event.to_evaluate and not event.created_by_manager %}
+        <button type="button" class="btn btn-xs btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_event">
+            <svg class="icon icon-sm icon-danger">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-delete"></use>
+            </svg>
+        </button>
+        <div class="it-example-modal d-inline">
+           <div class="modal" tabindex="-1" role="dialog" id="delete_event" aria-labelledby="delete_event-Title">
+              <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                       <h2 class="modal-title h5" id="delete_event-Title">{% trans "Confirm" %}</h2>
+                       <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                          <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+                       </button>
+                    </div>
+                    <div class="modal-body">
+                       <p>{% trans "Do you want to remove the event?" %}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="{% url 'pe_management:user_event_delete' event_id=event.pk %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" type="submit">
+                                {% trans 'Yes, proceed' %}
+                            </button>
+                        </form>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock actions %}
+
+{% block people %}
+{% if event.data.involved_personnel.all %}
+<div class="mt-5 h5"><b>{% trans "Other involved personnel" %}</b></div>
+<hr />
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        {% for person in event.data.involved_personnel.all %}
+        <tr>
+            <td>{{ person }}</td>
+            <td class="text-end">
+                {% if event.is_editable_by_user %}
+                <button type="button" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ person.pk }}">
+                    <svg class="icon icon-sm icon-white">
+                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-delete"></use>
+                    </svg>
+                </button>
+                <div class="it-example-modal d-inline">
+                   <div class="modal" tabindex="-1" role="dialog" id="delete-{{ person.pk }}" aria-labelledby="delete-{{ person.pk }}-Title">
+                      <div class="modal-dialog" role="document">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                               <h2 class="modal-title h5 " id="delete-{{ person.pk }}-Title">{% trans "Confirm" %}</h2>
+                               <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                                  <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+                               </button>
+                            </div>
+                            <div class="modal-body">
+                               <p>{% trans "Do you want to confirm the entered data?" %}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{% url 'pe_management:user_event_people_delete' event_id=event.pk person_id=person.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn btn-danger" type="submit">
+                                        {% trans 'Yes, proceed' %}
+                                    </button>
+                                </form>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+{% endblock people %}
+
+{% block structures %}
+{% if event.data.involved_structure.all %}
+<div class="mt-5 h5"><b>{% trans "Other involved structures" %}</b></div>
+<hr />
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        {% for structure in event.data.involved_structure.all %}
+        <tr>
+            <td>{{ structure }}</td>
+            <td class="text-end">
+                {% if event.is_editable_by_user %}
+                <button type="button" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ structure.pk }}">
+                    <svg class="icon icon-sm icon-white">
+                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-delete"></use>
+                    </svg>
+                </button>
+                <div class="it-example-modal d-inline">
+                   <div class="modal" tabindex="-1" role="dialog" id="delete-{{ structure.pk }}" aria-labelledby="delete-{{ structure.pk }}-Title">
+                      <div class="modal-dialog" role="document">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                               <h2 class="modal-title h5 " id="delete-{{ structure.pk }}-Title">{% trans "Confirm" %}</h2>
+                               <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                                  <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+                               </button>
+                            </div>
+                            <div class="modal-body">
+                               <p>{% trans "Do you want to confirm the entered data?" %}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{% url 'pe_management:user_event_structures_delete' event_id=event.pk structure_id=structure.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn btn-danger" type="submit">
+                                        {% trans 'Yes, proceed' %}
+                                    </button>
+                                </form>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+{% endblock structures %}

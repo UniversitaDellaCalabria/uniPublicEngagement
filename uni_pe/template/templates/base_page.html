@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block header_wrapper %}
+{{ block.super }}
+{% include "breadcrumbs.html" %}
+{% endblock header_wrapper %}
+
+{% block centered_container %}
+    {% block top_content %}
+    {% endblock top_content %}
+
+    {% block top_buttons_surround %}
+    <div class="mb-4 mt-2">
+    {% block top_buttons %}
+    {% endblock top_buttons %}
+    </div>
+    {% endblock top_buttons_surround %}
+
+    {% block over_content %}{% endblock over_content %}
+
+    {% block clean_content %}
+    <div class="row">
+        <div class="col">
+            <div class="card-space card-wrapper">
+                <div class="card card-bg no-after">
+                    <div class="card-body">
+                        {% block page_content %}
+                        {% endblock page_content %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock clean_content %}
+{% endblock centered_container %}
+
+{% comment %}
+{% block bottom_scripts %}
+{{ block.super }}
+<script>
+<!-- Close modal window on submit first click -->
+document.querySelectorAll('.modal input[type="submit"]').forEach(function(button) {
+    button.addEventListener('click', function(e) {
+        // Rimuove la classe "show" dagli elementi con la classe "modal"
+        document.querySelectorAll('.modal').forEach(function(modal) {
+            modal.classList.remove('show');
+        });
+
+        // Cambia l'opacità degli elementi con la classe "modal-backdrop fade"
+        document.querySelectorAll('.modal-backdrop.fade').forEach(function(backdrop) {
+            backdrop.style.opacity = '0';
+        });
+    });
+});
+</script>
+{% endblock bottom_scripts %}
+{% endcomment %}

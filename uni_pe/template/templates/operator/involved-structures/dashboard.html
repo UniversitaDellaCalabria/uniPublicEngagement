@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load pe_management_tags %}
+
+
+{% block top_content %}
+<h2>{% trans "Structures" %}</h2>
+<p>{% trans "Choose the structure" %}</p>
+{% endblock top_content %}
+
+{% block clean_content %}
+<div class="row mt-5">
+    {% for structure in structures %}
+    <div class="col-12 col-lg-3">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ structure }}
+                    </h5>
+                    <hr>
+                    <a class="read-more" href="{% url 'pe_management:involved_structures_events' structure_slug=structure.slug %}">
+                        <span class="text text-primary">{% trans "Enter" %}</span>
+                        <svg class="icon">
+                            <use href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+    {% endfor %}
+</div>
+{% endblock clean_content %}

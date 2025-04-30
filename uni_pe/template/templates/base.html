@@ -1,0 +1,83 @@
+{% extends 'base-setup.html' %}
+
+{% load i18n %}
+{% load generic_tags %}
+{% load static %}
+
+{% block extra_head %}
+{{ block.super }}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/vue.3.4.31.prod.js' %}"></script>
+<script src="{% static 'js/axios.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/datatables.css' %}">
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock extra_head %}
+
+{% block header_center_logo %}
+<div class="col-10 col-md-9 col-lg-12 offset-2 offset-md-0">
+    <img src="{% static 'images/logo_unical_pe.jpg' %}" class="w-75"/>
+</div>
+{% endblock header_center_logo %}
+
+
+{% block header_center_search %}
+{% endblock header_center_search %}
+
+{% block menu_links %}
+<li class="nav-item">
+    <a class="nav-link" href="/">
+        <span>{% trans "Dashboard" %}</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'accounts:account' %}">
+        <span>{% trans "Account" %}</span>
+    </a>
+</li>
+{% endblock menu_links %}
+
+{% block header_slim_buttons %}
+{% settings_value "LOGOUT_URL" as logout_url %}
+<a href="{{ logout_url }}">
+    <button class="btn btn-primary btn-sm btn-icon" type="button">
+        <svg class="icon icon-light icon-xs">
+          <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
+        </svg> <span>{% trans "Logout" %}</span>
+    </button>
+</a>
+{% endblock header_slim_buttons %}
+
+{% block header_slim_sub_menu %}
+{% endblock header_slim_sub_menu %}
+
+{% block footer_menu_section %}
+{% endblock footer_menu_section %}
+
+{% block centered_container %}
+    {% block top_content %}
+    {% endblock top_content %}
+
+    {% block top_buttons_surround %}
+    <div class="mb-4 mt-2">
+    {% block top_buttons %}
+    {% endblock top_buttons %}
+    </div>
+    {% endblock top_buttons_surround %}
+
+    {% block over_content %}{% endblock over_content %}
+
+    {% block clean_content %}
+    <div class="row">
+        <div class="col">
+            <div class="card-space card-wrapper">
+                <div class="card card-bg no-after">
+                    <div class="card-body">
+                        {% block page_content %}
+                        {% endblock page_content %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock clean_content %}
+{% endblock centered_container %}

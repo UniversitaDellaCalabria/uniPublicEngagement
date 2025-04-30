@@ -1,0 +1,15 @@
+django<6
+django_countries
+django-rest-framework
+pillow
+requests
+
+# $ sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+mysqlclient
+
+design-django-theme
+git+https://github.com/UniversitaDellaCalabria/django-unical-bootstrap-italia.git
+
+django-filter
+python-magic
+cryptojwt

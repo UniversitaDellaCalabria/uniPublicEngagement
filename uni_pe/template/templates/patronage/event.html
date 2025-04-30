@@ -1,0 +1,83 @@
+{% extends 'event.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% load pe_management_tags %}
+
+
+{% block actions %}
+<div class="text-end mt-5">
+{% if event.can_be_handled_for_patronage %}
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#take_event">
+    <svg class="icon icon-sm icon-white">
+        <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
+    </svg> {% trans "Handle" %}
+</button>
+<div class="it-example-modal d-inline">
+   <div class="modal" tabindex="-1" role="dialog" id="take_event" aria-labelledby="take_event-Title">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h2 class="modal-title h5" id="take_event-Title">{% trans "Confirm" %}</h2>
+               <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                  <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+               </button>
+            </div>
+            <div class="modal-body">
+               <p>{% trans "Do you want to proceed?" %}</p>
+            </div>
+            <div class="modal-footer">
+                <form action="{% url 'pe_management:patronage_operator_take_event' structure_slug=structure_slug event_id=event.pk %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-success" type="submit">
+                        {% trans 'Yes, proceed' %}
+                    </button>
+                </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endif %}
+
+{% if event.is_ready_for_patronage_check %}
+<a class="btn btn-success" href="{% url 'pe_management:patronage_operator_event_evaluation' structure_slug=structure_slug event_id=event.pk %}">
+    <svg class="icon icon-sm icon-white">
+        <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
+    </svg> {% trans "Evaluate" %} {% trans "patronage" %}
+</a>
+{% elif event.patronage_can_be_reviewed %}
+<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#reopen_evaluation">
+    <svg class="icon icon-sm icon-white">
+        <use xlink:href="{% static 'svg/sprites.svg' %}#it-refresh"></use>
+    </svg> {% trans "Reopen evaluation" %} {% trans "patronage" %}
+</button>
+<div class="it-example-modal d-inline">
+   <div class="modal" tabindex="-1" role="dialog" id="reopen_evaluation" aria-labelledby="reopen_evaluation-Title">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h2 class="modal-title h5 " id="reopen_evaluation-Title">{% trans "Confirm" %}</h2>
+               <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
+                  <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+               </button>
+            </div>
+            <div class="modal-body">
+               <p>{% trans "Do you want to reopen evaluation?" %}</p>
+            </div>
+            <div class="modal-footer">
+                <form action="{% url 'pe_management:patronage_operator_event_reopen_evaluation' structure_slug=structure_slug event_id=event.pk %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-warning" type="submit">
+                        {% trans 'Yes, proceed' %}
+                    </button>
+                </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endif %}
+</div>
+{% endblock actions %}

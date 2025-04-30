@@ -1,0 +1,547 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% load pe_management_tags %}
+
+
+{% block top_content %}
+<h2>{{ event.title }}</h2>
+<h3 style="font-weight: lighter">{% trans "Data summary" %}</h3>
+{% endblock top_content %}
+
+{% block page_content %}
+{% block alerts %}
+{% if not event.is_active %}
+<div class="alert alert-danger mb-5" role="alert">
+    <b>{% trans "Not eligible" %}:</b> {{ event.disabled_notes }}
+</div>
+{% endif %}
+{% if not event.check_year %}
+<div class="alert alert-danger" role="alert">
+   {% trans "Editing data for the year" %}<b>{{ event.start.year }}</b> {% trans "is closed. No further operations are allowed" %}
+</div>
+{% endif %}
+{% endblock alerts %}
+<b>{% trans "Submission:" %}</b> {{ event.created }} / {{ event.created_by }}<br>
+{% if event.modified_by %}<b>{% trans "Last update :" %}</b> {{ event.modified }} / {{ event.modified_by }}{% endif %}
+{% block actions %}{% endblock actions %}
+
+{% if event.created_by_manager %}
+<div class="alert alert-warning mt-5" role="alert">
+    <b>{% trans "Alert" %}:</b> {% trans "Loaded by manager (singular)" %}
+</div>
+{% else %}
+<div class="row mt-5">
+    <div class="col-12 col-lg-{% if event.data.patronage_requested %}4{% else %}6{% endif %}">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg no-after">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <svg class="icon">
+                            <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
+                        </svg>
+                        {% trans 'Event referent or his delegate' %}
+                    </h5>
+                    <span>
+                        {% if not event.to_evaluate %}
+                        <span class="badge bg-warning">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-warning-circle"></use>
+                            </svg> {% trans "Evaluation to request" %}
+                        </span>
+                        {% elif event.evaluation_request_date %}
+                        <span class="badge bg-success">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
+                            </svg> {% trans "Evaluation requested" %}
+                        </span>
+                        <hr>
+                        <ul style="font-size:1rem">
+                            <li>
+                                {{ event.evaluation_request_date }} da {{ event.evaluation_request_by }}
+                            </li>
+                        </ul>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+    <div class="col-12 col-lg-{% if event.data.patronage_requested %}4{% else %}6{% endif %}">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg no-after">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <svg class="icon">
+                            <use href="{% static 'svg/sprites.svg' %}#it-box"></use>
+                        </svg>
+                        {{ event.structure }}
+                    </h5>
+                    <span>
+                        {% if not event.operator_taken_date %}
+                        <span class="badge bg-info">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                            </svg>  {% trans "To be handled" %}
+                        </span>
+                        {% elif event.has_been_rejected %}
+                        <span class="badge bg-danger">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-error"></use>
+                            </svg>  {% trans "Rejected (singular)" %}
+                        </span>
+                        {% elif event.has_been_approved %}
+                        <span class="badge bg-success">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
+                            </svg>  {% trans "Approved (singular)" %}
+                        </span>
+                        {% elif event.operator_taken_date and not event.operator_evaluation_date%}
+                        <span class="badge bg-warning">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                            </svg>  {% trans "To evaluate" %}
+                        </span>
+                        {% endif %}
+
+                        {% if event.operator_taken_date or event.operator_evaluation_date %}
+                        <hr>
+                        <ul style="font-size:1rem">
+                            {% if event.operator_taken_date %}
+                            <li>
+                                <b> {% trans "Handled" %}:</b>
+                                <br>
+                                {{ event.operator_taken_date }} {% trans "from" %} {{ event.operator_taken_by }}
+                            </li>
+                            {% endif %}
+                            {% if event.operator_evaluation_date %}
+                            <li>
+                                <b> {% trans "Evaluated:" %}</b>
+                                <br>
+                                {{ event.operator_evaluation_date }} da {{ event.operator_evaluated_by }}
+                            </li>
+                            {% if event.operator_notes %}
+                            <li>
+                                <b> {% trans "Notes:" %}</b>
+                                <br>
+                                {{ event.operator_notes }}
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                        </ul>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+    {% if event.data.patronage_requested %}
+    <div class="col-12 col-lg-4">
+        <!--start card-->
+        <div class="card-wrapper card-space">
+            <div class="card card-bg no-after">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <svg class="icon">
+                            <use href="{% static 'svg/sprites.svg' %}#it-flag"></use>
+                        </svg>
+                        {% trans 'Patronage' %}
+                    </h5>
+                    <span>
+                        {% if not event.patronage_operator_taken_date %}
+                        <span class="badge bg-info">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                            </svg>  {% trans "To be handled" %}
+                        </span>
+                        {% elif event.has_patronage_denied %}
+                        <span class="badge bg-danger">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-error"></use>
+                            </svg>  {% trans "Denied patronage" %}
+                        </span>
+                        {% elif event.has_patronage_granted %}
+                        <span class="badge bg-success">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
+                            </svg>  {% trans "Patronage granted" %}
+                        </span>
+                        {% elif event.patronage_operator_taken_date and not event.patronage_granted_date%}
+                        <span class="badge bg-warning">
+                            <svg class="icon icon-sm icon-white">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
+                            </svg>  {% trans "To evaluate" %}
+                        </span>
+                        {% endif %}
+
+                        {% if event.patronage_operator_taken_date or event.patronage_granted_date %}
+                        <hr>
+                        <ul style="font-size:1rem">
+                            {% if event.patronage_operator_taken_date %}
+                            <li>
+                                <b> {% trans "Handled" %}:</b>
+                                <br>
+                                {{ event.patronage_operator_taken_date }} {% trans "from" %} {{ event.patronage_operator_taken_by }}
+                            </li>
+                            {% endif %}
+                            {% if event.patronage_granted_date %}
+                            <li>
+                                <b> {% trans "Evaluated:" %}</b>
+                                <br>
+                                {{ event.patronage_granted_date }} da {{ event.patronage_granted_by }}
+                            </li>
+                            {% if event.patronage_granted_notes %}
+                            <li>
+                                <b>Note:</b>
+                                <br>
+                                {{ event.patronage_granted_notes }}
+                            </li>
+                            {% endif %}
+                            {% endif %}
+                        </ul>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="mt-5 h5"><b>{% trans "General informations" %}</b></div>
+<hr />
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <tr>
+            <td>
+                {% get_field_label event 'start' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.start }}</td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event 'end' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.end }}</td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event 'referent' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.referent }} ({{ event.referent.taxpayer_id }})</td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event 'structure' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.structure }}</td>
+        </tr>
+    </table>
+</div>
+
+{% if event.data %}
+<div class="mt-5 h5"><b> {% trans "Event data" %}</b></div>
+<hr />
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <tr>
+            <td>
+                {% get_field_label event.data 'event_type' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.data.event_type }}</td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.data 'description' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.data.description }}</td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.data 'project_name' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                {% if event.data.project_name %}
+                {{ event.data.project_name }}
+                {% else %}
+                {% trans "No" %}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.data 'recipient' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                <ul>
+                    {% for recipient in event.data.recipient.all %}
+                    <li>{{ recipient }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% if event.data.other_recipients %}
+        <tr>
+            <td>
+                {% get_field_label event.data 'other_recipients' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                {{ event.data.other_recipients }}
+            </td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td>
+                {% get_field_label event.data 'target' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                <ul>
+                    {% for target in event.data.target.all %}
+                    <li>{{ target }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.data 'method_of_execution' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.data.method_of_execution }}</td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.data 'geographical_dimension' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.data.geographical_dimension }}</td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.data 'organizing_subject' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.data.organizing_subject }}</td>
+        </tr>
+        {% if event.data.promo_channel.all %}
+        <tr>
+            <td>
+                {% get_field_label event.data 'promo_channel' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                <ul>
+                    {% for channel in event.data.promo_channel.all %}
+                    <li>{{ channel }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td>
+                {% get_field_label event.data 'patronage_requested' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                {% if event.data.patronage_requested %}
+                {% trans "Yes" %}
+                {% else %}
+                {% trans "No" %}
+                {% endif %}
+            </td>
+        </tr>
+        {% if event.data.patronage_requested %}
+        <tr>
+            <td>
+                {% get_field_label event.data 'promo_tool' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                <ul>
+                    {% for tool in event.data.promo_tool.all %}
+                    <li>{{ tool }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endif %}
+        {% if event.data.poster %}
+        <tr>
+            <td>
+                {% get_field_label event.data 'poster' as field_label %}
+                {{ field_label }}
+            </td>
+            <td><a href="{% url 'pe_management:download_event_poster' event_id=event.pk %}" target="_blank">Download</a></td>
+        </tr>
+        {% endif %}
+    </table>
+</div>
+{% endif %}
+
+{% block people %}
+{% if event.data.involved_personnel.all %}
+<div class="mt-5 h5"><b>{% trans "Other involved personnel" %}</b></div>
+<hr />
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        {% for person in event.data.involved_personnel.all %}
+        <tr>
+            <td>{{ person }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+{% endblock people %}
+
+{% block structures %}
+{% if event.data.involved_structure.all %}
+<div class="mt-5 h5"><b>{% trans "Other involved structures" %}</b></div>
+<hr />
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        {% for structure in event.data.involved_structure.all %}
+        <tr>
+            <td>{{ structure }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+{% endblock structures %}
+
+{% if event.report %}
+<div class="mt-5 h5"><b>{% trans "Monitoring data" %}</b></div>
+<hr />
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <tr>
+            <td>
+                {% get_field_label event.report 'participants' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.report.participants }}</td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.report 'budget' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.report.budget }} €</td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.report 'monitoring_activity' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                {% if event.report.monitoring_activity %}
+                <svg class="icon icon-sm icon-success"><use href="{% static 'svg/sprites.svg' %}#it-check-circle"></use></svg>
+                {% else %}
+                <svg class="icon icon-sm icon-danger"><use href="{% static 'svg/sprites.svg' %}#it-close-circle"></use></svg>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.report 'impact_evaluation' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                {% if event.report.impact_evaluation %}
+                <svg class="icon icon-sm icon-success"><use href="{% static 'svg/sprites.svg' %}#it-check-circle"></use></svg>
+                {% else %}
+                <svg class="icon icon-sm icon-danger"><use href="{% static 'svg/sprites.svg' %}#it-close-circle"></use></svg>
+                {% endif %}
+            </td>
+        </tr>
+        {% comment %}
+        <tr>
+            <td>
+                {% get_field_label event.report 'other_structure' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                <ul>
+                    {% for structure in event.report.other_structure.all %}
+                    <li>{{ structure }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endcomment %}
+        <tr>
+            <td>
+                {% get_field_label event.report 'scientific_area' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                <ul>
+                    {% for area in event.report.scientific_area.all %}
+                    <li>{{ area.description }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% get_field_label event.report 'collaborator_type' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                <ul>
+                    {% for collaborator in event.report.collaborator_type.all %}
+                    <li>{{ collaborator.description }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% if event.report.website %}
+        <tr>
+            <td>
+                {% get_field_label event.report 'website' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                <a href="{{ event.report.website }}" target="_blank">
+                    {{ event.report.website }}
+                </a>
+            </td>
+        </tr>
+        {% endif %}
+        {% if event.report.notes %}
+        <tr>
+            <td>
+                {% get_field_label event.report 'notes' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.report.notes }}</td>
+        </tr>
+        {% endif %}
+    </table>
+</div>
+{% endif %}
+
+<div class="mt-4">
+    {% include "obj_logs.html" with logs=logs %}
+</div>
+{% endblock page_content %}

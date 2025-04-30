@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load static %}
+
+
+<div class="form-group">
+    <div class="input-group">
+        <span class="input-group-text">
+            <svg class="icon icon-sm">
+                <use href="{% static 'svg/sprites.svg' %}#it-search"></use>
+            </svg>
+        </span>
+        <input placeholder="{% trans 'Write here...' %}" type="text" class="form-control" id="input-group-3" name="input-group-3" v-model="search_terms" v-on:keyup.enter="getData()">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="button" id="button-3" @click="getData()">
+                {% trans "Search" %}
+            </button>
+        </div>
+    </div>
+</div>

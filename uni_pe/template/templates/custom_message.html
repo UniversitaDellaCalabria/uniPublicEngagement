@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block header_slim_sub_menu %}{% endblock header_slim_sub_menu %}
+
+{% block centered_container %}
+<div class="callout danger">
+    <div class="callout-inner">
+        <div class="callout-title">
+            <svg class="icon">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
+            </svg>
+            <span class="visually-hidden">{% trans "Oops! Something goes wrong" %}</span>
+            <span class="text">{% trans "Oops! Something goes wrong" %}</span>
+        </div>
+        <p>
+            {{ avviso }}
+            <hr>
+            <a role="button" class="btn btn-outline-danger"
+               href="javascript:history.back()">
+                {% trans "Back" %}
+            </a>
+            <a role="button" class="btn btn-outline-danger"
+               href="{% url 'template:dashboard' %}">
+                {% trans "Back to Dashboard" %}
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock centered_container %}

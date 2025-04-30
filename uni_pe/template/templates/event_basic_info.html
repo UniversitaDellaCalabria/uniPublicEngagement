@@ -1,0 +1,24 @@
+{% extends 'base.html' %}}
+
+{% load i18n %}
+{% load static %}
+{% load generic_tags %}
+
+
+{% block top_content %}
+<h2>{% if event %}{{ event.title }}{% else %}Nuova iniziativa{% endif %}</h2>
+<h3 style="font-weight: lighter">Informazioni generali</h3>
+
+{% if request.session.referent %}
+{% user_from_pk request.session.referent as referent %}
+{% if referent %}
+<div class="alert alert-info my-5" role="alert">
+    <b>Referente scelto:</b> {{ referent }}
+</div>
+{% endif %}
+{% endif %}
+{% endblock top_content %}
+
+{% block page_content %}
+{% include "form_template.html" with form=form %}
+{% endblock page_content %}
