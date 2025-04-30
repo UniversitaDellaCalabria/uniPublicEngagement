@@ -6,8 +6,4 @@
 Privilegi di accesso
 ====================
 
-L'accesso all'area dedicata alla gestione delle iniziative di PE
-
-.. image:: images/pe_home.png
-
-è riservato al personale dell'Università della Calabria.
+L'accesso all'area dedicata alla gestione delle iniziative di PE è riservato al personale dell'Università della Calabria.
