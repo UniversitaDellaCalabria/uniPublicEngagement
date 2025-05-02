@@ -43,13 +43,6 @@ def dashboard(request, structure=None):
         structure__pk__in=structures,
         is_active=True
     ).values("structure__id").annotate(
-        approved_total_count=Count(
-            "id",
-            filter=Q(
-                operator_evaluation_success=True,
-                operator_evaluation_date__isnull=False
-            )
-        ),
         approved_count=Count(
             "id",
             filter=Q(
@@ -61,10 +54,30 @@ def dashboard(request, structure=None):
         created_by_manager_count=Count(
             "id",
             filter=Q(
+                years_query,
                 created_by_manager=True
             )
         ),
-        total_count=Count("id"),
+        number_count=Count(
+            "id",
+            filter=Q(
+                years_query,
+            )
+        ),
+        total_approved_count=Count(
+            "id",
+            filter=Q(
+                operator_evaluation_success=True,
+                operator_evaluation_date__isnull=False
+            )
+        ),
+        total_created_by_manager_count=Count(
+            "id",
+            filter=Q(
+                created_by_manager=True
+            )
+        ),
+        total_number_count=Count("id"),
     )
     return render(request, template, {'breadcrumbs': breadcrumbs,
                                       'event_counts': event_counts,

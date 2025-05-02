@@ -49,26 +49,41 @@
                             {% else %}
                             <span class="badge bg-info">0</span>
                             {% endif %}
+                            <br>
+                            {% trans "All states" %}:
+                            {% if structure_events.0.number_count %}
+                            <span class="badge bg-info">{{ structure_events.0.number_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
                         </small>
                         <hr>
                         <small>
-                            <b>{% trans "Total" %}</b>
+                            <b>{% trans "Total (plural)" %}</b>
                             <br>
-                            {% trans "Approved (plural)"%}:
-                            {% if structure_events.0.approved_total_count  %}
-                            <span class="badge bg-success">{{ structure_events.0.approved_total_count }}</span>
+                            {% trans "Approved (plural)" %}:
+                            {% if structure_events.0.total_approved_count  %}
+                            <span class="badge bg-success">{{ structure_events.0.total_approved_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
+                            <br>
+                            {% trans "Loaded by manager (plural)" %}:
+                            {% if structure_events.0.total_created_by_manager_count %}
+                            <span class="badge bg-info">{{ structure_events.0.total_created_by_manager_count }}</span>
                             {% else %}
                             <span class="badge bg-info">0</span>
                             {% endif %}
                             <br>
                             {% trans "All states" %}:
-                            {% if structure_events.0.total_count %}
-                            <span class="badge bg-info">{{ structure_events.0.total_count }}</span>
+                            {% if structure_events.0.total_number_count %}
+                            <span class="badge bg-info">{{ structure_events.0.total_number_count }}</span>
                             {% else %}
                             <span class="badge bg-info">0</span>
                             {% endif %}
                         </small>
                     </p>
+                    <hr>
                     <a class="read-more" href="{% url 'pe_management:manager_events' structure_slug=structure.slug %}">
                         <span class="text text-primary">{% trans "Manage" %}</span>
                         <svg class="icon">
