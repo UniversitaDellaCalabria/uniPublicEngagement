@@ -19,7 +19,6 @@
 </div>
 {% endblock header_center_logo %}
 
-
 {% block header_center_search %}
 {% endblock header_center_search %}
 
@@ -49,6 +48,11 @@
 
 {% block header_slim_sub_menu %}
 {% endblock header_slim_sub_menu %}
+
+{% block header_wrapper %}
+{{ block.super }}
+{% include "breadcrumbs.html" %}
+{% endblock header_wrapper %}
 
 {% block footer_menu_section %}
 {% endblock footer_menu_section %}
