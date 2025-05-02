@@ -27,7 +27,7 @@ if 'makemigrations' in sys.argv or 'migrate' in sys.argv:  # pragma: no cover
 
 def _poster_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return "public-engagement/events/{0}/{2}".format(instance.event.id,
+    return "public-engagement/events/{0}/{1}".format(instance.event.id,
                                                      filename)
 
 
