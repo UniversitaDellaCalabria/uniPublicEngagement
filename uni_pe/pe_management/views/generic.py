@@ -19,7 +19,7 @@ from .. utils import *
 @login_required
 def dashboard(request):
     template = 'dashboard.html'
-    breadcrumbs = {'#': _('Public Engagement')}
+    breadcrumbs = {'#': _('Home')}
     return render(request, template, {'breadcrumbs': breadcrumbs})
 
 
