@@ -45,12 +45,12 @@ def dashboard(request, structures=None):
         structure__pk__in=structures,
         to_evaluate=True,
         created_by_manager=False,
-        is_active=True,
     ).values("structure__id").annotate(
         to_handle_count=Count(
             "id",
             filter=Q(
                 years_query,
+                is_active=True,
                 operator_taken_date__isnull=True
             )
         ),
@@ -58,6 +58,7 @@ def dashboard(request, structures=None):
             "id",
             filter=Q(
                 years_query,
+                is_active=True,
                 operator_taken_date__isnull=False,
                 operator_evaluation_date__isnull=True
             )
@@ -66,28 +67,35 @@ def dashboard(request, structures=None):
             "id",
             filter=Q(
                 years_query,
+                is_active=True,
                 operator_evaluation_success=True,
                 operator_evaluation_date__isnull=False
             )
         ),
-        discarded_count=Count(
+        rejected_count=Count(
             "id",
             filter=Q(
-                years_query,
-                operator_evaluation_success=False,
-                operator_evaluation_date__isnull=False
+                years_query
+            ) & (
+                Q(is_active=False) | Q(
+                    operator_evaluation_success=False,
+                    operator_evaluation_date__isnull=False
+                )
             )
         ),
         total_approved_count=Count(
             "id",
             filter=Q(
+                is_active=True,
                 operator_evaluation_success=True,
                 operator_evaluation_date__isnull=False
             )
         ),
-        total_discarded_count=Count(
+        total_rejected_count=Count(
             "id",
             filter=Q(
+                is_active=False)
+            | Q(
                 operator_evaluation_success=False,
                 operator_evaluation_date__isnull=False
             )

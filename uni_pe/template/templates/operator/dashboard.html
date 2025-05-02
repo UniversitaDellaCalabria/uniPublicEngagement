@@ -49,9 +49,9 @@
                             <span class="badge bg-info">0</span>
                             {% endif %}
                             <br>
-                            {% trans "Discarded (plural)" %}:
-                            {% if structure_events.0.discarded_count %}
-                            <span class="badge bg-danger">{{ structure_events.0.discarded_count }}</span>
+                            {% trans "Rejected (plural)" %}:
+                            {% if structure_events.0.rejected_count %}
+                            <span class="badge bg-danger">{{ structure_events.0.rejected_count }}</span>
                             {% else %}
                             <span class="badge bg-info">0</span>
                             {% endif %}
@@ -67,9 +67,9 @@
                             <span class="badge bg-info">0</span>
                             {% endif %}
                             <br>
-                            {% trans "Discarded (plural)" %}:
-                            {% if structure_events.0.total_discarded_count %}
-                            <span class="badge bg-danger">{{ structure_events.0.total_discarded_count }}</span>
+                            {% trans "Rejected (plural)" %}:
+                            {% if structure_events.0.total_rejected_count %}
+                            <span class="badge bg-danger">{{ structure_events.0.total_rejected_count }}</span>
                             {% else %}
                             <span class="badge bg-info">0</span>
                             {% endif %}
