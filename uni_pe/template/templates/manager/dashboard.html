@@ -27,25 +27,47 @@
         <div class="card-wrapper card-space">
             <div class="card card-bg">
                 <div class="card-body">
+                    {% filter_events_per_structure_id event_counts structure.pk as structure_events %}
                     <h5 class="card-title">
                         {{ structure }}
                     </h5>
                     <hr>
                     <p>
-                        <b>{% trans "Approved (plural)"%}:</b>
-                        {% filter_events_per_structure_id event_counts structure.pk as structure_events %}
-                        {% if structure_events.0.approved_count  %}
-                        <span class="badge bg-success">{{ structure_events.0.approved_count }}</span>
-                        {% else %}
-                        0
-                        {% endif %}
-                        <br>
-                        <b>{% trans "Loaded by manager (plural)" %}:</b>
-                        {% if structure_events.0.created_by_manager_count %}
-                        <span class="badge bg-info">{{ structure_events.0.created_by_manager_count }}</span>
-                        {% else %}
-                        0
-                        {% endif %}
+                        <small>
+                            <b>{% trans "Active monitoring" %}</b>
+                            <br>
+                            {% trans "Approved (plural)"%}:
+                            {% if structure_events.0.approved_count  %}
+                            <span class="badge bg-success">{{ structure_events.0.approved_count }}</span>
+                            {% else %}
+                            0
+                            {% endif %}
+                            <br>
+                            {% trans "Loaded by manager (plural)" %}:
+                            {% if structure_events.0.created_by_manager_count %}
+                            <span class="badge bg-info">{{ structure_events.0.created_by_manager_count }}</span>
+                            {% else %}
+                            0
+                            {% endif %}
+                        </small>
+                        <hr>
+                        <small>
+                            <b>{% trans "Total" %}</b>
+                            <br>
+                            {% trans "Approved (plural)"%}:
+                            {% if structure_events.0.approved_total_count  %}
+                            <span class="badge bg-success">{{ structure_events.0.approved_total_count }}</span>
+                            {% else %}
+                            0
+                            {% endif %}
+                            <br>
+                            {% trans "All states" %}:
+                            {% if structure_events.0.total_count %}
+                            <span class="badge bg-info">{{ structure_events.0.total_count }}</span>
+                            {% else %}
+                            0
+                            {% endif %}
+                        </small>
                     </p>
                     <a class="read-more" href="{% url 'pe_management:manager_events' structure_slug=structure.slug %}">
                         <span class="text text-primary">{% trans "Manage" %}</span>
