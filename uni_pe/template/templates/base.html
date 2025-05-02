@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load generic_tags %}
+{% load pe_management_tags %}
 {% load static %}
 
 {% block extra_head %}
@@ -23,14 +24,20 @@
 {% endblock header_center_search %}
 
 {% block menu_links %}
+{% pem_settings_value "DOCUMENTATION_URL" as documentation_url %}
 <li class="nav-item">
-    <a class="nav-link" href="/">
+    <a class="nav-link ps-0" href="/">
         <span>{% trans "Dashboard" %}</span>
     </a>
 </li>
 <li class="nav-item">
     <a class="nav-link" href="{% url 'accounts:account' %}">
         <span>{% trans "Account" %}</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ documentation_url }}" target="_blank">
+        <span>{% trans "Documentation" %}</span>
     </a>
 </li>
 {% endblock menu_links %}

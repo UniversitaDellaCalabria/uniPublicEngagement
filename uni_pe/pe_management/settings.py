@@ -24,3 +24,5 @@ EVALUATION_TIME_DELTA = getattr(settings, 'EVALUATION_TIME_DELTA', 0)
 # STORAGE_TOKEN = ''  token per comunicare con le API protette di storage.portale.unical.it
 
 MANAGER_ALIAS_EMAILS = getattr(settings, 'MANAGER_ALIAS_EMAILS', [])
+
+DOCUMENTATION_URL = getattr(settings, 'DOCUMENTATION_URL', 'https://unipublicengagement.readthedocs.io/it/latest/')
