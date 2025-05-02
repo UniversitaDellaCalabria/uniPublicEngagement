@@ -24,21 +24,25 @@
                     </h5>
                     <hr>
                     <p>
-                        <b>{% trans "To be handled" %}:</b>
-                        {% filter_events_per_structure_id event_counts structure.pk as structure_events %}
-                        {% if structure_events.0.to_handle_count  %}
-                        <span class="badge bg-info">{{ structure_events.0.to_handle_count }}</span>
-                        {% else %}
-                        0
-                        {% endif %}
-                        <br>
-                        <b>{% trans "To evaluate" %}:</b>
-                        {% if structure_events.0.to_evaluate_count %}
-                        <span class="badge bg-warning">{{ structure_events.0.to_evaluate_count }}</span>
-                        {% else %}
-                        0
-                        {% endif %}
+                        <small>
+                            <b>{% trans "Active monitoring" %}</b>
+                            {% trans "To be handled" %}:
+                            {% filter_events_per_structure_id event_counts structure.pk as structure_events %}
+                            {% if structure_events.0.to_handle_count  %}
+                            <span class="badge bg-info">{{ structure_events.0.to_handle_count }}</span>
+                            {% else %}
+                            0
+                            {% endif %}
+                            <br>
+                            {% trans "To evaluate" %}:
+                            {% if structure_events.0.to_evaluate_count %}
+                            <span class="badge bg-warning">{{ structure_events.0.to_evaluate_count }}</span>
+                            {% else %}
+                            0
+                            {% endif %}
+                        </small>
                     </p>
+                    <hr>
                     <a class="read-more" href="{% url 'pe_management:patronage_operator_events' structure_slug=structure.slug %}">
                         <span class="text text-primary">{% trans "Manage" %}</span>
                         <svg class="icon">
