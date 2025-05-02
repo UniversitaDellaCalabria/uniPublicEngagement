@@ -266,7 +266,7 @@ const app = Vue.createApp({
     methods: {
         filter_by_year(value) {
             this.year = value
-            this.getData(this.page)
+            this.getData(page=1)
         },
         change_sort_term(value) {
             this.sort_term = value
@@ -309,7 +309,7 @@ const app = Vue.createApp({
                 this.additional_url_params = '&not_eligible=true'
             }
             else this.additional_url_params = ''
-            this.getData(this.page)
+            this.getData(page=1)
         },
         {% block extra_vue_methods %}
         to_take(value) {
@@ -321,7 +321,7 @@ const app = Vue.createApp({
                 this.filter_evaluation_ko = false
             }
             else this.additional_url_params = ''
-            this.getData(this.page)
+            this.getData(page=1)
         },
         to_evaluate(value) {
             if (value) {
@@ -332,7 +332,7 @@ const app = Vue.createApp({
                 this.filter_evaluation_ko = false
             }
             else this.additional_url_params = ''
-            this.getData()
+            this.getData(page=1)
         },
         evaluation_ok(value) {
             if (value) {
@@ -343,7 +343,7 @@ const app = Vue.createApp({
                 this.filter_evaluation_ko = false
             }
             else this.additional_url_params = ''
-            this.getData()
+            this.getData(page=1)
         },
         evaluation_ko(value) {
             if (value) {
@@ -354,7 +354,7 @@ const app = Vue.createApp({
                 this.filter_evaluation_ko = true
             }
             else this.additional_url_params = ''
-            this.getData()
+            this.getData(page=1)
         },
         {% endblock extra_vue_methods %}
     }
