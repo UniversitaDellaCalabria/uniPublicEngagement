@@ -30,7 +30,7 @@ from .. utils import *
 @can_manage_public_engagement
 def events(request):
     template = 'involved_personnel/events.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Other involved personnel events')}
     api_url = reverse('pe_management:api_involved_personnel_events')
@@ -42,7 +42,7 @@ def events(request):
 @has_access_to_my_event
 def event(request, event_id, event=None):
     template = 'involved_personnel/event.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:involved_personnel_events'): _('Other involved personnel events'),
                    '#': event.title}

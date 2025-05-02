@@ -31,7 +31,7 @@ from .. utils import *
 @can_manage_public_engagement
 def events(request):
     template = 'user/events.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Events')}
     api_url = reverse('pe_management:api_user_events')
@@ -43,7 +43,7 @@ def events(request):
 def new_event_choose_referent(request):
     request.session.pop('referent', None)
     template = 'event_new.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:user_events'): _('Events'),
                    '#': _('New')}
@@ -130,7 +130,7 @@ def new_event_basic_info(request):
     template = 'event_basic_info.html'
     form = PublicEngagementEventForm(request=request)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:user_events'): _('Events'),
                    reverse('pe_management:user_new_event_choose_referent'): _('New'),
@@ -176,7 +176,7 @@ def new_event_basic_info(request):
 @has_access_to_my_event
 def event(request, event_id, event=None):
     template = 'user/event.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:user_events'): _('Events'),
                    '#': event.title}
@@ -193,7 +193,7 @@ def event(request, event_id, event=None):
 @has_access_to_my_event
 def event_basic_info(request, event_id, event=None):
     template = 'event_basic_info.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:user_events'): _('Events'),
                    reverse('pe_management:user_event', kwargs={'event_id': event_id}): event.title,
@@ -242,7 +242,7 @@ def event_data(request, event_id, event=None):
                                          event=event,
                                          by_user=True)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:user_events'): _('Events'),
                    reverse('pe_management:user_event', kwargs={'event_id': event_id}): event.title,
@@ -298,7 +298,7 @@ def event_people(request, event_id, event=None):
                         event_id=event.pk)
 
     template = 'event_people.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:user_events'): _('Events'),
                    reverse('pe_management:user_event', kwargs={'event_id': event_id}): event.title,
@@ -399,7 +399,7 @@ def event_structures(request, event_id, event=None):
                         event_id=event.pk)
 
     template = 'event_structures.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:user_events'): _('Events'),
                    reverse('pe_management:user_event', kwargs={'event_id': event_id}): event.title,
@@ -486,7 +486,7 @@ def event_report(request, event_id, event=None):
     instance = PublicEngagementEventReport.objects.filter(event=event).first()
     form = PublicEngagementEventReportForm(instance=instance)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:user_events'): _('Events'),
                    reverse('pe_management:user_event', kwargs={'event_id': event_id}): event.title,

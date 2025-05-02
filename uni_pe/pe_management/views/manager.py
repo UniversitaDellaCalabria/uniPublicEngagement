@@ -27,7 +27,7 @@ from pe_management.views import management
 @is_manager
 def dashboard(request, structure=None):
     template = 'manager/dashboard.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Manager')}
     structures = OrganizationalStructure.objects.filter(is_active=True)
@@ -89,7 +89,7 @@ def dashboard(request, structure=None):
 @is_manager
 def events(request, structure_slug, structure=None):
     template = 'manager/events.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    '#': structure.name}
@@ -105,7 +105,7 @@ def events(request, structure_slug, structure=None):
 def new_event_choose_referent(request, structure_slug, structure=None):
     request.session.pop('referent', None)
     template = 'event_new.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -182,7 +182,7 @@ def new_event_basic_info(request, structure_slug, structure=None):
     form = PublicEngagementEventOperatorForm(
         request=request, structure_slug=structure_slug)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -243,7 +243,7 @@ def event(request, structure_slug, event_id, structure=None):
         return redirect('pe_management:manager_events', structure_slug=structure_slug)
 
     template = 'manager/event.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -264,7 +264,7 @@ def event(request, structure_slug, event_id, structure=None):
 @is_manager
 @is_editable_by_manager
 def event_basic_info(request, structure_slug, event_id, event=None, structure=None):
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -413,7 +413,7 @@ def event_report(request, structure_slug, event_id, structure=None):
     instance = PublicEngagementEventReport.objects.filter(event=event).first()
     form = PublicEngagementEventReportForm(instance=instance)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -462,7 +462,7 @@ def event_enable_disable(request, structure_slug, event_id, event=None, structur
     template = 'manager/event_change_status.html'
     form = PublicEngagementEventDisableEnableForm()
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,

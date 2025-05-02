@@ -27,7 +27,7 @@ from .. views import management
 def dashboard(request, structures=None):
     template = 'patronage/dashboard.html'
     organizational_structures = OrganizationalStructure.objects.filter(pk__in=structures)
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Patronage operator')}
 
@@ -60,7 +60,7 @@ def dashboard(request, structures=None):
 @is_structure_patronage_operator
 def events(request, structure_slug, structure=None):
     template = 'patronage/events.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:patronage_operator_dashboard'): _('Patronage operator'),
                    '#': structure.name}
@@ -82,7 +82,7 @@ def event(request, structure_slug, event_id, structure=None):
                              "<b>{}</b>: {}".format(_('Alert'), _('URL access is not allowed')))
         return redirect('pe_management:patronage_operator_events', structure_slug=structure_slug)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:patronage_operator_dashboard'): _('Patronage operator'),
                    reverse('pe_management:patronage_operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -161,7 +161,7 @@ def event_evaluation(request, structure_slug, event_id, structure=None):
 
     form = PublicEngagementEventEvaluationForm()
     template = 'event_evaluation.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:patronage_operator_dashboard'): _('Patronage operator'),
                    reverse('pe_management:patronage_operator_events', kwargs={'structure_slug': structure_slug}): structure.name,

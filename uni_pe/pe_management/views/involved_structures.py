@@ -27,7 +27,7 @@ def dashboard(request, structures=None):
     template = 'operator/involved-structures/dashboard.html'
     organizational_structures = OrganizationalStructure.objects.filter(pk__in=structures)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Involved structure operator')}
 
@@ -39,7 +39,7 @@ def dashboard(request, structures=None):
 @is_structure_evaluation_operator
 def events(request, structure_slug, structure=None):
     template = 'operator/involved-structures/events.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Involved structure operator'),
                    '#': structure.name}
@@ -59,7 +59,7 @@ def event(request, structure_slug, event_id, structure=None):
                              "<b>{}</b>: {}".format(_('Alert'), _('URL access is not allowed')))
         return redirect('pe_management:involved_structures_events', structure_slug=structure_slug)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Involved structure operator'),
                    reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,

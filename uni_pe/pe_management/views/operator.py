@@ -30,7 +30,7 @@ def dashboard(request, structures=None):
     template = 'operator/dashboard.html'
     organizational_structures = OrganizationalStructure.objects.filter(pk__in=structures)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Structure operator')}
 
@@ -102,7 +102,7 @@ def dashboard(request, structures=None):
 @is_structure_evaluation_operator
 def events(request, structure_slug, structure=None):
     template = 'operator/events.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Structure operator'),
                    '#': structure.name}
@@ -122,7 +122,7 @@ def event(request, structure_slug, event_id, structure=None):
                              "<b>{}</b>: {}".format(_('Alert'), _('URL access is not allowed')))
         return redirect('pe_management:operator_events', structure_slug=structure_slug)
 
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Structure operator'),
                    reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -177,7 +177,7 @@ def take_event(request, structure_slug, event_id, structure=None):
 @is_structure_evaluation_operator
 @is_editable_by_operator
 def event_basic_info(request, structure_slug, event_id, structure=None, event=None):
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Structure operator'),
                    reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -323,7 +323,7 @@ def event_evaluation(request, structure_slug, event_id, structure=None):
 
     form = PublicEngagementEventEvaluationForm()
     template = 'event_evaluation.html'
-    breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+    breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Structure operator'),
                    reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,

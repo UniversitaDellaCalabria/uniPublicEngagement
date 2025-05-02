@@ -21,14 +21,14 @@ from .. utils import *
 
 def event_data(request, structure_slug, event_id, by_manager=False, event=None, structure=None):
     if by_manager:
-        breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+        breadcrumbs = {
                        reverse('pe_management:dashboard'): _('Home'),
                        reverse('pe_management:manager_dashboard'): _('Manager'),
                        reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
                        reverse('pe_management:manager_event', kwargs={'event_id': event_id, 'structure_slug': structure_slug}): event.title,
                        '#': _('Event data')}
     else:
-        breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+        breadcrumbs = {
                        reverse('pe_management:dashboard'): _('Home'),
                        reverse('pe_management:operator_dashboard'): _('Structure operator'),
                        reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -95,14 +95,14 @@ def event_people(request, structure_slug, event_id, by_manager=False, event=None
     template = 'event_people.html'
 
     if by_manager:
-        breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+        breadcrumbs = {
                        reverse('pe_management:dashboard'): _('Home'),
                        reverse('pe_management:manager_dashboard'): _('Manager'),
                        reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
                        reverse('pe_management:manager_event', kwargs={'event_id': event_id, 'structure_slug': structure_slug}): event.title,
                        '#': _('Other involved personnel')}
     else:
-        breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+        breadcrumbs = {
                        reverse('pe_management:dashboard'): _('Home'),
                        reverse('pe_management:operator_dashboard'): _('Structure operator'),
                        reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
@@ -231,14 +231,14 @@ def event_structures(request, structure_slug, event_id, by_manager=False, event=
     template = 'event_structures.html'
     form = PublicEngagementStructureForm()
     if by_manager:
-        breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+        breadcrumbs = {
                        reverse('pe_management:dashboard'): _('Home'),
                        reverse('pe_management:manager_dashboard'): _('Manager'),
                        reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
                        reverse('pe_management:manager_event', kwargs={'event_id': event_id, 'structure_slug': structure_slug}): event.title,
                        '#': _('Other involved structures')}
     else:
-        breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
+        breadcrumbs = {
                        reverse('pe_management:dashboard'): _('Home'),
                        reverse('pe_management:operator_dashboard'): _('Structure operator'),
                        reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
