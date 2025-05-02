@@ -28,7 +28,7 @@ def dashboard(request, structures=None):
     organizational_structures = OrganizationalStructure.objects.filter(pk__in=structures)
 
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Involved structure operator')}
 
     return render(request, template, {'breadcrumbs': breadcrumbs,
@@ -40,7 +40,7 @@ def dashboard(request, structures=None):
 def events(request, structure_slug, structure=None):
     template = 'operator/involved-structures/events.html'
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Involved structure operator'),
                    '#': structure.name}
     api_url = reverse('pe_management:api_involved_structures_events', kwargs={'structure_slug': structure_slug})
@@ -60,7 +60,7 @@ def event(request, structure_slug, event_id, structure=None):
         return redirect('pe_management:involved_structures_events', structure_slug=structure_slug)
 
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Involved structure operator'),
                    reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    '#': event.title}

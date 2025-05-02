@@ -31,7 +31,7 @@ def dashboard(request, structures=None):
     organizational_structures = OrganizationalStructure.objects.filter(pk__in=structures)
 
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Structure operator')}
 
     active_years = PublicEngagementAnnualMonitoring.objects\
@@ -103,7 +103,7 @@ def dashboard(request, structures=None):
 def events(request, structure_slug, structure=None):
     template = 'operator/events.html'
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Structure operator'),
                    '#': structure.name}
     api_url = reverse('pe_management:api_evaluation_operator_events', kwargs={'structure_slug': structure_slug})
@@ -123,7 +123,7 @@ def event(request, structure_slug, event_id, structure=None):
         return redirect('pe_management:operator_events', structure_slug=structure_slug)
 
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Structure operator'),
                    reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    '#': event.title}
@@ -178,7 +178,7 @@ def take_event(request, structure_slug, event_id, structure=None):
 @is_editable_by_operator
 def event_basic_info(request, structure_slug, event_id, structure=None, event=None):
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Structure operator'),
                    reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    reverse('pe_management:operator_event', kwargs={'event_id': event_id, 'structure_slug': structure_slug}): event.title,
@@ -324,7 +324,7 @@ def event_evaluation(request, structure_slug, event_id, structure=None):
     form = PublicEngagementEventEvaluationForm()
     template = 'event_evaluation.html'
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:operator_dashboard'): _('Structure operator'),
                    reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    reverse('pe_management:operator_event', kwargs={'event_id': event_id, 'structure_slug': structure_slug}): event.title,

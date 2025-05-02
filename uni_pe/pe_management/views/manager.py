@@ -28,7 +28,7 @@ from pe_management.views import management
 def dashboard(request, structure=None):
     template = 'manager/dashboard.html'
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Manager')}
     structures = OrganizationalStructure.objects.filter(is_active=True)
     active_years = PublicEngagementAnnualMonitoring.objects\
@@ -90,7 +90,7 @@ def dashboard(request, structure=None):
 def events(request, structure_slug, structure=None):
     template = 'manager/events.html'
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    '#': structure.name}
     api_url = reverse('pe_management:api_manager_events', kwargs={'structure_slug': structure_slug})
@@ -106,7 +106,7 @@ def new_event_choose_referent(request, structure_slug, structure=None):
     request.session.pop('referent', None)
     template = 'event_new.html'
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    '#': _("New")}
@@ -183,7 +183,7 @@ def new_event_basic_info(request, structure_slug, structure=None):
         request=request, structure_slug=structure_slug)
 
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    reverse('pe_management:manager_new_event_choose_referent', kwargs={'structure_slug': structure_slug}): _('New'),
@@ -244,7 +244,7 @@ def event(request, structure_slug, event_id, structure=None):
 
     template = 'manager/event.html'
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    '#': event.title}
@@ -265,7 +265,7 @@ def event(request, structure_slug, event_id, structure=None):
 @is_editable_by_manager
 def event_basic_info(request, structure_slug, event_id, event=None, structure=None):
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    reverse('pe_management:manager_event', kwargs={'event_id': event_id, 'structure_slug': structure_slug}): event.title,
@@ -414,7 +414,7 @@ def event_report(request, structure_slug, event_id, structure=None):
     form = PublicEngagementEventReportForm(instance=instance)
 
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    reverse('pe_management:manager_event', kwargs={'event_id': event_id, 'structure_slug': structure_slug}): event.title,
@@ -463,7 +463,7 @@ def event_enable_disable(request, structure_slug, event_id, event=None, structur
     form = PublicEngagementEventDisableEnableForm()
 
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:manager_dashboard'): _('Manager'),
                    reverse('pe_management:manager_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    reverse('pe_management:manager_event', kwargs={'event_id': event_id, 'structure_slug': structure_slug}): event.title,

@@ -28,7 +28,7 @@ def dashboard(request, structures=None):
     template = 'patronage/dashboard.html'
     organizational_structures = OrganizationalStructure.objects.filter(pk__in=structures)
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Patronage operator')}
 
     active_years = PublicEngagementAnnualMonitoring.objects\
@@ -61,7 +61,7 @@ def dashboard(request, structures=None):
 def events(request, structure_slug, structure=None):
     template = 'patronage/events.html'
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:patronage_operator_dashboard'): _('Patronage operator'),
                    '#': structure.name}
     api_url = reverse('pe_management:api_patronage_operator_events', kwargs={'structure_slug': structure_slug})
@@ -83,7 +83,7 @@ def event(request, structure_slug, event_id, structure=None):
         return redirect('pe_management:patronage_operator_events', structure_slug=structure_slug)
 
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:patronage_operator_dashboard'): _('Patronage operator'),
                    reverse('pe_management:patronage_operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    '#': event.title}
@@ -162,7 +162,7 @@ def event_evaluation(request, structure_slug, event_id, structure=None):
     form = PublicEngagementEventEvaluationForm()
     template = 'event_evaluation.html'
     breadcrumbs = {reverse('template:dashboard'): _('Dashboard'),
-                   reverse('pe_management:dashboard'): _('Public engagement'),
+                   reverse('pe_management:dashboard'): _('Home'),
                    reverse('pe_management:patronage_operator_dashboard'): _('Patronage operator'),
                    reverse('pe_management:patronage_operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
                    reverse('pe_management:patronage_operator_event', kwargs={'structure_slug': structure_slug, 'event_id': event_id}): '{}'.format(event.title),
