@@ -41,12 +41,12 @@ def dashboard(request, structure=None):
 
     event_counts = PublicEngagementEvent.objects.filter(
         structure__pk__in=structures,
-        is_active=True
     ).values("structure__id").annotate(
         approved_count=Count(
             "id",
             filter=Q(
                 years_query,
+                is_active=True,
                 operator_evaluation_success=True,
                 operator_evaluation_date__isnull=False
             )
@@ -67,6 +67,7 @@ def dashboard(request, structure=None):
         total_approved_count=Count(
             "id",
             filter=Q(
+                is_active=True,
                 operator_evaluation_success=True,
                 operator_evaluation_date__isnull=False
             )
