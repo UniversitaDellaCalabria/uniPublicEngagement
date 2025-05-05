@@ -37,12 +37,14 @@ def download_event_poster(request, event_id):
         permission_granted = True
 
     if not permission_granted:
-        is_manager = user_in_office([MANAGER_OFFICE])
+        is_manager = user_in_office(user=request.user,
+                                    office_slug_list=[MANAGER_OFFICE])
         if is_manager: permission_granted = True
 
     if not permission_granted:
-        is_operator = user_in_office([OPERATOR_OFFICE, PATRONAGE_OFFICE],
-                                     event.structure)
+        is_operator = user_in_office(user=request.user,
+                                     office_slug_list=[OPERATOR_OFFICE, PATRONAGE_OFFICE],
+                                     structure=event.structure)
         if is_operator: permission_granted = True
 
     if not permission_granted:

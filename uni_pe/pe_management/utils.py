@@ -30,15 +30,20 @@ from . settings import *
 
 
 def user_is_operator(user, structure=None):
-    return user_in_office(user, [OPERATOR_OFFICE], structure)
+    return user_in_office(user=user,
+                          office_slug_list=[OPERATOR_OFFICE],
+                          structure=structure)
 
 
 def user_is_patronage_operator(user, structure=None):
-    return user_in_office(user, [PATRONAGE_OFFICE], structure)
+    return user_in_office(user=user,
+                          office_slug_list=[PATRONAGE_OFFICE],
+                          structure=structure)
 
 
 def user_is_manager(user):
-    return user_in_office(user, [MANAGER_OFFICE])
+    return user_in_office(user=user,
+                          office_slug_list=[MANAGER_OFFICE])
 
 
 def _send_email(subject, body, attachment=None, recipients=[]):
