@@ -15,8 +15,9 @@
             [[ result.title ]] ([[ result.structure ]])
         </option>
     </select>
-    <select name="api_select_{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} disabled v-else>
-        <option :value="initial_value" {% include "django/forms/widgets/attrs.html" %}>
+    <select name="api_select_{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} @change="set_value" v-else>
+        <option value="">- nessuna scelta -</option>
+        <option selected :value="initial_value" {% include "django/forms/widgets/attrs.html" %} v-if="initial_value != ''">
             [[ this.detail ]]
         </option>
     </select>
