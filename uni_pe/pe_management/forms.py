@@ -162,7 +162,7 @@ class PublicEngagementEventDataForm(forms.ModelForm):
             # ~ if self.instance.event.patronage_requested and not promo_tool:
                 # ~ self.add_error(
                     # ~ 'promo_tool', _("Make at least one choice if you require patronage"))
-            if self.instance.promo_channel and not poster:
+            if self.instance.promo_channel.exists() and not poster:
                 self.add_error(
                     'poster', _("Mandatory field if you require the event to be promoted on institutional communication channels"))
         return cleaned_data

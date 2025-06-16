@@ -248,6 +248,12 @@ def event_data(request, event_id, event=None):
                    reverse('pe_management:user_event', kwargs={'event_id': event_id}): event.title,
                    '#': _("Event data")}
 
+    # se l'evento è già iniziato
+    # ripulisco tutti i campi riferiti a patrocinio
+    # e promozione
+    if event.is_started():
+        event.clear_promo_info()
+
     if request.method == 'POST':
         form = PublicEngagementEventDataForm(instance=instance,
                                              data=request.POST,
@@ -269,12 +275,6 @@ def event_data(request, event_id, event=None):
             form.save_m2m()
             event.modified_by = request.user
             event.save()
-
-            # se l'evento è già iniziato
-            # ripulisco tutti i campi riferiti a patrocinio
-            # e promozione
-            if event.is_started():
-                event.clear_promo_info()
 
             messages.add_message(request, messages.SUCCESS,
                                  _("Data updated successfully"))
