@@ -92,7 +92,7 @@ def send_email_to_managers(subject, body, to_alias=True):
     _send_email(subject=subject, body=body, recipients=recipients)
 
 
-def send_email_to_promoters(channel, title, start, end, description, poster=None, recipients=[]):
+def send_email_to_promoters(channel, title, start, end, description, structure, referent, poster=None, recipients=[]):
     body = """
        Canale di promozione: {channel}
 
@@ -101,14 +101,18 @@ def send_email_to_promoters(channel, title, start, end, description, poster=None
        Titolo: {title}
        Inizio: {start}
        Fine: {end}
+       Struttura: {structure}
+       Referente scientifico: {referent}
        Descrizione: {description}
     """.format(channel=channel,
                title=title,
                start=timezone.localtime(start),
                end=timezone.localtime(end),
-               description=description)
+               description=description,
+               structure=structure,
+               referent=referent)
 
-    _send_email(subject=f"Promozione evento Public Engagement: {title}",
+    _send_email(subject=f"Promozione evento Public Engagement: {channel}",
                 body=body,
                 attachment=poster,
                 recipients=recipients)

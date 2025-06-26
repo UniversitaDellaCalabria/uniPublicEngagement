@@ -395,6 +395,8 @@ def event_evaluation(request, structure_slug, event_id, structure=None):
                                             start=event.start,
                                             end=event.end,
                                             description=event.data.description,
+                                            structure=event.structure,
+                                            referent=event.referent,
                                             poster=event.data.poster,
                                             recipients=recipients)
 
