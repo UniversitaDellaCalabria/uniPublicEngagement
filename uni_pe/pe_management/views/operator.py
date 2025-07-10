@@ -269,8 +269,7 @@ def event_people_delete(request, structure_slug, event_id, person_id, structure=
                                             structure_slug=structure_slug,
                                             event_id=event_id,
                                             event=event,
-                                            person_id=person_id,
-                                            by_manager=True)
+                                            person_id=person_id)
     if result == True:
         return redirect("pe_management:operator_event",
                         structure_slug=structure_slug,
@@ -303,8 +302,7 @@ def event_structures_delete(request, structure_slug, event_id, structure_id, str
                                                 structure_slug=structure_slug,
                                                 event_id=event_id,
                                                 event=event,
-                                                structure_id=structure_id,
-                                                by_manager=True)
+                                                structure_id=structure_id)
     if result == True:
         return redirect("pe_management:operator_event",
                         structure_slug=structure_slug,

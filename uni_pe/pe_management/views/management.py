@@ -196,7 +196,7 @@ def event_people_delete(request, structure_slug, event_id, person_id, by_manager
         event.modified_by = request.user
 
         if by_manager:
-                event.edited_by_manager = True
+            event.edited_by_manager = True
 
         event.save()
 
@@ -314,7 +314,7 @@ def event_structures_delete(request, structure_slug, event_id, structure_id, by_
         event.modified_by = request.user
 
         if by_manager:
-                event.edited_by_manager = True
+            event.edited_by_manager = True
 
         event.save()
 
