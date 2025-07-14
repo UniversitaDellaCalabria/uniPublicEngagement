@@ -33,7 +33,7 @@ def _poster_directory_path(instance, filename):
 
 class PublicEngagementAnnualMonitoring(ActivableModel, CreatedModifiedBy, TimeStampedModel):
     # serve per definire chiudere o aprire le attività di PE in un anno
-    year = models.IntegerField(choices=_year_choices, unique=True)
+    year = models.IntegerField(unique=True)
 
     class Meta:
         verbose_name = "Anno di monitoraggio"
