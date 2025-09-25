@@ -121,6 +121,7 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
+                                    <th scope="col">{% trans "ID" %}</th>
                                     <th scope="col">{% trans "Title" %}</th>
                                     <th scope="col">{% trans "Referent" %}</th>
                                     <th scope="col">{% trans "Structure" %}</th>
@@ -136,7 +137,12 @@
                                 <tr v-for="event in data.results">
                                     <th scope="row">
                                         <b class="text-primary">
-                                            <a :href="event.id + '/'">[[ event.title ]]</a>
+                                            <a :href="event.id + '/'">[[ event.id ]]</a>
+                                        </b>
+                                    </th>
+                                    <th scope="row">
+                                        <b>
+                                            [[ event.title ]]
                                         </b>
                                     </th>
                                     <td>[[ event.referent ]]</td>

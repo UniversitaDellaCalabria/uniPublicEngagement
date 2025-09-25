@@ -24,6 +24,7 @@
 </div>
 {% endif %}
 {% endblock alerts %}
+<b>{% trans "ID:" %}</b> {{ event.id }}<br>
 <b>{% trans "Submission:" %}</b> {{ event.created }} / {{ event.created_by }}<br>
 {% if event.modified_by %}<b>{% trans "Last update :" %}</b> {{ event.modified }} / {{ event.modified_by }}{% endif %}
 {% block actions %}{% endblock actions %}
