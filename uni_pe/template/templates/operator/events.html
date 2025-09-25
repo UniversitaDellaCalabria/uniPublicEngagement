@@ -12,6 +12,15 @@
 {% block custom_filters %}
 <div class="form-check form-check-inline">
     <div class="toggles">
+      <label for="toggle15">
+        {% trans "Draft" %}
+        <input v-model="filter_draft" type="checkbox" id="toggle15" @change="draft($event.target.checked)">
+        <span class="lever"></span>
+      </label>
+    </div>
+</div>
+<div class="form-check form-check-inline">
+    <div class="toggles">
       <label for="toggle1">
         {% trans "To be handled" %}
         <input v-model="filter_to_handle" type="checkbox" id="toggle1" @change="to_take($event.target.checked)">

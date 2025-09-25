@@ -19,8 +19,8 @@ class PublicEngagementEventList(PublicEngagementEventList):
             .prefetch_related('data', 'report')\
             .select_related('referent', 'structure')\
             .filter(structure__slug=self.kwargs['structure_slug'],
-                    structure__is_active=True,
-                    to_evaluate=True)
+                    structure__is_active=True,)
+                    # ~ to_evaluate=True)
 
         status = self.request.query_params.get('status')
         if status=='to_handle' or status=='to_evaluate':
@@ -35,6 +35,7 @@ class PublicEngagementEventList(PublicEngagementEventList):
                 years_query,
                 operator_taken_date__isnull=True,
                 created_by_manager=False,
+                to_evaluate=True
             )
         elif status=='to_evaluate':
             events = events.filter(
@@ -42,16 +43,21 @@ class PublicEngagementEventList(PublicEngagementEventList):
                 operator_taken_date__isnull=False,
                 operator_evaluation_date__isnull=True,
                 created_by_manager=False,
+                to_evaluate=True
             )
+        elif status=='draft':
+            events = events.filter(to_evaluate=False)
         elif status=='approved':
             events = events.filter(operator_evaluation_success=True,
-                                   operator_evaluation_date__isnull=False)
+                                   operator_evaluation_date__isnull=False,
+                                   to_evaluate=True)
         elif status=='rejected':
             events = events.filter(operator_evaluation_success=False,
-                                   operator_evaluation_date__isnull=False)
+                                   operator_evaluation_date__isnull=False,
+                                   to_evaluate=True)
 
         not_eligible = self.request.query_params.get('not_eligible')
         if not_eligible=='true':
-            events = events.filter(is_active=False)
+            events = events.filter(is_active=False, to_evaluate=True)
 
         return events

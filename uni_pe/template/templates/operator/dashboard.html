@@ -55,6 +55,13 @@
                             {% else %}
                             <span class="badge bg-info">0</span>
                             {% endif %}
+                            <br>
+                            {% trans "Draft" %}:
+                            {% if structure_events.0.draft_count %}
+                            <span class="badge bg-info">{{ structure_events.0.draft_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
                         </small>
                         <hr>
                         <small>
@@ -70,6 +77,13 @@
                             {% trans "Rejected (plural)" %}:
                             {% if structure_events.0.total_rejected_count %}
                             <span class="badge bg-danger">{{ structure_events.0.total_rejected_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
+                            <br>
+                            {% trans "All states" %}:
+                            {% if structure_events.0.total_number_count %}
+                            <span class="badge bg-info">{{ structure_events.0.total_number_count }}</span>
                             {% else %}
                             <span class="badge bg-info">0</span>
                             {% endif %}

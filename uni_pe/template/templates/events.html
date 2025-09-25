@@ -253,6 +253,7 @@ const app = Vue.createApp({
             year: null,
             filter_not_eligible: false,
             {% block extra_vue_data %}
+            filter_draft: false,
             filter_to_handle: false,
             filter_to_evaluate: false,
             filter_evaluation_ok: false,
@@ -315,6 +316,7 @@ const app = Vue.createApp({
         to_take(value) {
             if (value) {
                 this.additional_url_params = '&status=to_handle'
+                this.filter_draft = false
                 this.filter_to_handle = true
                 this.filter_to_evaluate = false
                 this.filter_evaluation_ok = false
@@ -326,6 +328,7 @@ const app = Vue.createApp({
         to_evaluate(value) {
             if (value) {
                 this.additional_url_params = '&status=to_evaluate'
+                this.filter_draft = false
                 this.filter_to_handle = false
                 this.filter_to_evaluate = true
                 this.filter_evaluation_ok = false
@@ -337,6 +340,7 @@ const app = Vue.createApp({
         evaluation_ok(value) {
             if (value) {
                 this.additional_url_params = '&status=approved'
+                this.filter_draft = false
                 this.filter_to_handle = false
                 this.filter_to_evaluate = false
                 this.filter_evaluation_ok = true
@@ -348,10 +352,23 @@ const app = Vue.createApp({
         evaluation_ko(value) {
             if (value) {
                 this.additional_url_params = '&status=rejected'
+                this.filter_draft = false
                 this.filter_to_handle = false
                 this.filter_to_evaluate = false
                 this.filter_evaluation_ok = false
                 this.filter_evaluation_ko = true
+            }
+            else this.additional_url_params = ''
+            this.getData(page=1)
+        },
+        draft(value) {
+            if (value) {
+                this.additional_url_params = '&status=draft'
+                this.filter_draft = true
+                this.filter_to_handle = false
+                this.filter_to_evaluate = false
+                this.filter_evaluation_ok = false
+                this.filter_evaluation_ko = false
             }
             else this.additional_url_params = ''
             this.getData(page=1)

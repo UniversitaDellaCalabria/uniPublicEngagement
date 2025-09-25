@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-02 10:27+0200\n"
-"PO-Revision-Date: 2025-05-02 10:27+0200\n"
+"POT-Creation-Date: 2025-09-25 10:50+0200\n"
+"PO-Revision-Date: 2025-09-25 10:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -91,7 +91,7 @@ msgid "Utenti"
 msgstr ""
 
 #: accounts/templates/account.html:10 accounts/views.py:21 accounts/views.py:30
-#: template/templates/base.html:34
+#: template/templates/base.html:35
 msgid "Account"
 msgstr ""
 
@@ -119,31 +119,30 @@ msgstr "Modifica"
 msgid "Edit user data"
 msgstr "Modifica dati utente"
 
-#: accounts/views.py:20 accounts/views.py:29
-#: pe_management/views/involved_personnel.py:33
-#: pe_management/views/involved_personnel.py:45
-#: pe_management/views/involved_structures.py:30
-#: pe_management/views/involved_structures.py:42
-#: pe_management/views/involved_structures.py:62
-#: pe_management/views/management.py:24 pe_management/views/management.py:31
-#: pe_management/views/management.py:98 pe_management/views/management.py:105
-#: pe_management/views/management.py:234 pe_management/views/management.py:241
-#: pe_management/views/manager.py:30 pe_management/views/manager.py:92
-#: pe_management/views/manager.py:108 pe_management/views/manager.py:185
-#: pe_management/views/manager.py:246 pe_management/views/manager.py:267
-#: pe_management/views/manager.py:416 pe_management/views/manager.py:465
-#: pe_management/views/operator.py:33 pe_management/views/operator.py:105
-#: pe_management/views/operator.py:125 pe_management/views/operator.py:180
-#: pe_management/views/operator.py:326 pe_management/views/patronage.py:30
-#: pe_management/views/patronage.py:63 pe_management/views/patronage.py:85
-#: pe_management/views/patronage.py:164 pe_management/views/user.py:34
-#: pe_management/views/user.py:46 pe_management/views/user.py:133
-#: pe_management/views/user.py:179 pe_management/views/user.py:196
-#: pe_management/views/user.py:245 pe_management/views/user.py:301
-#: pe_management/views/user.py:402 pe_management/views/user.py:489
-#: template/templates/base.html:29
-msgid "Dashboard"
-msgstr "Pannello di controllo"
+#: accounts/views.py:20 accounts/views.py:29 pe_management/views/generic.py:22
+#: pe_management/views/involved_personnel.py:34
+#: pe_management/views/involved_personnel.py:46
+#: pe_management/views/involved_structures.py:31
+#: pe_management/views/involved_structures.py:43
+#: pe_management/views/involved_structures.py:63
+#: pe_management/views/management.py:25 pe_management/views/management.py:32
+#: pe_management/views/management.py:99 pe_management/views/management.py:106
+#: pe_management/views/management.py:235 pe_management/views/management.py:242
+#: pe_management/views/manager.py:31 pe_management/views/manager.py:93
+#: pe_management/views/manager.py:109 pe_management/views/manager.py:186
+#: pe_management/views/manager.py:247 pe_management/views/manager.py:268
+#: pe_management/views/manager.py:417 pe_management/views/manager.py:466
+#: pe_management/views/operator.py:34 pe_management/views/operator.py:130
+#: pe_management/views/operator.py:150 pe_management/views/operator.py:205
+#: pe_management/views/operator.py:349 pe_management/views/patronage.py:31
+#: pe_management/views/patronage.py:64 pe_management/views/patronage.py:86
+#: pe_management/views/patronage.py:165 pe_management/views/user.py:35
+#: pe_management/views/user.py:47 pe_management/views/user.py:134
+#: pe_management/views/user.py:180 pe_management/views/user.py:197
+#: pe_management/views/user.py:246 pe_management/views/user.py:302
+#: pe_management/views/user.py:403 pe_management/views/user.py:490
+msgid "Home"
+msgstr ""
 
 #: accounts/views.py:49
 msgid "Data saved successfully"
@@ -203,9 +202,9 @@ msgstr "Email aggiornata con successo"
 #: pe_management/decorators/patronage.py:69 pe_management/decorators/user.py:40
 #: pe_management/decorators/user.py:57 pe_management/decorators/user.py:74
 #: pe_management/views/manager.py:121 pe_management/views/manager.py:130
-#: pe_management/views/manager.py:160 pe_management/views/operator.py:150
-#: pe_management/views/operator.py:314 pe_management/views/operator.py:319
-#: pe_management/views/operator.py:409 pe_management/views/operator.py:414
+#: pe_management/views/manager.py:160 pe_management/views/operator.py:174
+#: pe_management/views/operator.py:336 pe_management/views/operator.py:341
+#: pe_management/views/operator.py:433 pe_management/views/operator.py:438
 #: pe_management/views/patronage.py:111 pe_management/views/patronage.py:115
 #: pe_management/views/patronage.py:152 pe_management/views/patronage.py:157
 #: pe_management/views/patronage.py:222 pe_management/views/patronage.py:227
@@ -551,7 +550,7 @@ msgid "Initiative’s website"
 msgstr "Sito web dell'iniziativa"
 
 #: pe_management/models.py:701 pe_management/views/manager.py:487
-#: pe_management/views/operator.py:360 pe_management/views/patronage.py:198
+#: pe_management/views/operator.py:382 pe_management/views/patronage.py:198
 msgid "Notes"
 msgstr "Note"
 
@@ -566,31 +565,6 @@ msgstr "Monitoraggio iniziativa"
 #: pe_management/validators.py:16 template/validators.py:15
 msgid "File extension not accepted: \"{}\". Enter {} only"
 msgstr "Estensione del file non accettata: \"{}\". Inserisci solo {}"
-
-#: pe_management/views/generic.py:22
-#: pe_management/views/involved_personnel.py:34
-#: pe_management/views/involved_personnel.py:46
-#: pe_management/views/involved_structures.py:31
-#: pe_management/views/involved_structures.py:43
-#: pe_management/views/involved_structures.py:63
-#: pe_management/views/management.py:25 pe_management/views/management.py:32
-#: pe_management/views/management.py:99 pe_management/views/management.py:106
-#: pe_management/views/management.py:235 pe_management/views/management.py:242
-#: pe_management/views/manager.py:31 pe_management/views/manager.py:93
-#: pe_management/views/manager.py:109 pe_management/views/manager.py:186
-#: pe_management/views/manager.py:247 pe_management/views/manager.py:268
-#: pe_management/views/manager.py:417 pe_management/views/manager.py:466
-#: pe_management/views/operator.py:34 pe_management/views/operator.py:106
-#: pe_management/views/operator.py:126 pe_management/views/operator.py:181
-#: pe_management/views/operator.py:327 pe_management/views/patronage.py:31
-#: pe_management/views/patronage.py:64 pe_management/views/patronage.py:86
-#: pe_management/views/patronage.py:165 pe_management/views/user.py:35
-#: pe_management/views/user.py:47 pe_management/views/user.py:134
-#: pe_management/views/user.py:180 pe_management/views/user.py:197
-#: pe_management/views/user.py:246 pe_management/views/user.py:302
-#: pe_management/views/user.py:403 pe_management/views/user.py:490
-msgid "Home"
-msgstr ""
 
 #: pe_management/views/involved_personnel.py:35
 #: pe_management/views/involved_personnel.py:47
@@ -607,8 +581,8 @@ msgstr "Operatore di struttura coinvolta"
 #: pe_management/views/management.py:86 pe_management/views/management.py:297
 #: pe_management/views/manager.py:232 pe_management/views/manager.py:316
 #: pe_management/views/manager.py:451 pe_management/views/manager.py:515
-#: pe_management/views/operator.py:122 pe_management/views/operator.py:219
-#: pe_management/views/operator.py:398 pe_management/views/patronage.py:82
+#: pe_management/views/operator.py:146 pe_management/views/operator.py:243
+#: pe_management/views/operator.py:422 pe_management/views/patronage.py:82
 #: pe_management/views/patronage.py:209 pe_management/views/user.py:149
 #: pe_management/views/user.py:171 pe_management/views/user.py:229
 #: pe_management/views/user.py:285 pe_management/views/user.py:296
@@ -619,7 +593,7 @@ msgid "Alert"
 msgstr "Attenzione"
 
 #: pe_management/views/involved_structures.py:59
-#: pe_management/views/operator.py:122 pe_management/views/patronage.py:82
+#: pe_management/views/operator.py:146 pe_management/views/patronage.py:82
 msgid "URL access is not allowed"
 msgstr ""
 
@@ -634,8 +608,8 @@ msgstr "Operatore di Ateneo"
 
 #: pe_management/views/management.py:33 pe_management/views/management.py:107
 #: pe_management/views/management.py:243 pe_management/views/operator.py:35
-#: pe_management/views/operator.py:107 pe_management/views/operator.py:127
-#: pe_management/views/operator.py:182 pe_management/views/operator.py:328
+#: pe_management/views/operator.py:131 pe_management/views/operator.py:151
+#: pe_management/views/operator.py:206 pe_management/views/operator.py:350
 #: template/templates/dashboard.html:50
 msgid "Structure operator"
 msgstr "Operatore di struttura"
@@ -647,9 +621,9 @@ msgstr "Dati aggiornati con successo"
 #: pe_management/views/management.py:74 pe_management/views/management.py:172
 #: pe_management/views/management.py:216 pe_management/views/management.py:286
 #: pe_management/views/management.py:334 pe_management/views/manager.py:302
-#: pe_management/views/manager.py:484 pe_management/views/operator.py:167
-#: pe_management/views/operator.py:208 pe_management/views/operator.py:357
-#: pe_management/views/operator.py:431 pe_management/views/patronage.py:134
+#: pe_management/views/manager.py:484 pe_management/views/operator.py:191
+#: pe_management/views/operator.py:232 pe_management/views/operator.py:379
+#: pe_management/views/operator.py:455 pe_management/views/patronage.py:134
 #: pe_management/views/patronage.py:195 pe_management/views/patronage.py:244
 #: pe_management/views/user.py:547 pe_management/views/user.py:579
 msgid "Public engagement"
@@ -658,21 +632,21 @@ msgstr "Public engagement"
 #: pe_management/views/management.py:74 pe_management/views/management.py:172
 #: pe_management/views/management.py:216 pe_management/views/management.py:286
 #: pe_management/views/management.py:334 pe_management/views/manager.py:302
-#: pe_management/views/operator.py:208
+#: pe_management/views/operator.py:232
 msgid "Data modified"
 msgstr "Dati modificati"
 
 #: pe_management/views/management.py:75 pe_management/views/management.py:173
 #: pe_management/views/management.py:217 pe_management/views/management.py:287
 #: pe_management/views/management.py:335 pe_management/views/manager.py:303
-#: pe_management/views/operator.py:209
+#: pe_management/views/operator.py:233
 msgid "has modified the data of the event"
 msgstr "ha modificato i dati dell'iniziativa"
 
 #: pe_management/views/management.py:86 pe_management/views/management.py:297
 #: pe_management/views/manager.py:232 pe_management/views/manager.py:316
 #: pe_management/views/manager.py:451 pe_management/views/manager.py:515
-#: pe_management/views/operator.py:219 pe_management/views/operator.py:398
+#: pe_management/views/operator.py:243 pe_management/views/operator.py:422
 #: pe_management/views/patronage.py:209 pe_management/views/user.py:171
 #: pe_management/views/user.py:229 pe_management/views/user.py:285
 #: pe_management/views/user.py:446 pe_management/views/user.py:518
@@ -747,7 +721,7 @@ msgid "Event referent is mandatory"
 msgstr "Referente iniziativa obbligatorio"
 
 #: pe_management/views/manager.py:190 pe_management/views/manager.py:272
-#: pe_management/views/operator.py:185 pe_management/views/user.py:137
+#: pe_management/views/operator.py:209 pe_management/views/user.py:137
 #: pe_management/views/user.py:200 template/templates/event.html:219
 #: template/templates/manager/event.html:15
 #: template/templates/operator/event.html:64
@@ -763,7 +737,7 @@ msgstr ""
 msgid "First step completed successfully. Now proceed to enter the data"
 msgstr "Primo step completato. Ora procedi all'inserimento dei dati"
 
-#: pe_management/views/manager.py:299 pe_management/views/operator.py:205
+#: pe_management/views/manager.py:299 pe_management/views/operator.py:229
 #: pe_management/views/user.py:224
 msgid "Modified general informations successfully"
 msgstr "Informazioni generali modificate correttamente"
@@ -794,8 +768,8 @@ msgstr "Abilitato"
 msgid "has changed the status of the event"
 msgstr "ha modificato lo stato dell'iniziativa"
 
-#: pe_management/views/manager.py:496 pe_management/views/operator.py:369
-#: pe_management/views/operator.py:440
+#: pe_management/views/manager.py:496 pe_management/views/operator.py:391
+#: pe_management/views/operator.py:464
 #, fuzzy
 #| msgid "Other involved structures"
 msgid "Notification for operators of involved structure"
@@ -805,47 +779,47 @@ msgstr "Altre strutture coinvolte"
 msgid "Event status modified successfully"
 msgstr "Stato dell'iniziativa modificato con successo"
 
-#: pe_management/views/operator.py:159
+#: pe_management/views/operator.py:183
 msgid "Event handled successfully"
 msgstr "Iniziativa presa in carico con successo"
 
-#: pe_management/views/operator.py:167 pe_management/views/patronage.py:134
+#: pe_management/views/operator.py:191 pe_management/views/patronage.py:134
 #: template/templates/event.html:117 template/templates/event.html:188
 msgid "Handled"
 msgstr "Preso in carico"
 
-#: pe_management/views/operator.py:168 pe_management/views/patronage.py:135
+#: pe_management/views/operator.py:192 pe_management/views/patronage.py:135
 msgid "is evaluating the event"
 msgstr "preso in carico"
 
-#: pe_management/views/operator.py:331 pe_management/views/patronage.py:169
+#: pe_management/views/operator.py:353 pe_management/views/patronage.py:169
 #: template/templates/dashboard.html:56
 #: template/templates/event_evaluation.html:9
 msgid "Evaluation"
 msgstr "Validazione"
 
-#: pe_management/views/operator.py:353 pe_management/views/operator.py:357
+#: pe_management/views/operator.py:375 pe_management/views/operator.py:379
 msgid "Evaluation completed"
 msgstr "Validazione completata"
 
-#: pe_management/views/operator.py:356 pe_management/views/patronage.py:194
+#: pe_management/views/operator.py:378 pe_management/views/patronage.py:194
 msgid "approved"
 msgstr "approvata"
 
-#: pe_management/views/operator.py:356 pe_management/views/patronage.py:194
+#: pe_management/views/operator.py:378 pe_management/views/patronage.py:194
 msgid "not approved"
 msgstr "non approvata"
 
-#: pe_management/views/operator.py:358 pe_management/views/patronage.py:196
+#: pe_management/views/operator.py:380 pe_management/views/patronage.py:196
 msgid "has evaluated the event with the result"
 msgstr "ha validato l'iniziativa con il seguente esito"
 
-#: pe_management/views/operator.py:428 pe_management/views/operator.py:431
+#: pe_management/views/operator.py:452 pe_management/views/operator.py:455
 #: pe_management/views/patronage.py:241
 msgid "Evaluation reopened"
 msgstr "Validazione riaperta"
 
-#: pe_management/views/operator.py:432
+#: pe_management/views/operator.py:456
 msgid "has reopened evaluation of the event"
 msgstr "ha riaperto la valutazione dell'iniziativa"
 
@@ -994,11 +968,15 @@ msgstr ""
 "Per problemi tecnici contatta il nostro staff.\n"
 "Cordiali saluti.\n"
 
-#: template/templates/base.html:39
+#: template/templates/base.html:30
+msgid "Dashboard"
+msgstr "Pannello di controllo"
+
+#: template/templates/base.html:40
 msgid "Documentation"
 msgstr "Documentazione"
 
-#: template/templates/base.html:50
+#: template/templates/base.html:51
 msgid "Logout"
 msgstr "Esci"
 
@@ -1041,7 +1019,7 @@ msgstr "Per registrare o modificare un’iniziativa"
 
 #: template/templates/dashboard.html:34 template/templates/dashboard.html:84
 #: template/templates/manager/dashboard.html:88
-#: template/templates/operator/dashboard.html:80
+#: template/templates/operator/dashboard.html:94
 #: template/templates/patronage/dashboard.html:47
 msgid "Manage"
 msgstr "Gestisci"
@@ -1121,7 +1099,7 @@ msgstr "Validazione richiesta"
 
 #: template/templates/event.html:90 template/templates/event.html:161
 #: template/templates/operator/dashboard.html:30
-#: template/templates/operator/events.html:16
+#: template/templates/operator/events.html:25
 #: template/templates/patronage/dashboard.html:29
 #: template/templates/patronage/events.html:16
 msgid "To be handled"
@@ -1139,7 +1117,7 @@ msgstr "Approvata"
 
 #: template/templates/event.html:108 template/templates/event.html:179
 #: template/templates/operator/dashboard.html:38
-#: template/templates/operator/events.html:25
+#: template/templates/operator/events.html:34
 #: template/templates/patronage/dashboard.html:37
 #: template/templates/patronage/events.html:25
 msgid "To evaluate"
@@ -1223,12 +1201,15 @@ msgstr "Decrescente"
 #: template/templates/manager/dashboard.html:64
 #: template/templates/manager/events.html:23
 #: template/templates/operator/dashboard.html:45
-#: template/templates/operator/dashboard.html:63
-#: template/templates/operator/events.html:34
+#: template/templates/operator/dashboard.html:70
+#: template/templates/operator/events.html:43
 msgid "Approved (plural)"
 msgstr "Approvate"
 
-#: template/templates/events.html:92 template/templates/operator/events.html:43
+#: template/templates/events.html:92
+#: template/templates/operator/dashboard.html:52
+#: template/templates/operator/dashboard.html:77
+#: template/templates/operator/events.html:52
 msgid "Rejected (plural)"
 msgstr "Respinte"
 
@@ -1391,11 +1372,12 @@ msgstr "Inserite da operatore di Ateneo"
 
 #: template/templates/manager/dashboard.html:53
 #: template/templates/manager/dashboard.html:78
+#: template/templates/operator/dashboard.html:84
 msgid "All states"
 msgstr "Tutti gli stati"
 
 #: template/templates/manager/dashboard.html:62
-#: template/templates/operator/dashboard.html:61
+#: template/templates/operator/dashboard.html:68
 msgid "Total (plural)"
 msgstr "Totali"
 
@@ -1425,10 +1407,10 @@ msgstr "Aggiornamenti di stato (Log)"
 msgid "There isn't any log"
 msgstr "Nessun log presente"
 
-#: template/templates/operator/dashboard.html:52
-#: template/templates/operator/dashboard.html:70
-msgid "Discarded (plural)"
-msgstr "Non approvate"
+#: template/templates/operator/dashboard.html:59
+#: template/templates/operator/events.html:16
+msgid "Draft"
+msgstr "Bozza"
 
 #: template/templates/operator/event.html:20
 msgid "Evaluation request not sent"
@@ -1555,6 +1537,9 @@ msgstr "Dimensione del file troppo grande: {} bytes. Massimo {} bytes"
 msgid "File name length too large: {} characters. Max {} characters"
 msgstr ""
 "Lunghezza del nome file troppo grande: {} caratteri. Massimo {} caratteri"
+
+#~ msgid "Discarded (plural)"
+#~ msgstr "Non approvate"
 
 #~ msgid "Public Engagement"
 #~ msgstr "Public Engagement"

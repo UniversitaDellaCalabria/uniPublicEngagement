@@ -43,7 +43,6 @@ def dashboard(request, structures=None):
 
     event_counts = PublicEngagementEvent.objects.filter(
         structure__pk__in=structures,
-        to_evaluate=True,
         created_by_manager=False,
     ).values("structure__id").annotate(
         to_handle_count=Count(
@@ -51,6 +50,7 @@ def dashboard(request, structures=None):
             filter=Q(
                 years_query,
                 is_active=True,
+                to_evaluate=True,
                 operator_taken_date__isnull=True
             )
         ),
@@ -59,6 +59,7 @@ def dashboard(request, structures=None):
             filter=Q(
                 years_query,
                 is_active=True,
+                to_evaluate=True,
                 operator_taken_date__isnull=False,
                 operator_evaluation_date__isnull=True
             )
@@ -68,6 +69,7 @@ def dashboard(request, structures=None):
             filter=Q(
                 years_query,
                 is_active=True,
+                to_evaluate=True,
                 operator_evaluation_success=True,
                 operator_evaluation_date__isnull=False
             )
@@ -75,7 +77,8 @@ def dashboard(request, structures=None):
         rejected_count=Count(
             "id",
             filter=Q(
-                years_query
+                years_query,
+                to_evaluate=True,
             ) & (
                 Q(is_active=False) | Q(
                     operator_evaluation_success=False,
@@ -83,10 +86,18 @@ def dashboard(request, structures=None):
                 )
             )
         ),
+        draft_count=Count(
+            "id",
+            filter=Q(
+                years_query,
+                to_evaluate=False
+            )
+        ),
         total_approved_count=Count(
             "id",
             filter=Q(
                 is_active=True,
+                to_evaluate=True,
                 operator_evaluation_success=True,
                 operator_evaluation_date__isnull=False
             )
@@ -94,12 +105,17 @@ def dashboard(request, structures=None):
         total_rejected_count=Count(
             "id",
             filter=Q(
-                is_active=False)
-            | Q(
-                operator_evaluation_success=False,
-                operator_evaluation_date__isnull=False
+                to_evaluate=True
+            ) & (
+                Q(
+                    is_active=False
+                ) | Q(
+                    operator_evaluation_success=False,
+                    operator_evaluation_date__isnull=False
+                )
             )
         ),
+        total_number_count=Count("id")
     )
     return render(request, template, {'breadcrumbs': breadcrumbs,
                                       'event_counts': event_counts,
