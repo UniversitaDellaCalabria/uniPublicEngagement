@@ -1,9 +1,12 @@
+import csv
+
 from django.contrib import messages
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.admin.utils import _get_changed_field_labels_from_form
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Count, Q
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect, reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -96,7 +99,6 @@ def events(request, structure_slug, structure=None):
     api_url = reverse('pe_management:api_manager_events', kwargs={'structure_slug': structure_slug})
     return render(request, template, {'api_url': api_url,
                                       'breadcrumbs': breadcrumbs,
-                                      'events': events,
                                       'structure_slug': structure_slug})
 
 
@@ -517,3 +519,56 @@ def event_enable_disable(request, structure_slug, event_id, event=None, structur
                                       'event': event,
                                       'form': form,
                                       'structure_slug': structure_slug})
+
+
+@login_required
+@is_manager
+def export(request):
+    template = 'export.html'
+    breadcrumbs = {
+       reverse('pe_management:dashboard'): _('Home'),
+       reverse('pe_management:manager_dashboard'): _('Manager'),
+       '#': _('Export')
+    }
+
+    if request.method == 'POST':
+        year = request.POST.get('year', timezone.localtime().year)
+        if not year:
+            messages.add_message(request, messages.ERROR, _('Year is mandatory'))
+            return render(
+                request, template,
+                {'breadcrumbs': breadcrumbs}
+            )
+
+        events = PublicEngagementEvent.objects\
+            .select_related('referent', 'structure')\
+            .select_related('data__method_of_execution')\
+            .prefetch_related('data', 'report')\
+            .prefetch_related(
+                'data__involved_personnel',
+                'data__involved_structure',
+                'data__recipient',
+                'data__target',
+                'data__promo_channel',
+                'data__promo_tool',
+                'data__promo_tool',
+            )\
+            .prefetch_related(
+                'report__scientific_area',
+                'report__collaborator_type',
+            )\
+            .filter(structure__is_active=True,
+                    start__year=year)\
+            .order_by('start', 'title')
+
+        if not events.exists():
+            messages.add_message(request, messages.ERROR, _('No results'))
+            return render(
+                request, template,
+                {'breadcrumbs': breadcrumbs}
+            )
+
+        response = export_csv(events, year)
+        return response
+
+    return render(request, template, {'breadcrumbs': breadcrumbs})

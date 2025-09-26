@@ -72,6 +72,8 @@ urlpatterns = [
          operator.dashboard, name='operator_dashboard'),
     path(f'{prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events/',
          operator.events, name='operator_events'),
+    path(f'{prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/export/',
+         operator.export, name='operator_export'),
     path(f'{prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events/<int:event_id>/',
          operator.event, name='operator_event'),
     path(f'{prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events/<int:event_id>/take/',
@@ -118,6 +120,8 @@ urlpatterns = [
     # manager
     path(f'{prefix}/{manager_prefix}/',
          manager.dashboard, name='manager_dashboard'),
+    path(f'{prefix}/{manager_prefix}/export/',
+         manager.export, name='manager_export'),
     path(f'{prefix}/{manager_prefix}/<str:structure_slug>/events/',
          manager.events, name='manager_events'),
     path(f'{prefix}/{manager_prefix}/<str:structure_slug>/events/new/',
@@ -156,14 +160,19 @@ urlpatterns = [
          api_generic.PublicEngagementApprovedEventDetail.as_view(), name='api_generic_approved_event'),
     path(f'{prefix}/{api_prefix}/{user_prefix}/events/',
          api_user.PublicEngagementEventList.as_view(), name='api_user_events'),
+    # operator
     path(f'{prefix}/{api_prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events/',
          api_evaluation_operator.PublicEngagementEventList.as_view(), name='api_evaluation_operator_events'),
+    # patronage
     path(f'{prefix}/{api_prefix}/{operator_prefix}/{patronage_prefix}/<str:structure_slug>/events/',
          api_patronage_operator.PublicEngagementEventList.as_view(), name='api_patronage_operator_events'),
+    # manager
     path(f'{prefix}/{api_prefix}/{manager_prefix}/<str:structure_slug>/events/',
          api_manager.PublicEngagementEventList.as_view(), name='api_manager_events'),
+    # involved personnel
     path(f'{prefix}/{api_prefix}/{involved_personnel_prefix}/events/',
          api_involved_personnel.PublicEngagementEventList.as_view(), name='api_involved_personnel_events'),
+    # involved structures
     path(f'{prefix}/{api_prefix}/{operator_prefix}/{involved_structures_prefix}/<str:structure_slug>/events/',
          api_involved_structures.PublicEngagementEventList.as_view(), name='api_involved_structures_events'),
 ]

@@ -476,3 +476,58 @@ def event_reopen_evaluation(request, structure_slug, event_id, structure=None):
     return redirect("pe_management:operator_event",
                     structure_slug=structure_slug,
                     event_id=event_id)
+
+
+@login_required
+@is_structure_evaluation_operator
+def export(request, structure_slug, structure=None):
+    template = 'export.html'
+    breadcrumbs = {
+        reverse('pe_management:dashboard'): _('Home'),
+        reverse('pe_management:operator_dashboard'): _('Structure operator'),
+        reverse('pe_management:operator_events', kwargs={'structure_slug': structure_slug}): structure.name,
+        '#': _('Export')
+    }
+
+    if request.method == 'POST':
+        year = request.POST.get('year', timezone.localtime().year)
+        if not year:
+            messages.add_message(request, messages.ERROR, _('Year is mandatory'))
+            return render(
+                request, template,
+                {'breadcrumbs': breadcrumbs}
+            )
+
+        events = PublicEngagementEvent.objects\
+            .select_related('referent', 'structure')\
+            .select_related('data__method_of_execution')\
+            .prefetch_related('data', 'report')\
+            .prefetch_related(
+                'data__involved_personnel',
+                'data__involved_structure',
+                'data__recipient',
+                'data__target',
+                'data__promo_channel',
+                'data__promo_tool',
+                'data__promo_tool',
+            )\
+            .prefetch_related(
+                'report__scientific_area',
+                'report__collaborator_type',
+            )\
+            .filter(structure__slug=structure_slug,
+                    structure__is_active=True,
+                    start__year=year)\
+            .order_by('start', 'title')
+
+        if not events.exists():
+            messages.add_message(request, messages.ERROR, _('No results'))
+            return render(
+                request, template,
+                {'breadcrumbs': breadcrumbs}
+            )
+
+        response = export_csv(events, f"{structure_slug}_{year}")
+        return response
+
+    return render(request, template, {'breadcrumbs': breadcrumbs, 'structure_slug': structure_slug})

@@ -7,6 +7,13 @@
 {% block top_content %}
 <h2>{% trans "Events" %}</h2>
 <h3 style="font-weight: lighter">{{ structure_slug|upper }}</h3>
+<div class="text-end mt-3">
+    <a href="{% url 'pe_management:operator_export' structure_slug=structure_slug %}" class="btn btn-outline-info text-lg-end">
+        <svg class="icon icon-sm icon-info">
+            <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
+        </svg> {% trans "Export" %}
+    </a>
+</div>
 {% endblock top_content %}
 
 {% block custom_filters %}

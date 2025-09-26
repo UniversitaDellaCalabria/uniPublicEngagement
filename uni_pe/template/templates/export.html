@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load generic_tags %}
+
+
+{% block top_content %}
+<h2>{% trans "Export" %} DB</h2>
+{% endblock top_content %}
+
+{% block page_content %}
+<form method="post">
+    <div class="row">
+        <div class="col-12 mt-4">
+            <div class="select-wrapper">
+                <label for="year">{% trans "Year" %}</label>
+                <select id="year" name="year">
+                    {% year_list as year_list %}
+                    {% for year in year_list %}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <input class="btn btn-success"
+                   type="submit"
+                   id="submitForm"
+                   value="{% trans 'Download' %}">
+            </div>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
+{% endblock page_content %}

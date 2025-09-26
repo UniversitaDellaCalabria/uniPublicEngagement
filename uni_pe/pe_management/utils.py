@@ -1,14 +1,17 @@
+import csv
 import requests
 
 from django.conf import settings
 # from django.core.mail import send_mail
 from django.core.mail import EmailMessage
+from django.http import HttpResponse
 from django.utils import timezone
 
 from organizational_area.models import *
 from organizational_area.utils import user_in_office
 
 from template.settings import MSG_HEADER, MSG_FOOTER
+from . models import *
 from . settings import *
 
 
@@ -116,3 +119,133 @@ def send_email_to_promoters(channel, title, start, end, description, structure, 
                 body=body,
                 attachment=poster,
                 recipients=recipients)
+
+
+def export_csv(events, file_name):
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={'Content-Disposition': f'attachment; filename="{file_name}.csv"'},
+    )
+
+    writer = csv.writer(response)
+
+    # header
+    header = [
+        PublicEngagementEvent._meta.get_field("id").verbose_name,
+        PublicEngagementEvent._meta.get_field("created").verbose_name,
+        PublicEngagementEvent._meta.get_field("modified").verbose_name,
+        PublicEngagementEvent._meta.get_field("start").verbose_name,
+        PublicEngagementEvent._meta.get_field("end").verbose_name,
+        PublicEngagementEvent._meta.get_field("title").verbose_name,
+        PublicEngagementEvent._meta.get_field("referent").verbose_name,
+        PublicEngagementEvent._meta.get_field("structure").verbose_name,
+        PublicEngagementEvent._meta.get_field("evaluation_request_date").verbose_name,
+        PublicEngagementEvent._meta.get_field("evaluation_request_by").verbose_name,
+        PublicEngagementEvent._meta.get_field("operator_taken_date").verbose_name,
+        PublicEngagementEvent._meta.get_field("operator_taken_by").verbose_name,
+        PublicEngagementEvent._meta.get_field("operator_evaluation_date").verbose_name,
+        PublicEngagementEvent._meta.get_field("operator_evaluation_success").verbose_name,
+        PublicEngagementEvent._meta.get_field("operator_evaluated_by").verbose_name,
+        PublicEngagementEvent._meta.get_field("operator_notes").verbose_name,
+        PublicEngagementEvent._meta.get_field("patronage_operator_taken_date").verbose_name,
+        PublicEngagementEvent._meta.get_field("patronage_operator_taken_by").verbose_name,
+        PublicEngagementEvent._meta.get_field("patronage_granted").verbose_name,
+        PublicEngagementEvent._meta.get_field("patronage_granted_date").verbose_name,
+        PublicEngagementEvent._meta.get_field("patronage_granted_by").verbose_name,
+        PublicEngagementEvent._meta.get_field("patronage_granted_notes").verbose_name,
+        PublicEngagementEvent._meta.get_field("created_by_manager").verbose_name,
+        PublicEngagementEvent._meta.get_field("edited_by_manager").verbose_name,
+        PublicEngagementEvent._meta.get_field("is_active").verbose_name,
+        PublicEngagementEvent._meta.get_field("disabled_notes").verbose_name,
+        # data
+        PublicEngagementEventData._meta.get_field("event_type").verbose_name,
+        PublicEngagementEventData._meta.get_field("description").verbose_name,
+        PublicEngagementEventData._meta.get_field("involved_personnel").verbose_name,
+        PublicEngagementEventData._meta.get_field("involved_structure").verbose_name,
+        PublicEngagementEventData._meta.get_field("project_name").verbose_name,
+        PublicEngagementEventData._meta.get_field("recipient").verbose_name,
+        PublicEngagementEventData._meta.get_field("other_recipients").verbose_name,
+        PublicEngagementEventData._meta.get_field("target").verbose_name,
+        PublicEngagementEventData._meta.get_field("method_of_execution").verbose_name,
+        PublicEngagementEventData._meta.get_field("geographical_dimension").verbose_name,
+        PublicEngagementEventData._meta.get_field("organizing_subject").verbose_name,
+        PublicEngagementEventData._meta.get_field("promo_channel").verbose_name,
+        PublicEngagementEventData._meta.get_field("patronage_requested").verbose_name,
+        PublicEngagementEventData._meta.get_field("promo_tool").verbose_name,
+        # report
+        PublicEngagementEventReport._meta.get_field("participants").verbose_name,
+        PublicEngagementEventReport._meta.get_field("budget").verbose_name,
+        PublicEngagementEventReport._meta.get_field("monitoring_activity").verbose_name,
+        PublicEngagementEventReport._meta.get_field("impact_evaluation").verbose_name,
+        PublicEngagementEventReport._meta.get_field("scientific_area").verbose_name,
+        PublicEngagementEventReport._meta.get_field("collaborator_type").verbose_name,
+        PublicEngagementEventReport._meta.get_field("website").verbose_name,
+        PublicEngagementEventReport._meta.get_field("notes").verbose_name,
+        PublicEngagementEventReport._meta.get_field("edited_by_manager").verbose_name,
+    ]
+
+    writer.writerow(header)
+
+    for event in events:
+        data = [
+            event.pk,
+            timezone.localtime(event.created),
+            timezone.localtime(event.modified),
+            timezone.localtime(event.start),
+            timezone.localtime(event.end),
+            event.title,
+            event.referent,
+            event.structure,
+            timezone.localtime(event.evaluation_request_date),
+            event.evaluation_request_by,
+            timezone.localtime(event.operator_taken_date),
+            event.operator_taken_by,
+            timezone.localtime(event.operator_evaluation_date),
+            event.operator_evaluation_success,
+            event.operator_evaluated_by,
+            event.operator_notes,
+            timezone.localtime(event.patronage_operator_taken_date),
+            event.patronage_operator_taken_by,
+            event.patronage_granted,
+            timezone.localtime(event.patronage_granted_date),
+            event.patronage_granted_by,
+            event.patronage_granted_notes,
+            event.created_by_manager,
+            event.edited_by_manager,
+            event.is_active,
+            event.disabled_notes,
+        ]
+
+        if hasattr(event, 'data'):
+            data.extend([
+                event.data.event_type,
+                event.data.description,
+                ", ".join(str(p) for p in event.data.involved_personnel.all()),
+                ", ".join(str(s) for s in event.data.involved_structure.all()),
+                event.data.project_name,
+                ", ".join(event.data.recipient.values_list("description", flat=True)),
+                event.data.other_recipients,
+                ", ".join(event.data.target.values_list("description", flat=True)),
+                event.data.method_of_execution.description,
+                event.data.geographical_dimension,
+                event.data.organizing_subject,
+                ", ".join(event.data.promo_channel.values_list("description", flat=True)),
+                event.data.patronage_requested,
+                ", ".join(event.data.promo_tool.values_list("description", flat=True)),
+            ])
+
+        if hasattr(event, 'report'):
+            data.extend([
+                event.report.participants,
+                event.report.budget,
+                event.report.monitoring_activity,
+                event.report.impact_evaluation,
+                ", ".join(event.report.scientific_area.values_list("description", flat=True)),
+                ", ".join(event.report.collaborator_type.values_list("description", flat=True)),
+                event.report.website,
+                event.report.notes,
+                event.report.edited_by_manager,
+            ])
+
+        writer.writerow(data)
+    return response

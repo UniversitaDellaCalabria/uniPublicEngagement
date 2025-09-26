@@ -12,6 +12,13 @@
 {% endblock top_content %}
 
 {% block clean_content %}
+<div class="text-end mt-3">
+    <a href="{% url 'pe_management:manager_export' %}" class="btn btn-outline-info text-lg-end">
+        <svg class="icon icon-sm icon-info">
+            <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
+        </svg> {% trans "Export" %}
+    </a>
+</div>
 <div class="row mt-5" id="structures-grid">
     <div class="form-group">
         <input type="text" id="structuresFilter" placeholder="{% trans 'Filter by keyword...' %}" style="background: none">
