@@ -562,7 +562,11 @@ def export(request):
             .order_by('start', 'title')
 
         if not events.exists():
-            messages.add_message(request, messages.ERROR, _('No results'))
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "{} {}".format(_('No results for year'), year)
+            )
             return render(
                 request, template,
                 {'breadcrumbs': breadcrumbs}

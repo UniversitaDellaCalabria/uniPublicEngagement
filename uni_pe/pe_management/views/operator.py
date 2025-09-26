@@ -495,7 +495,7 @@ def export(request, structure_slug, structure=None):
             messages.add_message(request, messages.ERROR, _('Year is mandatory'))
             return render(
                 request, template,
-                {'breadcrumbs': breadcrumbs}
+                {'breadcrumbs': breadcrumbs, 'structure_slug': structure_slug}
             )
 
         events = PublicEngagementEvent.objects\
@@ -521,10 +521,14 @@ def export(request, structure_slug, structure=None):
             .order_by('start', 'title')
 
         if not events.exists():
-            messages.add_message(request, messages.ERROR, _('No results'))
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "{} {}".format(_('No results for year'), year)
+            )
             return render(
                 request, template,
-                {'breadcrumbs': breadcrumbs}
+                {'breadcrumbs': breadcrumbs, 'structure_slug': structure_slug}
             )
 
         response = export_csv(events, f"{structure_slug}_{year}")
