@@ -6,6 +6,7 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from organizational_area.models import *
 from organizational_area.utils import user_in_office
@@ -155,7 +156,8 @@ def export_csv(events, file_name):
         PublicEngagementEvent._meta.get_field("patronage_granted_notes").verbose_name,
         PublicEngagementEvent._meta.get_field("created_by_manager").verbose_name,
         PublicEngagementEvent._meta.get_field("edited_by_manager").verbose_name,
-        PublicEngagementEvent._meta.get_field("is_active").verbose_name,
+        # PublicEngagementEvent._meta.get_field("is_active").verbose_name,
+        _("Not eligible"),
         PublicEngagementEvent._meta.get_field("disabled_notes").verbose_name,
         # data
         PublicEngagementEventData._meta.get_field("event_type").verbose_name,
@@ -187,6 +189,20 @@ def export_csv(events, file_name):
     writer.writerow(header)
 
     for event in events:
+
+        evaluation_request_date = timezone.localtime(event.evaluation_request_date) if event.evaluation_request_date else ""
+        operator_taken_date = timezone.localtime(event.operator_taken_date) if event.operator_taken_date else ""
+        operator_evaluation_date = timezone.localtime(event.operator_evaluation_date) if event.operator_evaluation_date else ""
+        operator_evaluation_success = _("Yes") if event.operator_evaluation_success else _("No")
+        operator_evaluation_success = operator_evaluation_success if operator_evaluation_date else ""
+        patronage_operator_taken_date = timezone.localtime(event.patronage_operator_taken_date) if event.patronage_operator_taken_date else ""
+        patronage_granted_date = timezone.localtime(event.patronage_granted_date) if event.patronage_granted_date else ""
+        patronage_granted = _("Yes") if event.patronage_granted else _("No")
+        patronage_granted = patronage_granted if patronage_granted_date else ""
+        created_by_manager = _("Yes") if event.created_by_manager else _("No")
+        edited_by_manager = _("Yes") if event.edited_by_manager else _("No")
+        is_active = _("Not eligible") if not event.is_active else ""
+
         data = [
             event.pk,
             timezone.localtime(event.created),
@@ -196,27 +212,29 @@ def export_csv(events, file_name):
             event.title,
             event.referent,
             event.structure,
-            timezone.localtime(event.evaluation_request_date) if event.evaluation_request_date else "",
+            evaluation_request_date,
             event.evaluation_request_by,
-            timezone.localtime(event.operator_taken_date) if event.operator_taken_date else "",
+            operator_taken_date,
             event.operator_taken_by,
-            timezone.localtime(event.operator_evaluation_date) if event.operator_evaluation_date else "",
-            event.operator_evaluation_success,
+            operator_evaluation_date,
+            operator_evaluation_success,
             event.operator_evaluated_by,
             event.operator_notes,
-            timezone.localtime(event.patronage_operator_taken_date) if event.patronage_operator_taken_date else "",
+            patronage_operator_taken_date,
             event.patronage_operator_taken_by,
-            event.patronage_granted,
-            timezone.localtime(event.patronage_granted_date) if event.patronage_granted_date else "",
+            patronage_granted,
+            patronage_granted_date,
             event.patronage_granted_by,
             event.patronage_granted_notes,
-            event.created_by_manager,
-            event.edited_by_manager,
-            event.is_active,
+            created_by_manager,
+            edited_by_manager,
+            is_active,
             event.disabled_notes,
         ]
 
         if hasattr(event, 'data'):
+            patronage_requested = _("Yes") if event.data.patronage_requested else _("No")
+
             data.extend([
                 event.data.event_type,
                 event.data.description,
@@ -230,16 +248,19 @@ def export_csv(events, file_name):
                 event.data.geographical_dimension,
                 event.data.organizing_subject,
                 ", ".join(event.data.promo_channel.values_list("description", flat=True)),
-                event.data.patronage_requested,
+                patronage_requested,
                 ", ".join(event.data.promo_tool.values_list("description", flat=True)),
             ])
 
         if hasattr(event, 'report'):
+            monitoring_activity = _("Yes") if event.report.monitoring_activity else _("No")
+            impact_evaluation = _("Yes") if event.report.impact_evaluation else _("No")
+
             data.extend([
                 event.report.participants,
                 event.report.budget,
-                event.report.monitoring_activity,
-                event.report.impact_evaluation,
+                monitoring_activity,
+                impact_evaluation,
                 ", ".join(event.report.scientific_area.values_list("description", flat=True)),
                 ", ".join(event.report.collaborator_type.values_list("description", flat=True)),
                 event.report.website,
@@ -248,4 +269,5 @@ def export_csv(events, file_name):
             ])
 
         writer.writerow(data)
+
     return response
