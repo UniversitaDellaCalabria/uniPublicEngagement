@@ -25,4 +25,9 @@ class PublicEngagementEventList(PublicEngagementEventList):
                     # ~ is_active=True,
                     operator_evaluation_date__isnull=False)
                     # ~ operator_evaluation_success=True)
+
+        not_eligible = self.request.query_params.get('not_eligible')
+        if not_eligible=='true':
+            events = events.filter(is_active=False)
+
         return events

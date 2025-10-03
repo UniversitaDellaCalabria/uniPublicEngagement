@@ -32,4 +32,9 @@ class PublicEngagementEventList(PublicEngagementEventList):
         elif status=='rejected':
             events = events.filter(operator_evaluation_success=False,
                                    operator_evaluation_date__isnull=False)
+
+        not_eligible = self.request.query_params.get('not_eligible')
+        if not_eligible=='true':
+            events = events.filter(is_active=False)
+
         return events

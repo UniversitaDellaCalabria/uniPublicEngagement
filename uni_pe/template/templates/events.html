@@ -75,13 +75,13 @@
 
                 <div class="row mt-4">
                     <div class="col-12 mt-4 mt-lg-0">
-                        <fieldset>
+                        <fieldset style="font-size: small">
                             {% block custom_filters %}
                             <div class="form-check form-check-inline">
                                 <div class="toggles">
                                   <label for="toggle1">
-                                    {% trans "Approved (plural)" %}
-                                    <input v-model="filter_evaluation_ok" type="checkbox" id="toggle1" @change="evaluation_ok($event.target.checked)">
+                                    {% trans "Draft" %}
+                                    <input v-model="filter_draft" type="checkbox" id="toggle1" @change="draft($event.target.checked)">
                                     <span class="lever"></span>
                                   </label>
                                 </div>
@@ -89,8 +89,44 @@
                             <div class="form-check form-check-inline">
                                 <div class="toggles">
                                   <label for="toggle2">
+                                    {% trans "To be handled" %}
+                                    <input v-model="filter_to_handle" type="checkbox" id="toggle2" @change="to_take($event.target.checked)">
+                                    <span class="lever"></span>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <div class="toggles">
+                                  <label for="toggle3">
+                                    {% trans "To evaluate" %}
+                                    <input v-model="filter_to_evaluate" type="checkbox" id="toggle3" @change="to_evaluate($event.target.checked)">
+                                    <span class="lever"></span>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <div class="toggles">
+                                  <label for="toggle4">
+                                    {% trans "Approved (plural)" %}
+                                    <input v-model="filter_evaluation_ok" type="checkbox" id="toggle4" @change="evaluation_ok($event.target.checked)">
+                                    <span class="lever"></span>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <div class="toggles">
+                                  <label for="toggle5">
                                     {% trans "Rejected (plural)" %}
-                                    <input v-model="filter_evaluation_ko" type="checkbox" id="toggle2" @change="evaluation_ko($event.target.checked)">
+                                    <input v-model="filter_evaluation_ko" type="checkbox" id="toggle5" @change="evaluation_ko($event.target.checked)">
+                                    <span class="lever"></span>
+                                  </label>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <div class="toggles">
+                                  <label for="toggle6">
+                                    {% trans "Loaded by manager (plural)" %}
+                                    <input v-model="filter_created_by_manager" type="checkbox" id="toggle6" @change="created_by_manager($event.target.checked)">
                                     <span class="lever"></span>
                                   </label>
                                 </div>
@@ -98,9 +134,9 @@
                             {% endblock custom_filters %}
                             <div class="form-check form-check-inline">
                                 <div class="toggles">
-                                  <label for="toggle3">
+                                  <label for="toggle7">
                                     {% trans "Not eligible (plural)" %}
-                                    <input v-model="filter_not_eligible" type="checkbox" id="toggle3" @change="not_eligible($event.target.checked)">
+                                    <input v-model="filter_not_eligible" type="checkbox" id="toggle7" @change="not_eligible($event.target.checked)">
                                     <span class="lever"></span>
                                   </label>
                                 </div>
@@ -257,20 +293,30 @@ const app = Vue.createApp({
             additional_url_params: '',
             controller: null,
             year: null,
-            filter_not_eligible: false,
             {% block extra_vue_data %}
             filter_draft: false,
             filter_to_handle: false,
             filter_to_evaluate: false,
             filter_evaluation_ok: false,
             filter_evaluation_ko: false,
+            filter_created_by_manager: false,
             {% endblock extra_vue_data %}
+            filter_not_eligible: false,
         }
     },
     mounted () {
         this.getData()
     },
     methods: {
+        reset_filters(){
+            this.filter_draft = false
+            this.filter_to_handle = false
+            this.filter_to_evaluate = false
+            this.filter_evaluation_ok = false
+            this.filter_evaluation_ko = false
+            //~ this.filter_not_eligible = false
+            this.filter_created_by_manager = false
+        },
         filter_by_year(value) {
             this.year = value
             this.getData(page=1)
@@ -311,72 +357,70 @@ const app = Vue.createApp({
                     }
                 })
         },
-        not_eligible(value) {
-            if (value) {
-                this.additional_url_params = '&not_eligible=true'
-            }
-            else this.additional_url_params = ''
-            this.getData(page=1)
-        },
         {% block extra_vue_methods %}
         to_take(value) {
             if (value) {
-                this.additional_url_params = '&status=to_handle'
-                this.filter_draft = false
+                this.additional_url_params += '&status=to_handle'
+                this.reset_filters()
                 this.filter_to_handle = true
-                this.filter_to_evaluate = false
-                this.filter_evaluation_ok = false
-                this.filter_evaluation_ko = false
             }
-            else this.additional_url_params = ''
+            else this.additional_url_params += '&status='
             this.getData(page=1)
         },
         to_evaluate(value) {
             if (value) {
-                this.additional_url_params = '&status=to_evaluate'
-                this.filter_draft = false
-                this.filter_to_handle = false
+                this.additional_url_params += '&status=to_evaluate'
+                this.reset_filters()
                 this.filter_to_evaluate = true
-                this.filter_evaluation_ok = false
-                this.filter_evaluation_ko = false
             }
-            else this.additional_url_params = ''
+            else this.additional_url_params += '&status='
             this.getData(page=1)
         },
         evaluation_ok(value) {
             if (value) {
-                this.additional_url_params = '&status=approved'
-                this.filter_draft = false
-                this.filter_to_handle = false
-                this.filter_to_evaluate = false
+                this.additional_url_params += '&status=approved'
+                this.reset_filters()
                 this.filter_evaluation_ok = true
-                this.filter_evaluation_ko = false
             }
-            else this.additional_url_params = ''
+            else this.additional_url_params += '&status='
             this.getData(page=1)
         },
         evaluation_ko(value) {
             if (value) {
-                this.additional_url_params = '&status=rejected'
-                this.filter_draft = false
-                this.filter_to_handle = false
-                this.filter_to_evaluate = false
-                this.filter_evaluation_ok = false
+                this.additional_url_params += '&status=rejected'
+                this.reset_filters()
                 this.filter_evaluation_ko = true
             }
-            else this.additional_url_params = ''
+            else this.additional_url_params += '&status='
             this.getData(page=1)
         },
         draft(value) {
             if (value) {
-                this.additional_url_params = '&status=draft'
+                this.additional_url_params += '&status=draft'
+                this.reset_filters()
                 this.filter_draft = true
-                this.filter_to_handle = false
-                this.filter_to_evaluate = false
-                this.filter_evaluation_ok = false
-                this.filter_evaluation_ko = false
             }
-            else this.additional_url_params = ''
+            else this.additional_url_params += '&status='
+            this.getData(page=1)
+        },
+        created_by_manager(value) {
+            if (value) {
+                this.additional_url_params += '&status=created_by_manager'
+                this.reset_filters()
+                this.filter_created_by_manager = true
+            }
+            else this.additional_url_params += '&status='
+            this.getData()
+        },
+        not_eligible(value) {
+            if (value) {
+                this.additional_url_params += '&not_eligible=true'
+                this.filter_not_eligible = true
+            }
+            else {
+                this.additional_url_params += '&not_eligible=false'
+                this.filter_not_eligible = false
+            }
             this.getData(page=1)
         },
         {% endblock extra_vue_methods %}
