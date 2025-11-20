@@ -1,0 +1,56 @@
+<div id="app_events_methods_of_execution">
+    <div id="chart_events_methods_of_execution"></div>
+</div>
+
+<script>
+var options_events_methods_of_execution = {
+          series: [],
+          chart: {
+          width: "100%",
+          type: 'pie',
+        },
+        labels: [],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+const app_events_methods_of_execution = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data () {},
+    mounted () {
+        this.getCounters()
+    },
+    methods: {
+        myFunction(item) {
+            options_events_methods_of_execution.labels.push(item.method_of_execution__description)
+            options_events_methods_of_execution.series.push(item.num_iniziative)
+        },
+        getCounters() {
+            axios
+                .get("{{ api_url }}")
+                .then(response => {
+                    this.error_msg = ""
+                    this.error_status = null
+                    response.data.forEach(this.myFunction)
+                    var chart = new ApexCharts(document.querySelector("#chart_events_methods_of_execution"), options_events_methods_of_execution)
+                    chart.render()
+                })
+                .catch(error => {
+                    if(error) {
+                        this.error_msg = error.response.data.detail
+                        this.error_status = error.response.status
+                    }
+                })
+        },
+    }
+}).mount('#app_events_methods_of_execution')
+</script>

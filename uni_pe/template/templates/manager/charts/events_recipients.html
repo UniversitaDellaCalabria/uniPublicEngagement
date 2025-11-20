@@ -1,0 +1,78 @@
+<div id="app_events_recipients">
+    <div id="chart_events_recipients"></div>
+</div>
+
+<script>
+var options_events_recipients = {
+          series: [
+          {
+            data: [],
+          },
+        ],
+          chart: {
+          type: 'bar',
+          height: 350,
+          dropShadow: {
+            enabled: true,
+          },
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 0,
+            horizontal: true,
+            barHeight: '80%',
+            isFunnel: true,
+          },
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val, opt) {
+            return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
+          },
+          dropShadow: {
+            enabled: true,
+          },
+        },
+        title: {
+          text: '',
+          align: 'middle',
+        },
+        xaxis: {
+          categories: [],
+        },
+        legend: {
+          show: false,
+        },
+        };
+
+const app_events_recipients = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data () {},
+    mounted () {
+        this.getCounters()
+    },
+    methods: {
+        myFunction(item) {
+            options_events_recipients.xaxis.categories.push(item.recipient__description)
+            options_events_recipients.series[0].data.push(item.num_iniziative)
+        },
+        getCounters() {
+            axios
+                .get("{{ api_url }}")
+                .then(response => {
+                    this.error_msg = ""
+                    this.error_status = null
+                    response.data.forEach(this.myFunction)
+                    var chart = new ApexCharts(document.querySelector("#chart_events_recipients"), options_events_recipients)
+                    chart.render()
+                })
+                .catch(error => {
+                    if(error) {
+                        this.error_msg = error.response.data.detail
+                        this.error_status = error.response.status
+                    }
+                })
+        },
+    }
+}).mount('#app_events_recipients')
+</script>

@@ -6,124 +6,83 @@
 
 
 {% block top_content %}
-<h2>{% trans "Structures" %}</h2>
-<p>{% trans "Choose the structure to manage" %}</p>
-<small>{% trans "The counters only take charge of the events for which the monitoring year is still active" %}.</small>
+<h2>{% trans "Dashboard" %}</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
 {% endblock top_content %}
 
 {% block clean_content %}
-<div class="text-end mt-3">
-    <a href="{% url 'pe_management:manager_export' %}" class="btn btn-outline-info text-lg-end">
-        <svg class="icon icon-sm icon-info">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
-        </svg> {% trans "Export" %}
-    </a>
-</div>
-<div class="row mt-5" id="structures-grid">
-    <div class="form-group">
-        <input type="text" id="structuresFilter" placeholder="{% trans 'Filter by keyword...' %}" style="background: none">
-        <span class="autocomplete-icon" style="background: none">
-            <svg class="icon icon-sm">
-                <use xlink:href="{% static 'svg/sprites.svg' %}#it-search"></use>
-            </svg>
-        </span>
-    </div>
-    {% for structure in structures %}
-    <div class="col-12 col-lg-4 structure-box">
-        <!--start card-->
+
+<div class="row">
+    <div class="col-12 col-lg-6">
         <div class="card-wrapper card-space">
             <div class="card card-bg">
                 <div class="card-body">
-                    {% filter_events_per_structure_id event_counts structure.pk as structure_events %}
-                    <h5 class="card-title">
-                        {{ structure }}
-                    </h5>
-                    <hr>
-                    <p>
-                        <small>
-                            <b>{% trans "Active monitoring" %}</b>
-                            <br>
-                            {% trans "Approved (plural)"%}:
-                            {% if structure_events.0.approved_count  %}
-                            <span class="badge bg-success">{{ structure_events.0.approved_count }}</span>
-                            {% else %}
-                            <span class="badge bg-info">0</span>
-                            {% endif %}
-                            <br>
-                            {% trans "Loaded by manager (plural)" %}:
-                            {% if structure_events.0.created_by_manager_count %}
-                            <span class="badge bg-info">{{ structure_events.0.created_by_manager_count }}</span>
-                            {% else %}
-                            <span class="badge bg-info">0</span>
-                            {% endif %}
-                            <br>
-                            {% trans "All states" %}:
-                            {% if structure_events.0.number_count %}
-                            <span class="badge bg-info">{{ structure_events.0.number_count }}</span>
-                            {% else %}
-                            <span class="badge bg-info">0</span>
-                            {% endif %}
-                        </small>
-                        <hr>
-                        <small>
-                            <b>{% trans "Total (plural)" %}</b>
-                            <br>
-                            {% trans "Approved (plural)" %}:
-                            {% if structure_events.0.total_approved_count  %}
-                            <span class="badge bg-success">{{ structure_events.0.total_approved_count }}</span>
-                            {% else %}
-                            <span class="badge bg-info">0</span>
-                            {% endif %}
-                            <br>
-                            {% trans "Loaded by manager (plural)" %}:
-                            {% if structure_events.0.total_created_by_manager_count %}
-                            <span class="badge bg-info">{{ structure_events.0.total_created_by_manager_count }}</span>
-                            {% else %}
-                            <span class="badge bg-info">0</span>
-                            {% endif %}
-                            <br>
-                            {% trans "All states" %}:
-                            {% if structure_events.0.total_number_count %}
-                            <span class="badge bg-info">{{ structure_events.0.total_number_count }}</span>
-                            {% else %}
-                            <span class="badge bg-info">0</span>
-                            {% endif %}
-                        </small>
-                    </p>
-                    <hr>
-                    <a class="read-more" href="{% url 'pe_management:manager_events' structure_slug=structure.slug %}">
-                        <span class="text text-primary">{% trans "Manage" %}</span>
-                        <svg class="icon">
-                            <use href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
-                        </svg>
-                    </a>
+                    <p class="card-title h5">Lorem ipsum</p>
+                    {% url 'pe_management:api_manager_structure_counters' as structure_counters_url %}
+                    {% include "manager/charts/structure_counters.html" with api_url=structure_counters_url %}
                 </div>
             </div>
         </div>
-        <!--end card-->
     </div>
-    {% endfor %}
+    <div class="col-12 col-lg-6">
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <p class="card-title h5">Lorem ipsum</p>
+                    {% url 'pe_management:api_manager_main_projects' as main_projects_url %}
+                    {% include "manager/charts/main_projects.html" with api_url=main_projects_url %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <p class="card-title h5">Lorem ipsum</p>
+                    {% url 'pe_management:api_manager_events_types' as events_types_url %}
+                    {% include "manager/charts/events_types.html" with api_url=events_types_url %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <p class="card-title h5">Lorem ipsum</p>
+                    {% url 'pe_management:api_manager_events_recipients' as events_recipients_url %}
+                    {% include "manager/charts/events_recipients.html" with api_url=events_recipients_url %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <p class="card-title h5">Lorem ipsum</p>
+                    {% url 'pe_management:api_manager_events_targets' as events_targets_url %}
+                    {% include "manager/charts/events_targets.html" with api_url=events_targets_url %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card-wrapper card-space">
+            <div class="card card-bg">
+                <div class="card-body">
+                    <p class="card-title h5">Lorem ipsum</p>
+                    {% url 'pe_management:api_manager_events_methods_of_execution' as events_methods_of_execution_url %}
+                    {% include "manager/charts/events_methods_of_execution.html" with api_url=events_methods_of_execution_url %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock clean_content %}
-
-{% block extra_scripts %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const structuresFilterInput = document.getElementById('structuresFilter');
-    const structuresGrid = document.getElementById('structures-grid');
-
-    if (structuresFilterInput && structuresGrid) {
-        structuresFilterInput.addEventListener('keyup', function() {
-            const value = this.value.toLowerCase();
-            const structureBoxes = structuresGrid.querySelectorAll('.structure-box');
-
-            structureBoxes.forEach(function(box) {
-                const text = box.textContent.toLowerCase();
-                box.style.display = text.indexOf(value) > -1 ? '' : 'none';
-            });
-        });
-    }
-});
-</script>
-{% endblock extra_scripts %}
-

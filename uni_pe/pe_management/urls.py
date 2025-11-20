@@ -120,6 +120,8 @@ urlpatterns = [
     # manager
     path(f'{prefix}/{manager_prefix}/',
          manager.dashboard, name='manager_dashboard'),
+    path(f'{prefix}/{manager_prefix}/',
+         manager.dashboard_structures, name='manager_dashboard_structures'),
     path(f'{prefix}/{manager_prefix}/export/',
          manager.export, name='manager_export'),
     path(f'{prefix}/{manager_prefix}/<str:structure_slug>/events/',
@@ -169,6 +171,18 @@ urlpatterns = [
     # manager
     path(f'{prefix}/{api_prefix}/{manager_prefix}/<str:structure_slug>/events/',
          api_manager.PublicEngagementEventList.as_view(), name='api_manager_events'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/structure-counters/',
+         api_manager.PublicEngagementEventStructureCounterList.as_view(), name='api_manager_structure_counters'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-types/',
+         api_manager.PublicEngagementEventTypesList.as_view(), name='api_manager_events_types'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/main-projects/',
+         api_manager.PublicEngagementMainProjectsList.as_view(), name='api_manager_main_projects'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-recipients/',
+         api_manager.PublicEngagementEventsRecipientsList.as_view(), name='api_manager_events_recipients'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-targets/',
+         api_manager.PublicEngagementEventsTargetsList.as_view(), name='api_manager_events_targets'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-methods-of-execution/',
+         api_manager.PublicEngagementEventsMethodsOfExecutionList.as_view(), name='api_manager_events_methods_of_execution'),
     # involved personnel
     path(f'{prefix}/{api_prefix}/{involved_personnel_prefix}/events/',
          api_involved_personnel.PublicEngagementEventList.as_view(), name='api_involved_personnel_events'),

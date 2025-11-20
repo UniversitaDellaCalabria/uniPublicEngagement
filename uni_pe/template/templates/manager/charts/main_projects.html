@@ -1,0 +1,50 @@
+<div id="app_main_projects">
+    <div id="chart_main_projects"></div>
+</div>
+
+<script>
+var options_main_projects = {
+    series: [
+        {data: []}
+    ],
+    legend: {
+        show: false
+    },
+    chart: {
+        height: "auto",
+        type: 'treemap'
+    },
+    title: {
+        text: ''}
+    };
+
+const app_main_projects = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data () {},
+    mounted () {
+        this.getCounters()
+    },
+    methods: {
+        myFunction(item) {
+            options_main_projects.series[0].data.push({'x': item.project_name__title, 'y': item.num_iniziative})
+        },
+        getCounters() {
+            axios
+                .get("{{ api_url }}")
+                .then(response => {
+                    this.error_msg = ""
+                    this.error_status = null
+                    response.data.forEach(this.myFunction)
+                    var chart = new ApexCharts(document.querySelector("#chart_main_projects"), options_main_projects)
+                    chart.render()
+                })
+                .catch(error => {
+                    if(error) {
+                        this.error_msg = error.response.data.detail
+                        this.error_status = error.response.status
+                    }
+                })
+        },
+    }
+}).mount('#app_main_projects')
+</script>

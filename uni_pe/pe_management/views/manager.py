@@ -33,6 +33,17 @@ def dashboard(request, structure=None):
     breadcrumbs = {
                    reverse('pe_management:dashboard'): _('Home'),
                    '#': _('Manager')}
+    return render(request, template, {'breadcrumbs': breadcrumbs})
+
+
+@login_required
+@is_manager
+def dashboard_structures(request, structure=None):
+    template = 'manager/dashboard_structures.html'
+    breadcrumbs = {
+                   reverse('pe_management:dashboard'): _('Home'),
+                   reverse('pe_management:dashboard'): _('Manager'),
+                   '#': _('Structures'),}
     structures = OrganizationalStructure.objects.filter(is_active=True)
     active_years = PublicEngagementAnnualMonitoring.objects\
                                                    .filter(is_active=True)\

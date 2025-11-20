@@ -1,0 +1,105 @@
+<div id="app_events_targets">
+    <div id="chart_events_targets"></div>
+</div>
+
+<script>
+var options_events_targets = {
+          series: [{data: []}],
+          chart: {
+          type: 'bar',
+          height: "auto"
+        },
+        plotOptions: {
+          bar: {
+            barHeight: '100%',
+            distributed: true,
+            horizontal: true,
+            dataLabels: {
+              position: 'bottom'
+            },
+          }
+        },
+        colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+          '#f48024', '#69d2e7'
+        ],
+        dataLabels: {
+          enabled: false,
+          textAnchor: 'start',
+          style: {
+            colors: ['#fff']
+          },
+          formatter: function (val, opt) {
+            return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+          },
+          offsetX: 0,
+          dropShadow: {
+            enabled: true
+          }
+        },
+        stroke: {
+          width: 1,
+          colors: ['#fff']
+        },
+        xaxis: {
+          categories: [],
+        },
+        yaxis: {
+          labels: {
+            show: false
+          }
+        },
+        title: {
+            text: '',
+            align: 'center',
+            floating: true
+        },
+        subtitle: {
+            text: '',
+            align: 'center',
+        },
+        tooltip: {
+          theme: 'dark',
+          x: {
+            show: false
+          },
+          y: {
+            title: {
+              formatter: function () {
+                return ''
+              }
+            }
+          }
+        }
+        };
+
+const app_events_targets = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data () {},
+    mounted () {
+        this.getCounters()
+    },
+    methods: {
+        myFunction(item) {
+            options_events_targets.xaxis.categories.push(item.target__description)
+            options_events_targets.series[0].data.push(item.num_iniziative)
+        },
+        getCounters() {
+            axios
+                .get("{{ api_url }}")
+                .then(response => {
+                    this.error_msg = ""
+                    this.error_status = null
+                    response.data.forEach(this.myFunction)
+                    var chart = new ApexCharts(document.querySelector("#chart_events_targets"), options_events_targets)
+                    chart.render()
+                })
+                .catch(error => {
+                    if(error) {
+                        this.error_msg = error.response.data.detail
+                        this.error_status = error.response.status
+                    }
+                })
+        },
+    }
+}).mount('#app_events_targets')
+</script>
