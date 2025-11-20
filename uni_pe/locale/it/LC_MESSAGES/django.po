@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 16:27+0200\n"
-"PO-Revision-Date: 2025-09-26 16:28+0200\n"
+"POT-Creation-Date: 2025-11-20 11:40+0100\n"
+"PO-Revision-Date: 2025-11-20 11:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -357,8 +357,8 @@ msgstr "Negativo"
 msgid "Mandatory in case of negative outcome"
 msgstr "Obbligatorio in caso di esito negativo"
 
-#: pe_management/forms.py:240 pe_management/models.py:76
-#: pe_management/models.py:543 template/templates/events.html:127
+#: pe_management/forms.py:240 pe_management/models.py:543
+#: template/templates/events.html:163
 msgid "Structure"
 msgstr "Struttura"
 
@@ -367,19 +367,23 @@ msgid "Event title"
 msgstr "Titolo iniziativa"
 
 #: pe_management/models.py:64 template/templates/events.html:60
-#: template/templates/events.html:128
+#: template/templates/events.html:164
 msgid "Start"
 msgstr "Inizio"
 
 #: pe_management/models.py:65 template/templates/events.html:61
-#: template/templates/events.html:129
+#: template/templates/events.html:165
 msgid "End"
 msgstr "Fine"
 
 #: pe_management/models.py:70 template/templates/events.html:59
-#: template/templates/events.html:126
+#: template/templates/events.html:162
 msgid "Referent"
 msgstr "Referente"
+
+#: pe_management/models.py:76
+msgid "Affiliation structure"
+msgstr "Struttura di afferenza"
 
 #: pe_management/models.py:538
 msgid "Contact"
@@ -562,6 +566,26 @@ msgstr "Monitoraggio iniziativa"
 #: pe_management/models.py:706
 msgid "Event monitoring records"
 msgstr "Monitoraggio iniziativa"
+
+#: pe_management/utils.py:160 pe_management/utils.py:204
+#: template/templates/event.html:18 template/templates/events.html:257
+msgid "Not eligible"
+msgstr "Non ammissibile"
+
+#: pe_management/utils.py:196 pe_management/utils.py:200
+#: pe_management/utils.py:202 pe_management/utils.py:203
+#: pe_management/utils.py:236 pe_management/utils.py:256
+#: pe_management/utils.py:257 template/templates/event.html:367
+msgid "Yes"
+msgstr "Si"
+
+#: pe_management/utils.py:196 pe_management/utils.py:200
+#: pe_management/utils.py:202 pe_management/utils.py:203
+#: pe_management/utils.py:236 pe_management/utils.py:256
+#: pe_management/utils.py:257 template/templates/event.html:283
+#: template/templates/event.html:369
+msgid "No"
+msgstr ""
 
 #: pe_management/validators.py:16 template/validators.py:15
 msgid "File extension not accepted: \"{}\". Enter {} only"
@@ -1044,7 +1068,7 @@ msgid "To manager structure events"
 msgstr "Per gestire le iniziative della struttura"
 
 #: template/templates/dashboard.html:62 template/templates/event.html:155
-#: template/templates/events.html:131
+#: template/templates/events.html:167
 msgid "Patronage"
 msgstr "Patrocinio"
 
@@ -1080,10 +1104,6 @@ msgstr ""
 msgid "Data summary"
 msgstr "Riepilogo dei dati"
 
-#: template/templates/event.html:18 template/templates/events.html:221
-msgid "Not eligible"
-msgstr "Non ammissibile"
-
 #: template/templates/event.html:23
 msgid "Editing data for the year"
 msgstr "La modifica dei dati per l'anno"
@@ -1104,7 +1124,7 @@ msgstr "Immessa:"
 msgid "Last update :"
 msgstr "Ultimo aggiornamento:"
 
-#: template/templates/event.html:34 template/templates/events.html:164
+#: template/templates/event.html:34 template/templates/events.html:200
 msgid "Loaded by manager (singular)"
 msgstr "Inserita da operatore di Ateneo"
 
@@ -1117,26 +1137,24 @@ msgid "Evaluation requested"
 msgstr "Validazione richiesta"
 
 #: template/templates/event.html:91 template/templates/event.html:162
+#: template/templates/events.html:92
 #: template/templates/operator/dashboard.html:30
-#: template/templates/operator/events.html:32
 #: template/templates/patronage/dashboard.html:29
 #: template/templates/patronage/events.html:16
 msgid "To be handled"
 msgstr "Da prendere in carico"
 
-#: template/templates/event.html:97 template/templates/events.html:180
-#: template/templates/operator/involved-structures/events.html:25
+#: template/templates/event.html:97 template/templates/events.html:216
 msgid "Rejected (singular)"
 msgstr "Respinta"
 
-#: template/templates/event.html:103 template/templates/events.html:184
-#: template/templates/operator/involved-structures/events.html:16
+#: template/templates/event.html:103 template/templates/events.html:220
 msgid "Approved (singular)"
 msgstr "Approvata"
 
 #: template/templates/event.html:109 template/templates/event.html:180
+#: template/templates/events.html:101
 #: template/templates/operator/dashboard.html:38
-#: template/templates/operator/events.html:41
 #: template/templates/patronage/dashboard.html:37
 #: template/templates/patronage/events.html:25
 msgid "To evaluate"
@@ -1162,14 +1180,6 @@ msgstr "Patrocinio negato"
 #: template/templates/event.html:174
 msgid "Patronage granted"
 msgstr "Patrocinio concesso"
-
-#: template/templates/event.html:283 template/templates/event.html:369
-msgid "No"
-msgstr ""
-
-#: template/templates/event.html:367
-msgid "Yes"
-msgstr "Si"
 
 #: template/templates/event_new.html:23
 msgid "It's me"
@@ -1203,7 +1213,7 @@ msgstr ""
 msgid "Sorting"
 msgstr "Ordinamento"
 
-#: template/templates/events.html:58 template/templates/events.html:125
+#: template/templates/events.html:58 template/templates/events.html:161
 msgid "Title"
 msgstr "Titolo"
 
@@ -1216,67 +1226,77 @@ msgid "Descending"
 msgstr "Decrescente"
 
 #: template/templates/events.html:83
+#: template/templates/operator/dashboard.html:59
+msgid "Draft"
+msgstr "Bozza"
+
+#: template/templates/events.html:110
 #: template/templates/manager/dashboard.html:46
 #: template/templates/manager/dashboard.html:71
-#: template/templates/manager/events.html:23
 #: template/templates/operator/dashboard.html:45
 #: template/templates/operator/dashboard.html:70
-#: template/templates/operator/events.html:50
+#: template/templates/operator/involved-structures/events.html:16
 msgid "Approved (plural)"
 msgstr "Approvate"
 
-#: template/templates/events.html:92
+#: template/templates/events.html:119
 #: template/templates/operator/dashboard.html:52
 #: template/templates/operator/dashboard.html:77
-#: template/templates/operator/events.html:59
+#: template/templates/operator/involved-structures/events.html:25
 msgid "Rejected (plural)"
 msgstr "Respinte"
 
-#: template/templates/events.html:102
+#: template/templates/events.html:128
+#: template/templates/manager/dashboard.html:53
+#: template/templates/manager/dashboard.html:78
+msgid "Loaded by manager (plural)"
+msgstr "Inserite da operatore di Ateneo"
+
+#: template/templates/events.html:138
 msgid "Not eligible (plural)"
 msgstr "Non ammissibili"
 
-#: template/templates/events.html:113
+#: template/templates/events.html:149
 msgid "Events number"
 msgstr "Numero iniziative"
 
-#: template/templates/events.html:124
+#: template/templates/events.html:160
 msgid "ID"
 msgstr ""
 
-#: template/templates/events.html:130
+#: template/templates/events.html:166
 msgid "Status"
 msgstr "Stato"
 
-#: template/templates/events.html:168
+#: template/templates/events.html:204
 msgid "Evaluation to be requested"
 msgstr "Validazione da richiedere"
 
-#: template/templates/events.html:172 template/templates/events.html:198
+#: template/templates/events.html:208 template/templates/events.html:234
 msgid "Waiting for handling"
 msgstr "In attesa di essere presa in carico"
 
-#: template/templates/events.html:176 template/templates/events.html:202
+#: template/templates/events.html:212 template/templates/events.html:238
 msgid "Waiting for evaluation"
 msgstr "In attesa di validazione"
 
-#: template/templates/events.html:188
+#: template/templates/events.html:224
 msgid "Filling in progress"
 msgstr "Compilazione in corso"
 
-#: template/templates/events.html:192
+#: template/templates/events.html:228
 msgid "Missing data or blocked changes"
 msgstr ""
 
-#: template/templates/events.html:207
+#: template/templates/events.html:243
 msgid "Denied"
 msgstr "Negato"
 
-#: template/templates/events.html:211
+#: template/templates/events.html:247
 msgid "Granted"
 msgstr ""
 
-#: template/templates/events.html:233
+#: template/templates/events.html:269
 msgid "No events available"
 msgstr "Non ci sono iniziative"
 
@@ -1391,12 +1411,6 @@ msgstr "Filtra per parola chiave..."
 msgid "Active monitoring"
 msgstr "Monitoraggio attivo"
 
-#: template/templates/manager/dashboard.html:53
-#: template/templates/manager/dashboard.html:78
-#: template/templates/manager/events.html:32
-msgid "Loaded by manager (plural)"
-msgstr "Inserite da operatore di Ateneo"
-
 #: template/templates/manager/dashboard.html:60
 #: template/templates/manager/dashboard.html:85
 #: template/templates/operator/dashboard.html:84
@@ -1433,11 +1447,6 @@ msgstr "Aggiornamenti di stato (Log)"
 #: template/templates/obj_logs.html:36
 msgid "There isn't any log"
 msgstr "Nessun log presente"
-
-#: template/templates/operator/dashboard.html:59
-#: template/templates/operator/events.html:23
-msgid "Draft"
-msgstr "Bozza"
 
 #: template/templates/operator/event.html:20
 msgid "Evaluation request not sent"
