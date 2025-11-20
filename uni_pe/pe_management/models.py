@@ -73,7 +73,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
                                   limit_choices_to={
                                       "is_active": True
                                   },
-                                  verbose_name=_("Structure")
+                                  verbose_name=_("Affiliation structure")
                                   )
     # pronto per la validazione
     to_evaluate = models.BooleanField(
