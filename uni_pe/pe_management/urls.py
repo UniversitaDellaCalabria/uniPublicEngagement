@@ -34,7 +34,8 @@ manager_prefix = 'manager'
 
 urlpatterns = [
     path(f'{prefix}/', generic.dashboard, name='dashboard'),
-    path(f'{prefix}/events/<int:event_id>/poster/download/', generic.download_event_poster, name='download_event_poster'),
+    path(f'{prefix}/events/<int:event_id>/poster/download/',
+         generic.download_event_poster, name='download_event_poster'),
 
     # user
     path(f'{prefix}/{user_prefix}/events/', user.events, name='user_events'),
@@ -113,15 +114,13 @@ urlpatterns = [
     path(f'{prefix}/{operator_prefix}/{involved_structures_prefix}/',
          involved_structures.dashboard, name='involved_structures_dashboard'),
     path(f'{prefix}/{operator_prefix}/{involved_structures_prefix}/<str:structure_slug>/events/',
-        involved_structures.events, name='involved_structures_events'),
+         involved_structures.events, name='involved_structures_events'),
     path(f'{prefix}/{operator_prefix}/{involved_structures_prefix}/<str:structure_slug>/events/<int:event_id>/',
-        involved_structures.event, name='involved_structures_event'),
+         involved_structures.event, name='involved_structures_event'),
 
     # manager
     path(f'{prefix}/{manager_prefix}/',
          manager.dashboard, name='manager_dashboard'),
-    path(f'{prefix}/{manager_prefix}/',
-         manager.dashboard_structures, name='manager_dashboard_structures'),
     path(f'{prefix}/{manager_prefix}/export/',
          manager.export, name='manager_export'),
     path(f'{prefix}/{manager_prefix}/<str:structure_slug>/events/',
@@ -150,12 +149,14 @@ urlpatterns = [
          manager.event_enable_disable, name='manager_event_enable_disable'),
 
     # involved personnel
-    path(f'{prefix}/{involved_personnel_prefix}/events/', involved_personnel.events, name='involved_personnel_events'),
+    path(f'{prefix}/{involved_personnel_prefix}/events/',
+         involved_personnel.events, name='involved_personnel_events'),
     path(f'{prefix}/{involved_personnel_prefix}/events/<int:event_id>/',
          involved_personnel.event, name='involved_personnel_event'),
 
     # API
-    path(f'{prefix}/{api_prefix}/structures/', api_generic.OrganizationalStructureList.as_view(), name='api_structures'),
+    path(f'{prefix}/{api_prefix}/structures/',
+         api_generic.OrganizationalStructureList.as_view(), name='api_structures'),
     path(f'{prefix}/{api_prefix}/events/',
          api_generic.PublicEngagementApprovedEventList.as_view(), name='api_generic_approved_events'),
     path(f'{prefix}/{api_prefix}/events/<int:pk>/',
@@ -183,6 +184,21 @@ urlpatterns = [
          api_manager.PublicEngagementEventsTargetsList.as_view(), name='api_manager_events_targets'),
     path(f'{prefix}/{api_prefix}/{manager_prefix}/events-methods-of-execution/',
          api_manager.PublicEngagementEventsMethodsOfExecutionList.as_view(), name='api_manager_events_methods_of_execution'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-geographical-dimension/',
+         api_manager.PublicEngagementEventsGeographicalDimensionList.as_view(), name='api_manager_events_geographical_dimension'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-organizing_subject/',
+         api_manager.PublicEngagementEventsOrganizingSubjectList.as_view(), name='api_manager_events_organizing_subject'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-promo-channels/',
+         api_manager.PublicEngagementEventsPromoChannelList.as_view(), name='api_manager_events_promo_channels'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-patronage-requested/',
+         api_manager.PublicEngagementEventsPatronageRequestedList.as_view(), name='api_manager_events_patronage_requested'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-with-monitoring-data/',
+         api_manager.PublicEngagementEventsMonitoringDataProvidedList.as_view(), name='api_manager_events_monitoring_data_provided'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-impact-evaluation/',
+         api_manager.PublicEngagementEventsImpactEvaluationList.as_view(), name='api_manager_events_impact_evaluation'),
+    path(f'{prefix}/{api_prefix}/{manager_prefix}/events-scientific-areas/',
+         api_manager.PublicEngagementEventsScientificAreasList.as_view(), name='api_manager_events_scientific_areas'),
+
     # involved personnel
     path(f'{prefix}/{api_prefix}/{involved_personnel_prefix}/events/',
          api_involved_personnel.PublicEngagementEventList.as_view(), name='api_involved_personnel_events'),

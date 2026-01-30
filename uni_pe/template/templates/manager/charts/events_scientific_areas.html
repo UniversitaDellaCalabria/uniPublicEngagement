@@ -13,63 +13,86 @@
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_structure_counters">
+        <div id="app_events_scientific_areas">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
-              {% trans "Data retrieval failed. Please check your search parameters" %}
+              Recupero dei dati non riuscito. Controlla i parametri di ricerca
             </div>
           </div>
-          <div id="chart_structure_counter" v-else></div>
+          <div id="chart_events_scientific_areas" v-else></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-
-
 <script>
-  var options_structure_counters = {
-    series: [
-    {
-      name: "",
-      data: [],
-    },
-    ],
+  var options_events_scientific_areas = {
+    series: [{
+      data: []
+    }],
     chart: {
       type: 'bar',
-      height: "auto",
-      dropShadow: {
-        enabled: true,
-      },
+      height: "auto"
     },
     plotOptions: {
       bar: {
-        borderRadius: 0,
+        barHeight: '100%',
+        distributed: true,
         horizontal: true,
-        barHeight: '80%',
-        isFunnel: true,
-      },
+        dataLabels: {
+          position: 'bottom'
+        },
+      }
     },
+    colors: [
+    '#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+    '#f48024', '#69d2e7'
+    ],
     dataLabels: {
-      enabled: true,
+      enabled: false,
+      textAnchor: 'start',
+      style: {
+        colors: ['#fff']
+      },
       formatter: function (val, opt) {
-        return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
+        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
       },
+      offsetX: 0,
       dropShadow: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
-    title: {},
+    stroke: {
+      width: 1,
+      colors: ['#fff']
+    },
     xaxis: {
       categories: [],
     },
-    legend: {
-      show: false,
+    yaxis: {
+      labels: {
+        show: true
+      }
     },
+    title: {},
+    subtitle: {},
+    tooltip: {
+      theme: 'dark',
+      x: {
+        show: false
+      },
+      y: {
+        title: {
+          formatter: function () {
+            return ''
+          }
+        }
+      }
+    }
   };
   
-  const app_structure_counters = Vue.createApp({
+  const app_events_scientific_areas = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -81,8 +104,8 @@
     },
     methods: {
       myFunction(item) {
-        options_structure_counters.xaxis.categories.push(item.structure__name)
-        options_structure_counters.series[0].data.push(item.num_iniziative)
+        options_events_scientific_areas.xaxis.categories.push(item.description)
+        options_events_scientific_areas.series[0].data.push(item.number)
       },
       getCounters() {
         axios
@@ -95,19 +118,18 @@
           this.error_msg = ""
           this.error_status = null
           response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_structure_counter"), options_structure_counters)
+          var chart = new ApexCharts(document.querySelector("#chart_events_scientific_areas"), options_events_scientific_areas)
           chart.render()
         })
         .catch(error => {
           if(error) {
             this.error = true
-            console.log(error)
             this.error_msg = error.response.data.detail
             this.error_status = error.response.status
           }
         })
       },
     }
-  }).mount('#app_structure_counters')
+  }).mount('#app_events_scientific_areas')
   
 </script>

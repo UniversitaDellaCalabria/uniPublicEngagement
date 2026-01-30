@@ -8,7 +8,12 @@ from organizational_area.models import *
 
 from template.widgets import *
 
-from . models import *
+from .models import (
+    PublicEngagementEvent,
+    PublicEngagementEventData,
+    PublicEngagementEventReport,
+    PublicEngagementAnnualMonitoring,
+)
 from . settings import *
 from . utils import user_is_manager
 from . widgets import *
@@ -21,7 +26,6 @@ class PublicEngagementReferentForm(forms.Form):
 
 class PublicEngagementEventForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        request = kwargs.pop('request', None)
         structure_slug = kwargs.pop('structure_slug', None)
 
         super().__init__(*args, **kwargs)
@@ -66,7 +70,6 @@ class PublicEngagementEventForm(forms.ModelForm):
         if end and end > timezone.now() and self.instance.id and hasattr(self.instance, 'report'):
             self.add_error(
                 'end', _("Since the monitoring data is already present, the initiative must have already ended"))
-
 
         if self.instance.id and hasattr(self.instance, 'data') and start <= timezone.now():
             if self.instance.data.patronage_requested or self.instance.data.promo_tool.exists() or self.instance.data.promo_channel.exists():
@@ -153,15 +156,16 @@ class PublicEngagementEventDataForm(forms.ModelForm):
         if self.instance.id:
             # se il nome dell'evento scelto corrisponde a quello dell'evento stesso
             if self.instance.event == cleaned_data.get('project_name', None):
-                self.add_error('project_name', _("It is not possible to connect to the same event"))
+                self.add_error('project_name', _(
+                    "It is not possible to connect to the same event"))
             # se la richiesta di patrocinio viene modificata ma
             # l'operatore di patrocinio aveva già preso in carico l'iniziativa
             # ~ if self.instance.event.patronage_operator_taken_date and not patronage_requested:
                 # ~ self.add_error(
-                    # ~ 'patronage_requested', _("It is not possible to cancel the patronage request if this has already been handled by a dedicated operator"))
+                # ~ 'patronage_requested', _("It is not possible to cancel the patronage request if this has already been handled by a dedicated operator"))
             # ~ if self.instance.event.patronage_requested and not promo_tool:
                 # ~ self.add_error(
-                    # ~ 'promo_tool', _("Make at least one choice if you require patronage"))
+                # ~ 'promo_tool', _("Make at least one choice if you require patronage"))
             if self.instance.promo_channel.exists() and not poster:
                 self.add_error(
                     'poster', _("Mandatory field if you require the event to be promoted on institutional communication channels"))
@@ -170,10 +174,10 @@ class PublicEngagementEventDataForm(forms.ModelForm):
 
 class PublicEngagementEventReportForm(forms.ModelForm):
     # def __init__(self, *args, **kwargs):
-        # event = kwargs.pop('event')
-        # super().__init__(*args, **kwargs)
-        # self.fields['other_structure'].queryset = self.fields['other_structure'].queryset.exclude(
-            # pk=event.structure.pk)
+    # event = kwargs.pop('event')
+    # super().__init__(*args, **kwargs)
+    # self.fields['other_structure'].queryset = self.fields['other_structure'].queryset.exclude(
+    # pk=event.structure.pk)
 
     class Meta:
         model = PublicEngagementEventReport
@@ -203,7 +207,7 @@ class PublicEngagementEventEvaluationForm(forms.Form):
         label=_("Outcome"),
         choices=[
             (True, _("Positive")),
-            (False,_("Negative"))
+            (False, _("Negative"))
         ],
         widget=BootstrapItaliaRadioWidget)
     notes = forms.CharField(
@@ -238,5 +242,5 @@ class PublicEngagementEventDisableEnableForm(forms.Form):
 
 class PublicEngagementStructureForm(forms.Form):
     structure = forms.IntegerField(label=_('Structure'),
-                                    required=True,
-                                    widget=BootstrapItaliaAPISelectStructureWidget())
+                                   required=True,
+                                   widget=BootstrapItaliaAPISelectStructureWidget())

@@ -1,4 +1,6 @@
-from django.forms.widgets import *
+from django.forms.widgets import (
+    DateTimeInput, CheckboxInput, CheckboxSelectMultiple
+)
 
 
 class BootstrapItaliaDateTimeWidget(DateTimeInput):

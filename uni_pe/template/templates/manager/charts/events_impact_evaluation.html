@@ -13,63 +13,64 @@
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_structure_counters">
+        <div id="app_events_impact_evaluation">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_structure_counter" v-else></div>
+          <div id="chart_events_impact_evaluation" v-else></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-
-
 <script>
-  var options_structure_counters = {
-    series: [
-    {
-      name: "",
-      data: [],
-    },
-    ],
+  var options_events_impact_evaluation = {
+    series: [],
     chart: {
       type: 'bar',
-      height: "auto",
-      dropShadow: {
-        enabled: true,
-      },
+      height: 150,
+      stacked: true
     },
+    colors: ['#008FFB', '#FF4560'],
     plotOptions: {
       bar: {
-        borderRadius: 0,
+        borderRadius: 5,
+        borderRadiusApplication: 'end', // 'around', 'end'
+        borderRadiusWhenStacked: 'all', // 'all', 'last'
         horizontal: true,
         barHeight: '80%',
-        isFunnel: true,
       },
     },
     dataLabels: {
-      enabled: true,
-      formatter: function (val, opt) {
-        return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
-      },
-      dropShadow: {
-        enabled: true,
-      },
+      enabled: false
     },
-    title: {},
+    stroke: {
+      width: 1,
+      colors: ["#fff"]
+    },
+    
+    grid: {
+      xaxis: {
+        lines: {
+          show: false
+        }
+      }
+    },
+    yaxis: {
+      stepSize: 1
+    },
+    tooltip: {
+      shared: false,
+    },
     xaxis: {
-      categories: [],
-    },
-    legend: {
-      show: false,
+      categories: ['Num']
     },
   };
   
-  const app_structure_counters = Vue.createApp({
+  const app_events_patronage_requested = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -81,8 +82,18 @@
     },
     methods: {
       myFunction(item) {
-        options_structure_counters.xaxis.categories.push(item.structure__name)
-        options_structure_counters.series[0].data.push(item.num_iniziative)
+        for (const [key, value] of Object.entries(item)) {
+          let label = "Si"
+          let num_iniziative = value
+          if(key == 'no') {
+            label = "No"
+            num_iniziative = value * -1
+          }
+          options_events_impact_evaluation.series.push({
+            'name': label,
+            'data': [num_iniziative]
+          })
+        }
       },
       getCounters() {
         axios
@@ -94,20 +105,20 @@
         .then(response => {
           this.error_msg = ""
           this.error_status = null
-          response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_structure_counter"), options_structure_counters)
+          this.myFunction(response.data)
+          var chart = new ApexCharts(document.querySelector("#chart_events_impact_evaluation"), options_events_impact_evaluation)
           chart.render()
         })
         .catch(error => {
           if(error) {
             this.error = true
             console.log(error)
-            this.error_msg = error.response.data.detail
-            this.error_status = error.response.status
+            {% comment %} this.error_msg = error.response.data.detail
+            this.error_status = error.response.status {% endcomment %}
           }
         })
       },
     }
-  }).mount('#app_structure_counters')
+  }).mount('#app_events_impact_evaluation')
   
 </script>

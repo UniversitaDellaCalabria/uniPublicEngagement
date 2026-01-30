@@ -1,78 +1,140 @@
-<div id="app_events_recipients">
-    <div id="chart_events_recipients"></div>
+{% load i18n %}
+{% load pe_management_tags %}
+
+{% pem_settings_value "DASHBOARD_KPI_LIST" as titles %}
+<div class="col-12">
+  <div class="card-wrapper card-space">
+    <div class="card card-bg no-after">
+      <div class="card-body">
+        <p class="card-title h5">
+          {% for title in titles %}
+          {% if title.0 == request.GET.kpi %}
+          {{ title.1 }}
+          {% endif %}
+          {% endfor %}
+        </p>
+        <div id="app_events_recipients">
+          <div v-if="error">
+            <div class="alert alert-danger" role="alert">
+              {% trans "Data retrieval failed. Please check your search parameters" %}            
+            </div>
+          </div>
+          <div id="chart_events_recipients" v-else></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
 <script>
-var options_events_recipients = {
-          series: [
-          {
-            data: [],
-          },
-        ],
-          chart: {
-          type: 'bar',
-          height: 350,
-          dropShadow: {
-            enabled: true,
-          },
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 0,
-            horizontal: true,
-            barHeight: '80%',
-            isFunnel: true,
-          },
-        },
-        dataLabels: {
-          enabled: true,
-          formatter: function (val, opt) {
-            return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
-          },
-          dropShadow: {
-            enabled: true,
-          },
-        },
-        title: {
-          text: '',
-          align: 'middle',
-        },
-        xaxis: {
-          categories: [],
-        },
-        legend: {
-          show: false,
-        },
-        };
-
-const app_events_recipients = Vue.createApp({
+  var options_events_recipients = {
+    series: [
+    {
+      name: "",
+      data: [],
+    },
+    ],
+    chart: {
+      type: 'bar',
+      height: 400,
+      dropShadow: {
+        enabled: true,
+      },
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 0,
+        horizontal: true,
+        barHeight: '80%',
+        isFunnel: true,
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function (val, opt) {
+        return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
+      },
+      dropShadow: {
+        enabled: true,
+      },
+    },
+    title: {},
+    xaxis: {
+      categories: [],
+    },
+    legend: {
+      show: false,
+    },
+  };
+  {% comment %}   
+  var options_events_recipients = {
+  series: [],
+  chart: {
+  width: "100%",
+  type: 'donut',
+  },
+  dataLabels: {
+  enabled: false
+  },
+  fill: {
+  type: 'gradient',
+  },
+  legend: {
+  formatter: function(val, opts) {
+  return val + " - " + opts.w.globals.series[opts.seriesIndex]
+  }
+  },
+  labels: [],
+  responsive: [{
+  breakpoint: 700,
+  options: {
+  chart: {
+  width: "100%"
+  },
+  legend: {
+  position: 'bottom'
+  }
+  }
+  }]
+  }; {% endcomment %}
+  
+  const app_events_recipients = Vue.createApp({
     delimiters: ['[[', ']]'],
-    data () {},
+    data () {
+      return {
+        error: false
+      }
+    },
     mounted () {
-        this.getCounters()
+      this.getCounters()
     },
     methods: {
-        myFunction(item) {
-            options_events_recipients.xaxis.categories.push(item.recipient__description)
-            options_events_recipients.series[0].data.push(item.num_iniziative)
-        },
-        getCounters() {
-            axios
-                .get("{{ api_url }}")
-                .then(response => {
-                    this.error_msg = ""
-                    this.error_status = null
-                    response.data.forEach(this.myFunction)
-                    var chart = new ApexCharts(document.querySelector("#chart_events_recipients"), options_events_recipients)
-                    chart.render()
-                })
-                .catch(error => {
-                    if(error) {
-                        this.error_msg = error.response.data.detail
-                        this.error_status = error.response.status
-                    }
-                })
-        },
+      myFunction(item) {
+        options_events_recipients.xaxis.categories.push(item.recipient__description)
+        options_events_recipients.series[0].data.push(item.num_iniziative)
+      },
+      getCounters() {
+        axios
+        .get("{{ api_url }}", {
+          params: {
+            year: "{{ year }}"
+          }
+        })
+        .then(response => {
+          this.error_msg = ""
+          this.error_status = null
+          response.data.forEach(this.myFunction)
+          var chart = new ApexCharts(document.querySelector("#chart_events_recipients"), options_events_recipients)
+          chart.render()
+        })
+        .catch(error => {
+          if(error) {
+            this.error = true
+            this.error_msg = error.response.data.detail
+            this.error_status = error.response.status
+          }
+        })
+      },
     }
-}).mount('#app_events_recipients')
+  }).mount('#app_events_recipients')
+  
 </script>

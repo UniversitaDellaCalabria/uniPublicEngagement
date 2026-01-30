@@ -13,63 +13,57 @@
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_structure_counters">
+        <div id="app_events_organizing_subjects">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_structure_counter" v-else></div>
+          <div id="chart_events_organizing_subjects" v-else></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-
-
 <script>
-  var options_structure_counters = {
-    series: [
-    {
-      name: "",
-      data: [],
-    },
-    ],
+  var options_events_organizing_subjects = {
+    series: [{
+      data: []
+    }],
     chart: {
+      height: 350,
       type: 'bar',
-      height: "auto",
-      dropShadow: {
-        enabled: true,
-      },
+      events: {
+        click: function(chart, w, e) {
+          // console.log(chart, w, e)
+        }
+      }
     },
     plotOptions: {
       bar: {
-        borderRadius: 0,
-        horizontal: true,
-        barHeight: '80%',
-        isFunnel: true,
-      },
+        columnWidth: '45%',
+        distributed: true,
+      }
     },
     dataLabels: {
-      enabled: true,
-      formatter: function (val, opt) {
-        return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
-      },
-      dropShadow: {
-        enabled: true,
-      },
-    },
-    title: {},
-    xaxis: {
-      categories: [],
+      enabled: false
     },
     legend: {
-      show: false,
+      show: false
     },
+    xaxis: {
+      categories: [],
+      labels: {
+        style: {
+          colors: [],
+          fontSize: '12px'
+        }
+      }
+    }
   };
   
-  const app_structure_counters = Vue.createApp({
+  const app_events_organizing_subjects = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -81,8 +75,8 @@
     },
     methods: {
       myFunction(item) {
-        options_structure_counters.xaxis.categories.push(item.structure__name)
-        options_structure_counters.series[0].data.push(item.num_iniziative)
+        options_events_organizing_subjects.xaxis.categories.push(item.organizing_subject)
+        options_events_organizing_subjects.series[0].data.push(item.num_iniziative)
       },
       getCounters() {
         axios
@@ -95,19 +89,17 @@
           this.error_msg = ""
           this.error_status = null
           response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_structure_counter"), options_structure_counters)
+          var chart = new ApexCharts(document.querySelector("#chart_events_organizing_subjects"), options_events_organizing_subjects)
           chart.render()
         })
         .catch(error => {
           if(error) {
             this.error = true
-            console.log(error)
             this.error_msg = error.response.data.detail
             this.error_status = error.response.status
           }
         })
       },
     }
-  }).mount('#app_structure_counters')
-  
+  }).mount('#app_events_organizing_subjects')
 </script>

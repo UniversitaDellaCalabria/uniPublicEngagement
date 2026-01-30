@@ -26,13 +26,14 @@ def custom_message(request, message='', status=None):
 
 
 def log_action(user, obj, flag, msg):
-    LogEntry.objects.log_action(user_id=user.pk,
-                                content_type_id=ContentType.objects.get_for_model(
-                                    obj).pk,
-                                object_id=obj.pk,
-                                object_repr=obj.__str__(),
-                                action_flag=flag,
-                                change_message=msg)
+    LogEntry.objects.log_action(
+        user_id=user.pk,
+        content_type_id=ContentType.objects.get_for_model(obj).pk,
+        object_id=obj.pk,
+        object_repr=obj.__str__(),
+        action_flag=flag,
+        change_message=msg
+    )
 
 
 def check_user_permission_on_model(user, model, permission='view'):
@@ -44,18 +45,26 @@ def check_user_permission_on_model(user, model, permission='view'):
 
 def check_user_permission_on_dashboard(user, main_model, office_slug):
     if user.is_superuser or check_user_permission_on_model(user, main_model):
-        offices = OrganizationalStructureOffice.objects\
-                                               .filter(slug=office_slug,
-                                                       is_active=True,
-                                                       organizational_structure__is_active=True)
+        offices = (
+            OrganizationalStructureOffice.objects
+            .filter(
+                slug=office_slug,
+                is_active=True,
+                organizational_structure__is_active=True
+            )
+        )
     else:
         # get offices that I'm able to manage
-        my_offices = OrganizationalStructureOfficeEmployee.objects\
-                                                          .filter(employee=user,
-                                                                  office__slug=office_slug,
-                                                                  office__is_active=True,
-                                                                  office__organizational_structure__is_active=True)\
-                                                          .select_related('office')
+        my_offices = (
+            OrganizationalStructureOfficeEmployee.objects
+            .filter(
+                employee=user,
+                office__slug=office_slug,
+                office__is_active=True,
+                office__organizational_structure__is_active=True
+            )
+            .select_related('office')
+        )
         offices = []
         for off in my_offices:
             offices.append(off.office)
@@ -73,8 +82,8 @@ def download_file(path, nome_file):
     if os.path.exists(file_path):
         with open(file_path, "rb") as fh:
             response = HttpResponse(fh.read(), content_type=content_type)
-            response["Content-Disposition"] = "inline; filename=" + os.path.basename(
-                file_path
+            response["Content-Disposition"] = (
+                "inline; filename={}".format(os.path.basename(file_path))
             )
             return response
     return None

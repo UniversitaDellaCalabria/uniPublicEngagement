@@ -13,63 +13,86 @@
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_structure_counters">
+        <div id="app_events_promo_channels">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_structure_counter" v-else></div>
+          <div id="chart_events_promo_channels" v-else></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-
-
 <script>
-  var options_structure_counters = {
-    series: [
-    {
-      name: "",
-      data: [],
-    },
-    ],
+  var options_events_promo_channels = {
+    series: [{
+      name: '',
+      data: []
+    }],
     chart: {
+      height: 350,
       type: 'bar',
-      height: "auto",
-      dropShadow: {
-        enabled: true,
-      },
     },
     plotOptions: {
       bar: {
-        borderRadius: 0,
-        horizontal: true,
-        barHeight: '80%',
-        isFunnel: true,
-      },
+        borderRadius: 10,
+        dataLabels: {
+          position: 'top', // top, center, bottom
+        },
+      }
     },
     dataLabels: {
       enabled: true,
-      formatter: function (val, opt) {
-        return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
-      },
-      dropShadow: {
-        enabled: true,
-      },
+      offsetY: -20,
+      style: {
+        fontSize: '12px',
+        colors: ["#304758"]
+      }
     },
-    title: {},
+    
     xaxis: {
       categories: [],
+      position: 'top',
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: 'gradient',
+          gradient: {
+            colorFrom: '#D8E3F0',
+            colorTo: '#BED1E6',
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5,
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+      }
     },
-    legend: {
-      show: false,
+    yaxis: {
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        show: false,
+      }
+      
     },
   };
   
-  const app_structure_counters = Vue.createApp({
+  const app_events_promo_channels = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -81,8 +104,8 @@
     },
     methods: {
       myFunction(item) {
-        options_structure_counters.xaxis.categories.push(item.structure__name)
-        options_structure_counters.series[0].data.push(item.num_iniziative)
+        options_events_promo_channels.xaxis.categories.push(item.promo_channel__description || "Nessuno")
+        options_events_promo_channels.series[0].data.push(item.num_iniziative)
       },
       getCounters() {
         axios
@@ -95,19 +118,18 @@
           this.error_msg = ""
           this.error_status = null
           response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_structure_counter"), options_structure_counters)
+          var chart = new ApexCharts(document.querySelector("#chart_events_promo_channels"), options_events_promo_channels)
           chart.render()
         })
         .catch(error => {
           if(error) {
             this.error = true
-            console.log(error)
             this.error_msg = error.response.data.detail
             this.error_status = error.response.status
           }
         })
       },
     }
-  }).mount('#app_structure_counters')
+  }).mount('#app_events_promo_channels')
   
 </script>

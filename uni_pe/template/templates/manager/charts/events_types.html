@@ -1,43 +1,67 @@
-<div id="app_events_types">
-    <div id="chart_events_types"></div>
+{% load i18n %}
+{% load pe_management_tags %}
+
+{% pem_settings_value "DASHBOARD_KPI_LIST" as titles %}
+<div class="col-12">
+  <div class="card-wrapper card-space">
+    <div class="card card-bg no-after">
+      <div class="card-body">
+        <p class="card-title h5">
+          {% for title in titles %}
+          {% if title.0 == request.GET.kpi %}
+          {{ title.1 }}
+          {% endif %}
+          {% endfor %}
+        </p>
+        <div id="app_events_types">
+          <div v-if="error">
+            <div class="alert alert-danger" role="alert">
+              {% trans "Data retrieval failed. Please check your search parameters" %}
+            </div>
+          </div>
+          <div id="chart_events_types" v-else></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+
 <script>
-var options_events_types = {
-    series: [
-        {data: []}
-    ],
+  var options_events_types = {
+    series: [{
+      data: []
+    }],
     chart: {
-        type: 'bar',
-        height: "auto"
+      type: 'bar',
+      height: "auto"
     },
     plotOptions: {
-        bar: {
-            barHeight: '100%',
-            distributed: true,
-            horizontal: true,
-            dataLabels: {
-              position: 'bottom'
-            },
-        }
+      bar: {
+        barHeight: '100%',
+        distributed: true,
+        horizontal: true,
+        dataLabels: {
+          position: 'bottom'
+        },
+      }
     },
-    colors: [
-        '#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B',
-        '#2b908f', '#f9a3a4', '#90ee7e', '#f48024', '#69d2e7'
+    colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+    '#f48024', '#69d2e7'
     ],
     dataLabels: {
-        enabled: false,
-        textAnchor: 'start',
-        style: {
-            colors: ['#fff']
-        },
-        formatter: function (val, opt) {
-            return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
-        },
-        offsetX: 0,
-        dropShadow: {
-            enabled: true
-        }
+      enabled: false,
+      textAnchor: 'start',
+      style: {
+        colors: ['#fff']
+      },
+      formatter: function (val, opt) {
+        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+      },
+      offsetX: 0,
+      dropShadow: {
+        enabled: true
+      }
     },
     stroke: {
       width: 1,
@@ -48,18 +72,11 @@ var options_events_types = {
     },
     yaxis: {
       labels: {
-        show: false
+        show: true
       }
     },
-    title: {
-        text: '',
-        align: 'center',
-        floating: true
-    },
-    subtitle: {
-        text: '',
-        align: 'center',
-    },
+    title: {},
+    subtitle: {},
     tooltip: {
       theme: 'dark',
       x: {
@@ -73,36 +90,77 @@ var options_events_types = {
         }
       }
     }
-};
-
-const app_events_types = Vue.createApp({
+  };
+  
+  
+  {% comment %} var options_events_types = {
+  series: [],
+  chart: {
+  width: "100%",
+  type: 'donut',
+  },
+  dataLabels: {
+  enabled: false
+  },
+  fill: {
+  type: 'gradient',
+  },
+  legend: {
+  formatter: function(val, opts) {
+  return val + " - " + opts.w.globals.series[opts.seriesIndex]
+  }
+  },
+  labels: [],
+  responsive: [{
+  breakpoint: 700,
+  options: {
+  chart: {
+  width: "100%"
+  },
+  legend: {
+  position: 'bottom'
+  }
+  }
+  }]
+  }; {% endcomment %}
+  
+  const app_events_types = Vue.createApp({
     delimiters: ['[[', ']]'],
-    data () {},
+    data () {
+      return {
+        error: false
+      }
+    },
     mounted () {
-        this.getCounters()
+      this.getCounters()
     },
     methods: {
-        myFunction(item) {
-            options_events_types.xaxis.categories.push(item.event_type__description)
-            options_events_types.series[0].data.push(item.num_iniziative)
-        },
-        getCounters() {
-            axios
-                .get("{{ api_url }}")
-                .then(response => {
-                    this.error_msg = ""
-                    this.error_status = null
-                    response.data.forEach(this.myFunction)
-                    var chart = new ApexCharts(document.querySelector("#chart_events_types"), options_events_types)
-                    chart.render()
-                })
-                .catch(error => {
-                    if(error) {
-                        this.error_msg = error.response.data.detail
-                        this.error_status = error.response.status
-                    }
-                })
-        },
+      myFunction(item) {
+        options_events_types.xaxis.categories.push(item.event_type__description)
+        options_events_types.series[0].data.push(item.num_iniziative)
+      },
+      getCounters() {
+        axios
+        .get("{{ api_url }}", {
+          params: {
+            year: "{{ year }}"
+          }
+        })
+        .then(response => {
+          this.error_msg = ""
+          this.error_status = null
+          response.data.forEach(this.myFunction)
+          var chart = new ApexCharts(document.querySelector("#chart_events_types"), options_events_types)
+          chart.render()
+        })
+        .catch(error => {
+          if(error) {
+            this.error_msg = error.response.data.detail
+            this.error_status = error.response.status
+          }
+        })
+      },
     }
-}).mount('#app_events_types')
+  }).mount('#app_events_types')
 </script>
+

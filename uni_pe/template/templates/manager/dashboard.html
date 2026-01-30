@@ -6,83 +6,277 @@
 
 
 {% block top_content %}
-<h2>{% trans "Dashboard" %}</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+<p class="h2">{% trans "Dashboard" %}</p>
+<hr class="my-4">
 {% endblock top_content %}
 
 {% block clean_content %}
 
+{% pem_settings_value 'DASHBOARD_KPI_LIST' as dashboard_kpi_list %}
+<p class="h4">{% trans "Data visualization" %}</p>
+<p>{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." %}</p>
+
+<form method="GET" action="">
+    <div class="row my-5">
+        <div class="col-12 col-lg-6">
+            <div class="select-wrapper h-100">
+                <label for="kpi">{% trans "KPI" %}</label>
+                <select name="kpi" id="kpi" onchange="this.form.submit()" class="h-100" style="background: transparent">
+                    <option value="">- {% trans "select" %} -</option>
+                    {% for kpi in dashboard_kpi_list %}
+                    <option value="{{ kpi.0 }}" {% if request.GET.kpi == kpi.0 %}selected{% endif %}>{{ kpi.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 mt-4 mt-lg-0">
+            <div class="select-wrapper h-100">
+                <label for="year">{% trans "Year" %}</label>
+                <select name="year" id="year" class="h-100" onchange="this.form.submit()" style="background: transparent">
+                    <option value="">- {% trans "select" %} -</option>
+                    {% for year in years %}
+                    <option value="{{ year }}" {% if request.GET.year == year|stringformat:"i" %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>        
+        </div>
+        <div class="col-12 col-lg-3 mt-3 mt-lg-0">
+            <a href="{% url 'pe_management:manager_dashboard' %}" class="btn btn-xs btn-outline-danger" title="Reset">
+                <svg class="icon icon-sm icon-danger">
+                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
+                </svg> Reset
+            </a>
+        </div>
+    </div>
+</form>
+
+{% if request.GET.kpi and request.GET.year %}
 <div class="row">
+
+    <!-- Numero progetti per ogni struttura-->
+    {% if request.GET.kpi == 'structure_counters' %}
+    {% url 'pe_management:api_manager_structure_counters' as structure_counters_url %}
+    {% include "manager/charts/structure_counters.html" with api_url=structure_counters_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Numero progetti per ogni struttura-->
+    
+    <!-- Destinatari -->
+    {% if request.GET.kpi == 'events_recipients' %}
+    {% url 'pe_management:api_manager_events_recipients' as events_recipients_url %}
+    {% include "manager/charts/events_recipients.html" with api_url=events_recipients_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Destinatari -->
+    
+    <!-- Tipologie iniziative -->
+    {% if request.GET.kpi == 'events_types' %}
+    {% url 'pe_management:api_manager_events_types' as events_types_url %}
+    {% include "manager/charts/events_types.html" with api_url=events_types_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Tipologie iniziative -->
+    
+    <!-- Obiettivi -->
+    {% if request.GET.kpi == 'events_goals' %}
+    {% url 'pe_management:api_manager_events_targets' as events_targets_url %}
+    {% include "manager/charts/events_targets.html" with api_url=events_targets_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Obiettivi -->
+    
+    <!-- Modalità di svolgimento -->
+    {% if request.GET.kpi == 'events_methods_of_execution' %}
+    {% url 'pe_management:api_manager_events_methods_of_execution' as events_methods_of_execution_url %}
+    {% include "manager/charts/events_methods_of_execution.html" with api_url=events_methods_of_execution_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Modalità di svolgimento -->
+    
+    <!-- Dimensione geografica -->
+    {% if request.GET.kpi == 'events_geographical_dimension' %}
+    {% url 'pe_management:api_manager_events_geographical_dimension' as events_geographical_dimension_url %}
+    {% include "manager/charts/events_geographical_dimension.html" with api_url=events_geographical_dimension_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Dimensione geografica -->
+    
+    <!-- Ente organizzatore -->
+    {% if request.GET.kpi == 'events_organizing_subjects' %}
+    {% url 'pe_management:api_manager_events_organizing_subject' as events_organizing_subject_url %}
+    {% include "manager/charts/events_organizing_subjects.html" with api_url=events_organizing_subject_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Ente organizzatore -->
+    
+    <!-- Canali di promozione -->
+    {% if request.GET.kpi == 'events_promo_channels' %}
+    {% url 'pe_management:api_manager_events_promo_channels' as events_promo_channels_url %}
+    {% include "manager/charts/events_promo_channels.html" with api_url=events_promo_channels_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Canali di promozione -->
+    
+    <!-- Richiesta di patrocinio -->
+    {% if request.GET.kpi == 'events_patronage_requested' %}
+    {% url 'pe_management:api_manager_events_patronage_requested' as events_patronage_requested_url %}
+    {% include "manager/charts/events_patronage_requested.html" with api_url=events_patronage_requested_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Richiesta di patrocinio -->
+     
+    <!-- Dati di monitoraggio presenti -->
+    {% if request.GET.kpi == 'events_monitoring_data_provided' %}
+    {% url 'pe_management:api_manager_events_monitoring_data_provided' as events_monitoring_data_provided_url %}
+    {% include "manager/charts/events_monitoring_data_provided.html" with api_url=events_monitoring_data_provided_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Dati di monitoraggio presenti -->
+    
+    <!-- Valutazione impatto -->
+    {% if request.GET.kpi == 'events_impact_evaluation' %}
+    {% url 'pe_management:api_manager_events_impact_evaluation' as events_impact_evaluation_url %}
+    {% include "manager/charts/events_impact_evaluation.html" with api_url=events_impact_evaluation_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Valutazione imopatto -->
+     
+    <!-- Aree scientifiche -->
+    {% if request.GET.kpi == 'events_scientific_areas' %}
+    {% url 'pe_management:api_manager_events_scientific_areas' as events_scientific_areas_url %}
+    {% include "manager/charts/events_scientific_areas.html" with api_url=events_scientific_areas_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Aree scientifiche-->
+    
+    
+    {% comment %}
     <div class="col-12 col-lg-6">
+    <div class="card-wrapper card-space">
+    <div class="card card-bg no-after">
+    <div class="card-body">
+    <p class="card-title h5">Lorem ipsum</p>
+    {% url 'pe_management:api_manager_main_projects' as main_projects_url %}
+    {% include "manager/charts/main_projects.html" with api_url=main_projects_url year=request.GET.year %}
+    </div>
+    </div>
+    </div>
+    </div>
+    {% endcomment %}
+</div>
+{% else %}
+<div class="alert alert-warning" role="alert">
+    {% trans "Select the KPI and the reference year" %}
+</div>
+{% endif %}
+
+
+<hr class="my-5">
+
+<p class="h4">{% trans "Structures" %}</p>
+{% comment %} <p>{% trans "Choose the structure to manage" %}</p> {% endcomment %}
+<p>{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." %}</p>
+
+<div class="text-end mt-3">
+    <a href="{% url 'pe_management:manager_export' %}" class="btn btn-outline-info text-lg-end">
+        <svg class="icon icon-sm icon-info">
+            <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
+        </svg> {% trans "Export" %}
+    </a>
+</div>
+<div class="row mt-5" id="structures-grid">
+    <div class="form-group">
+        <input type="text" id="structuresFilter" placeholder="{% trans 'Filter by keyword...' %}" style="background: none">
+        <span class="autocomplete-icon" style="background: none">
+            <svg class="icon icon-sm">
+                <use xlink:href="{% static 'svg/sprites.svg' %}#it-search"></use>
+            </svg>
+        </span>
+    </div>
+    {% for structure in structures %}
+    <div class="col-12 col-lg-4 structure-box">
+        <!--start card-->
         <div class="card-wrapper card-space">
             <div class="card card-bg">
                 <div class="card-body">
-                    <p class="card-title h5">Lorem ipsum</p>
-                    {% url 'pe_management:api_manager_structure_counters' as structure_counters_url %}
-                    {% include "manager/charts/structure_counters.html" with api_url=structure_counters_url %}
+                    {% filter_events_per_structure_id event_counts structure.pk as structure_events %}
+                    <h5 class="card-title">
+                        {{ structure }}
+                    </h5>
+                    <hr>
+                    <p>
+                        <small>
+                            <b>{% trans "Active monitoring" %}</b>
+                            <br>
+                            {% trans "Approved (plural)"%}:
+                            {% if structure_events.0.approved_count  %}
+                            <span class="badge bg-success">{{ structure_events.0.approved_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
+                            <br>
+                            {% trans "Loaded by manager (plural)" %}:
+                            {% if structure_events.0.created_by_manager_count %}
+                            <span class="badge bg-info">{{ structure_events.0.created_by_manager_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
+                            <br>
+                            {% trans "All states" %}:
+                            {% if structure_events.0.number_count %}
+                            <span class="badge bg-info">{{ structure_events.0.number_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
+                        </small>
+                        <hr>
+                        <small>
+                            <b>{% trans "Total (plural)" %}</b>
+                            <br>
+                            {% trans "Approved (plural)" %}:
+                            {% if structure_events.0.total_approved_count  %}
+                            <span class="badge bg-success">{{ structure_events.0.total_approved_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
+                            <br>
+                            {% trans "Loaded by manager (plural)" %}:
+                            {% if structure_events.0.total_created_by_manager_count %}
+                            <span class="badge bg-info">{{ structure_events.0.total_created_by_manager_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
+                            <br>
+                            {% trans "All states" %}:
+                            {% if structure_events.0.total_number_count %}
+                            <span class="badge bg-info">{{ structure_events.0.total_number_count }}</span>
+                            {% else %}
+                            <span class="badge bg-info">0</span>
+                            {% endif %}
+                        </small>
+                    </p>
+                    <hr>
+                    <a class="read-more" href="{% url 'pe_management:manager_events' structure_slug=structure.slug %}">
+                        <span class="text text-primary">{% trans "Manage" %}</span>
+                        <svg class="icon">
+                            <use href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
+        <!--end card-->
     </div>
-    <div class="col-12 col-lg-6">
-        <div class="card-wrapper card-space">
-            <div class="card card-bg">
-                <div class="card-body">
-                    <p class="card-title h5">Lorem ipsum</p>
-                    {% url 'pe_management:api_manager_main_projects' as main_projects_url %}
-                    {% include "manager/charts/main_projects.html" with api_url=main_projects_url %}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12">
-        <div class="card-wrapper card-space">
-            <div class="card card-bg">
-                <div class="card-body">
-                    <p class="card-title h5">Lorem ipsum</p>
-                    {% url 'pe_management:api_manager_events_types' as events_types_url %}
-                    {% include "manager/charts/events_types.html" with api_url=events_types_url %}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-lg-6">
-        <div class="card-wrapper card-space">
-            <div class="card card-bg">
-                <div class="card-body">
-                    <p class="card-title h5">Lorem ipsum</p>
-                    {% url 'pe_management:api_manager_events_recipients' as events_recipients_url %}
-                    {% include "manager/charts/events_recipients.html" with api_url=events_recipients_url %}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-lg-6">
-        <div class="card-wrapper card-space">
-            <div class="card card-bg">
-                <div class="card-body">
-                    <p class="card-title h5">Lorem ipsum</p>
-                    {% url 'pe_management:api_manager_events_targets' as events_targets_url %}
-                    {% include "manager/charts/events_targets.html" with api_url=events_targets_url %}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12">
-        <div class="card-wrapper card-space">
-            <div class="card card-bg">
-                <div class="card-body">
-                    <p class="card-title h5">Lorem ipsum</p>
-                    {% url 'pe_management:api_manager_events_methods_of_execution' as events_methods_of_execution_url %}
-                    {% include "manager/charts/events_methods_of_execution.html" with api_url=events_methods_of_execution_url %}
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 {% endblock clean_content %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const structuresFilterInput = document.getElementById('structuresFilter');
+        const structuresGrid = document.getElementById('structures-grid');
+        
+        if (structuresFilterInput && structuresGrid) {
+            structuresFilterInput.addEventListener('keyup', function() {
+                const value = this.value.toLowerCase();
+                const structureBoxes = structuresGrid.querySelectorAll('.structure-box');
+                
+                structureBoxes.forEach(function(box) {
+                    const text = box.textContent.toLowerCase();
+                    box.style.display = text.indexOf(value) > -1 ? '' : 'none';
+                });
+            });
+        }
+    });
+</script>
+{% endblock extra_scripts %}
+
