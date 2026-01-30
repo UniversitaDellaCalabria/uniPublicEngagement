@@ -62,8 +62,8 @@ DOCUMENTATION_URL = getattr(
 
 DASHBOARD_KPI_LIST = getattr(settings, 'DASHBOARD_KPI_LIST', [
     ('structure_counters', _('Number of events per structure')),
-    ('events_recipients', _('Event type')),
-    ('events_types', _('Recipients')),
+    ('events_types', _('Event type')),
+    ('events_recipients', _('Recipients')),
     ('events_goals', _('Sustainable Development Goals (SDGs)')),
     ('events_methods_of_execution', _('Execution method')),
     ('events_geographical_dimension', _('Geographical dimension')),
