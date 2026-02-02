@@ -84,14 +84,14 @@
       myFunction(item) {
         for (const [key, value] of Object.entries(item)) {
           let label = "Si"
-          let num_iniziative = value
+          let num = value
           if(key == 'no') {
             label = "No"
-            num_iniziative = value * -1
+            num = value * -1
           }
           options_events_monitoring_data_provided.series.push({
             'name': label,
-            'data': [num_iniziative]
+            'data': [num]
           })
         }
       },

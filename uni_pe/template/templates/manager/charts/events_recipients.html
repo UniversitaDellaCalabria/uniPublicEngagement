@@ -87,7 +87,7 @@
     methods: {
       myFunction(item) {
         options_events_recipients.xaxis.categories.push(item.recipient__description)
-        options_events_recipients.series[0].data.push(item.num_iniziative)
+        options_events_recipients.series[0].data.push(item.num)
       },
       getCounters() {
         axios

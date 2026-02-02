@@ -114,7 +114,7 @@
     methods: {
       myFunction(item) {
         options_events_promo_channels.xaxis.categories.push(item.promo_channel__description || "Nessuno")
-        options_events_promo_channels.series[0].data.push(item.num_iniziative)
+        options_events_promo_channels.series[0].data.push(item.num)
       },
       getCounters() {
         axios

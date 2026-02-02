@@ -29,8 +29,8 @@ class PublicEngagementEventStructureCounterList(generics.ListAPIView):
                 start__year=kwargs["year"],
             )
             .values("structure__name")
-            .annotate(num_iniziative=Count("id"))
-            .order_by("-num_iniziative")
+            .annotate(num=Count("id"))
+            .order_by("-num")
         )
         return events
 
@@ -52,8 +52,8 @@ class PublicEngagementEventTypesList(generics.ListAPIView):
                 event__start__year=kwargs["year"],
             )
             .values("event_type__description")
-            .annotate(num_iniziative=Count("id"))
-            .order_by("-num_iniziative")
+            .annotate(num=Count("id"))
+            .order_by("-num")
         )
         return events
 
@@ -76,8 +76,8 @@ class PublicEngagementMainProjectsList(generics.ListAPIView):
                 project_name__isnull=False,
             )
             .values("project_name__title")
-            .annotate(num_iniziative=Count("id"))
-            .order_by("-num_iniziative")
+            .annotate(num=Count("id"))
+            .order_by("-num")
         )
         return events
 
@@ -99,8 +99,8 @@ class PublicEngagementEventsRecipientsList(generics.ListAPIView):
                 event__start__year=kwargs["year"],
             )
             .values("recipient__description")
-            .annotate(num_iniziative=Count("id"))
-            .order_by("-num_iniziative")
+            .annotate(num=Count("id"))
+            .order_by("-num")
         )
         return events
 
@@ -123,7 +123,7 @@ class PublicEngagementEventsTargetsList(generics.ListAPIView):
                 target__isnull=False,
             )
             .values("target__description")
-            .annotate(num_iniziative=Count("id"))
+            .annotate(num=Count("id"))
             .order_by("target__id")
         )
         return events
@@ -147,8 +147,8 @@ class PublicEngagementEventsMethodsOfExecutionList(generics.ListAPIView):
                 method_of_execution__isnull=False,
             )
             .values("method_of_execution__description")
-            .annotate(num_iniziative=Count("id"))
-            .order_by("-num_iniziative")
+            .annotate(num=Count("id"))
+            .order_by("-num")
         )
         return events
 
@@ -171,7 +171,7 @@ class PublicEngagementEventsGeographicalDimensionList(generics.ListAPIView):
                 geographical_dimension__isnull=False,
             )
             .values("geographical_dimension")
-            .annotate(num_iniziative=Count("id"))
+            .annotate(num=Count("id"))
             .order_by("geographical_dimension")
         )
         return events
@@ -195,7 +195,7 @@ class PublicEngagementEventsOrganizingSubjectList(generics.ListAPIView):
                 organizing_subject__isnull=False,
             )
             .values("organizing_subject")
-            .annotate(num_iniziative=Count("id"))
+            .annotate(num=Count("id"))
             .order_by("organizing_subject")
         )
         return events
@@ -218,7 +218,7 @@ class PublicEngagementEventsPromoChannelList(generics.ListAPIView):
                 event__start__year=kwargs["year"],
             )
             .values("promo_channel__description")
-            .annotate(num_iniziative=Count("id"))
+            .annotate(num=Count("id"))
             .order_by("promo_channel__description")
         )
         return events
@@ -241,7 +241,7 @@ class PublicEngagementEventsPatronageRequestedList(generics.ListAPIView):
                 event__start__year=kwargs["year"],
             )
             .values("patronage_requested")
-            .annotate(num_iniziative=Count("id"))
+            .annotate(num=Count("id"))
         )
         return events
 

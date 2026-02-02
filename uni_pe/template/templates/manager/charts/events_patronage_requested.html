@@ -82,16 +82,16 @@
     },
     methods: {
       myFunction(item) {
-        let num_iniziative = item.num_iniziative
+        let num = item.num
         let label = "Richiesto"
         if(!item.patronage_requested) {
           label = "Non richiesto"
-          num_iniziative = item.num_iniziative * -1
+          num = item.num * -1
         }
         {% comment %} options_events_patronage_requested.labels.push(item.patronage_requested) {% endcomment %}
         options_events_patronage_requested.series.push({
           'name': label,
-          'data': [num_iniziative]
+          'data': [num]
         })
       },
       getCounters() {
