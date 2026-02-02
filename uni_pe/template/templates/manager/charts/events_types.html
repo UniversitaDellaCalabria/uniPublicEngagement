@@ -89,7 +89,25 @@
           }
         }
       }
-    }
+    },
+    responsive: [{
+      breakpoint: 768, // Sotto i 768px (tablet/mobile)
+      options: {
+        chart: {
+          height: 600 // Aumenta l'altezza per far respirare le barre
+        },
+        yaxis: {
+          labels: {
+            show: true
+          }
+        },
+        plotOptions: {
+          bar: {
+            barHeight: '80%', // Riduci leggermente per dare spazio tra le barre
+          }
+        }
+      }
+    }],
   };
   
   

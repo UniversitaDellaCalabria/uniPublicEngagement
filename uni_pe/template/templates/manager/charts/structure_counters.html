@@ -67,6 +67,14 @@
     legend: {
       show: false,
     },
+    responsive: [{
+      breakpoint: 768, // Sotto i 768px (tablet/mobile)
+      options: {
+        chart: {
+          height: 600 // Aumenta l'altezza per far respirare le barre
+        },
+      }
+    }],
   };
   
   const app_structure_counters = Vue.createApp({

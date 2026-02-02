@@ -64,38 +64,15 @@
     legend: {
       show: false,
     },
+    responsive: [{
+      breakpoint: 768, // Sotto i 768px (tablet/mobile)
+      options: {
+        chart: {
+          height: 600 // Aumenta l'altezza per far respirare le barre
+        },
+      }
+    }],
   };
-  {% comment %}   
-  var options_events_recipients = {
-  series: [],
-  chart: {
-  width: "100%",
-  type: 'donut',
-  },
-  dataLabels: {
-  enabled: false
-  },
-  fill: {
-  type: 'gradient',
-  },
-  legend: {
-  formatter: function(val, opts) {
-  return val + " - " + opts.w.globals.series[opts.seriesIndex]
-  }
-  },
-  labels: [],
-  responsive: [{
-  breakpoint: 700,
-  options: {
-  chart: {
-  width: "100%"
-  },
-  legend: {
-  position: 'bottom'
-  }
-  }
-  }]
-  }; {% endcomment %}
   
   const app_events_recipients = Vue.createApp({
     delimiters: ['[[', ']]'],

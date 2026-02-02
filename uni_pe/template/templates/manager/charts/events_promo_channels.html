@@ -88,8 +88,17 @@
       labels: {
         show: false,
       }
-      
     },
+    responsive: [{
+      breakpoint: 768, // Sotto i 768px (tablet/mobile)
+      options: {
+        xaxis: {
+          labels: {
+            show: false,
+          }
+        },
+      }
+    }],
   };
   
   const app_events_promo_channels = Vue.createApp({
