@@ -123,7 +123,7 @@
     },
     methods: {
       myFunction(item) {
-        options_structure_counters.xaxis.categories.push(item.structure__slug)
+        options_structure_counters.xaxis.categories.push(item.structure__slug.toUpperCase())
         options_structure_counters.series[0].data.push(item.num)
       },
       getCounters() {
