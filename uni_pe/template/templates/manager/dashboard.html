@@ -32,7 +32,7 @@
                 <select name="i" id="i" onchange="this.form.submit()" class="h-100" style="background: transparent">
                     <option value="">- {% trans "select" %} -</option>
                     {% for kpi in dashboard_kpi_list %}
-                    <option value="{{ kpi.0 }}" {% if request.GET.kpi == kpi.0 %}selected{% endif %}>{{ kpi.1 }}</option>
+                    <option value="{{ kpi.0 }}" {% if request.GET.i == kpi.0 %}selected{% endif %}>{{ kpi.1 }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -162,7 +162,7 @@
 </div>
 {% else %}
 <div class="alert alert-warning" role="alert">
-    {% trans "Select the KPI and the reference year" %}
+    {% trans "Select the indicator and the reference year" %}
 </div>
 {% endif %}
 {% endblock clean_content %}

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 16:34+0100\n"
-"PO-Revision-Date: 2026-02-03 16:35+0100\n"
+"PO-Revision-Date: 2026-02-03 16:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -1543,10 +1543,8 @@ msgstr ""
 "monitoraggio è ancora attivo"
 
 #: template/templates/operator/data_visualization.html:151
-#, fuzzy
-#| msgid "Select the KPI and the reference year"
 msgid "Select the indicator and the reference year"
-msgstr "Seleziona il KPI e l'anno di riferimento"
+msgstr "Seleziona l'indicatore e l'anno di riferimento"
 
 #: template/templates/operator/event.html:20
 msgid "Evaluation request not sent"

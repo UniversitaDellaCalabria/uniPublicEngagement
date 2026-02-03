@@ -28,7 +28,7 @@ class PublicEngagementEventStructureCounterList(generics.ListAPIView):
                 operator_evaluation_date__isnull=False,
                 start__year=kwargs["year"],
             )
-            .values("structure__name")
+            .values("structure__slug")
             .annotate(num=Count("id"))
             .order_by("-num")
         )
