@@ -22,6 +22,7 @@ def event_data(
         breadcrumbs = {
             reverse("pe_management:dashboard"): _("Home"),
             reverse("pe_management:manager_dashboard"): _("Manager"),
+            reverse("pe_management:manager_management"): _("Management"),
             reverse(
                 "pe_management:manager_events",
                 kwargs={"structure_slug": structure_slug},
@@ -128,6 +129,7 @@ def event_people(
         breadcrumbs = {
             reverse("pe_management:dashboard"): _("Home"),
             reverse("pe_management:manager_dashboard"): _("Manager"),
+            reverse("pe_management:manager_management"): _("Management"),
             reverse(
                 "pe_management:manager_events",
                 kwargs={"structure_slug": structure_slug},
@@ -312,6 +314,7 @@ def event_structures(
         breadcrumbs = {
             reverse("pe_management:dashboard"): _("Home"),
             reverse("pe_management:manager_dashboard"): _("Manager"),
+            reverse("pe_management:manager_management"): _("Management"),
             reverse(
                 "pe_management:manager_events",
                 kwargs={"structure_slug": structure_slug},

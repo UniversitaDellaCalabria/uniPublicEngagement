@@ -13,82 +13,59 @@
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_events_targets">
+        <div id="app_structure_counters">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_events_targets" v-else></div>
+          <div id="chart_structure_counter" v-else></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+
+
 <script>
-  var options_events_targets = {
-    series: [{
-      data: []
-    }],
+  var options_structure_counters = {
+    series: [
+    {
+      name: "",
+      data: [],
+    },
+    ],
     chart: {
       type: 'bar',
-      height: "auto"
+      height: "auto",
+      dropShadow: {
+        enabled: true,
+      },
     },
     plotOptions: {
       bar: {
-        barHeight: '100%',
-        distributed: true,
+        borderRadius: 0,
         horizontal: true,
-        dataLabels: {
-          position: 'bottom'
-        },
-      }
+        barHeight: '80%',
+        isFunnel: true,
+      },
     },
-    colors: [
-    '#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-    '#f48024', '#69d2e7'
-    ],
     dataLabels: {
-      enabled: false,
-      textAnchor: 'start',
-      style: {
-        colors: ['#fff']
-      },
+      enabled: true,
       formatter: function (val, opt) {
-        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+        return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
       },
-      offsetX: 0,
       dropShadow: {
-        enabled: true
-      }
+        enabled: true,
+      },
     },
-    stroke: {
-      width: 1,
-      colors: ['#fff']
-    },
+    title: {},
     xaxis: {
       categories: [],
     },
-    yaxis: {
-      labels: {
-        show: true
-      }
-    },
-    title: {},
-    subtitle: {},
-    tooltip: {
-      theme: 'dark',
-      x: {
-        show: false
-      },
-      y: {
-        title: {
-          formatter: function () {
-            return ''
-          }
-        }
-      }
+    legend: {
+      show: false,
     },
     responsive: [{
       breakpoint: 768, // Sotto i 768px (tablet/mobile)
@@ -96,21 +73,11 @@
         chart: {
           height: 600 // Aumenta l'altezza per far respirare le barre
         },
-        yaxis: {
-          labels: {
-            show: true
-          }
-        },
-        plotOptions: {
-          bar: {
-            barHeight: '80%', // Riduci leggermente per dare spazio tra le barre
-          }
-        }
       }
     }],
   };
   
-  const app_events_targets = Vue.createApp({
+  const app_structure_counters = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -122,8 +89,8 @@
     },
     methods: {
       myFunction(item) {
-        options_events_targets.xaxis.categories.push(item.target__description)
-        options_events_targets.series[0].data.push(item.num)
+        options_structure_counters.xaxis.categories.push(item.structure__name)
+        options_structure_counters.series[0].data.push(item.num)
       },
       getCounters() {
         axios
@@ -136,18 +103,19 @@
           this.error_msg = ""
           this.error_status = null
           response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_events_targets"), options_events_targets)
+          var chart = new ApexCharts(document.querySelector("#chart_structure_counter"), options_structure_counters)
           chart.render()
         })
         .catch(error => {
           if(error) {
             this.error = true
+            console.log(error)
             this.error_msg = error.response.data.detail
             this.error_status = error.response.status
           }
         })
       },
     }
-  }).mount('#app_events_targets')
+  }).mount('#app_structure_counters')
   
 </script>

@@ -8,7 +8,11 @@
 <h2>{% trans "Events" %}</h2>
 <h3 style="font-weight: lighter">{{ structure_slug|upper }}</h3>
 <div class="text-end mt-3">
-    <a href="{% url 'pe_management:operator_export' structure_slug=structure_slug %}" class="btn btn-outline-info text-lg-end">
+    <a href="{% url 'pe_management:operator_data_visualization' structure_slug=structure_slug %}" class="me-lg-1 btn btn-outline-info text-lg-end">
+        <svg class="icon icon-sm icon-info">
+            <use xlink:href="{% static 'svg/sprites.svg' %}#it-chart-line"></use>
+        </svg> {% trans "Data visualization" %}
+    </a><a href="{% url 'pe_management:operator_export' structure_slug=structure_slug %}" class="btn btn-outline-info text-lg-end">
         <svg class="icon icon-sm icon-info">
             <use xlink:href="{% static 'svg/sprites.svg' %}#it-download"></use>
         </svg> {% trans "Export" %}

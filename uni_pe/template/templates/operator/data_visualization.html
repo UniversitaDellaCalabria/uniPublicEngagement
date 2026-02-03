@@ -12,17 +12,9 @@
 
 {% block clean_content %}
 
-{% pem_settings_value 'DASHBOARD_MANAGER_KPI_LIST' as dashboard_kpi_list %}
-<div class="text-end my-3">
-    <a href="{% url 'pe_management:manager_management' %}" class="btn btn-outline-info text-lg-end">
-        <svg class="icon icon-sm icon-info">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-tool"></use>
-        </svg> {% trans "Management" %}
-    </a>
-</div>
-
+{% pem_settings_value 'DASHBOARD_OPERATOR_KPI_LIST' as dashboard_kpi_list %}
 <p class="h4">{% trans "Data visualization" %}</p>
-<p>{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." %}</p>
+{% comment %} <p>{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." %}</p> {% endcomment %}
 
 <form method="GET" action="">
     <div class="row my-5">
@@ -32,7 +24,7 @@
                 <select name="i" id="i" onchange="this.form.submit()" class="h-100" style="background: transparent">
                     <option value="">- {% trans "select" %} -</option>
                     {% for kpi in dashboard_kpi_list %}
-                    <option value="{{ kpi.0 }}" {% if request.GET.kpi == kpi.0 %}selected{% endif %}>{{ kpi.1 }}</option>
+                    <option value="{{ kpi.0 }}" {% if request.GET.i == kpi.0 %}selected{% endif %}>{{ kpi.1 }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -49,7 +41,7 @@
             </div>        
         </div>
         <div class="col-12 col-lg-3 mt-3 mt-lg-0">
-            <a href="{% url 'pe_management:manager_management' %}" class="btn btn-xs btn-outline-danger" title="Reset">
+            <a href="{% url 'pe_management:operator_data_visualization' structure_slug=structure.slug %}" class="btn btn-xs btn-outline-danger" title="Reset">
                 <svg class="icon icon-sm icon-danger">
                     <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
                 </svg> Reset
@@ -60,13 +52,6 @@
 
 {% if request.GET.i and request.GET.year %}
 <div class="row">
-    
-    <!-- Numero progetti per ogni struttura-->
-    {% if request.GET.i == 'structure_counters' %}
-    {% url 'pe_management:api_manager_structure_counters' as structure_counters_url %}
-    {% include "manager/charts/structure_counters.html" with api_url=structure_counters_url year=request.GET.year %}
-    {% endif %}
-    <!-- END Numero progetti per ogni struttura-->
     
     <!-- Destinatari -->
     {% if request.GET.i == 'events_recipients' %}
@@ -162,7 +147,7 @@
 </div>
 {% else %}
 <div class="alert alert-warning" role="alert">
-    {% trans "Select the KPI and the reference year" %}
+    {% trans "Select the indicator and the reference year" %}
 </div>
 {% endif %}
-{% endblock clean_content %}
+{% endblock %}
