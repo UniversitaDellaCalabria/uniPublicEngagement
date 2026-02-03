@@ -27,66 +27,42 @@
 </div>
 <script>
   var options_events_recipients = {
-    series: [{
-      data: []
-    }],
+    series: [
+    {
+      name: "",
+      data: [],
+    },
+    ],
     chart: {
       type: 'bar',
-      height: "auto"
+      height: 400,
+      dropShadow: {
+        enabled: true,
+      },
     },
     plotOptions: {
       bar: {
-        barHeight: '100%',
-        distributed: true,
+        borderRadius: 0,
         horizontal: true,
-        dataLabels: {
-          position: 'bottom'
-        },
-      }
+        barHeight: '80%',
+        isFunnel: true,
+      },
     },
-    colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-    '#f48024', '#69d2e7'
-    ],
     dataLabels: {
-      enabled: false,
-      textAnchor: 'start',
-      style: {
-        colors: ['#fff']
-      },
+      enabled: true,
       formatter: function (val, opt) {
-        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+        return opt.w.globals.labels[opt.dataPointIndex] + ':  ' + val
       },
-      offsetX: 0,
       dropShadow: {
-        enabled: true
-      }
+        enabled: true,
+      },
     },
-    stroke: {
-      width: 1,
-      colors: ['#fff']
-    },
+    title: {},
     xaxis: {
       categories: [],
     },
-    yaxis: {
-      labels: {
-        show: true
-      }
-    },
-    title: {},
-    subtitle: {},
-    tooltip: {
-      theme: 'dark',
-      x: {
-        show: false
-      },
-      y: {
-        title: {
-          formatter: function () {
-            return ''
-          }
-        }
-      }
+    legend: {
+      show: false,
     },
     responsive: [{
       breakpoint: 768, // Sotto i 768px (tablet/mobile)
@@ -94,16 +70,6 @@
         chart: {
           height: 600 // Aumenta l'altezza per far respirare le barre
         },
-        yaxis: {
-          labels: {
-            show: true
-          }
-        },
-        plotOptions: {
-          bar: {
-            barHeight: '80%', // Riduci leggermente per dare spazio tra le barre
-          }
-        }
       }
     }],
   };
