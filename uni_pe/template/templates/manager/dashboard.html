@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "adminlte/base.html" %}
 
 {% load i18n %}
 {% load static %}
@@ -14,10 +14,8 @@
 
 {% pem_settings_value 'DASHBOARD_MANAGER_KPI_LIST' as dashboard_kpi_list %}
 <div class="text-end my-3">
-    <a href="{% url 'pe_management:manager_management' %}" class="btn btn-outline-info text-lg-end">
-        <svg class="icon icon-sm icon-info">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-tool"></use>
-        </svg> {% trans "Management" %}
+    <a href="{% url 'pe_management:manager_management' %}" class="btn btn-info text-lg-end">
+         <i class="nav-icon bi bi-tools"></i> {% trans "Management" %}
     </a>
 </div>
 
@@ -26,7 +24,7 @@
 
 <form method="GET" action="">
     <div class="row my-5">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-auto">
             <div class="select-wrapper h-100">
                 <label for="i">{% trans "Indicator" %}</label>
                 <select name="i" id="i" onchange="this.form.submit()" class="h-100" style="background: transparent">
@@ -37,7 +35,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-12 col-lg-3 mt-4 mt-lg-0">
+        <div class="col-12 col-lg-auto mt-4 mt-lg-0">
             <div class="select-wrapper h-100">
                 <label for="year">{% trans "Year" %}</label>
                 <select name="year" id="year" class="h-100" onchange="this.form.submit()" style="background: transparent">
@@ -48,11 +46,9 @@
                 </select>
             </div>        
         </div>
-        <div class="col-12 col-lg-3 mt-3 mt-lg-0">
-            <a href="{% url 'pe_management:manager_management' %}" class="btn btn-xs btn-outline-danger" title="Reset">
-                <svg class="icon icon-sm icon-danger">
-                    <use xlink:href="{% static 'svg/sprites.svg' %}#it-close-circle"></use>
-                </svg> Reset
+        <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+            <a href="{% url 'pe_management:manager_dashboard' %}" class="btn btn-xs btn-danger" title="Reset">
+                Reset
             </a>
         </div>
     </div>

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "adminlte/base.html" %}
 
 {% load i18n %}
 {% load static %}
@@ -11,7 +11,7 @@
 <h3 style="font-weight: lighter">{% trans "Data summary" %}</h3>
 {% endblock top_content %}
 
-{% block page_content %}
+{% block clean_content %}
 {% block alerts %}
 {% if not event.is_active %}
 <div class="alert alert-danger mb-5" role="alert">
@@ -41,23 +41,18 @@
             <div class="card card-bg no-after">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <svg class="icon">
-                            <use href="{% static 'svg/sprites.svg' %}#it-user"></use>
-                        </svg>
+                        <i class="nav-icon bi bi-person"></i>
                         {% trans 'Event referent or his delegate' %}
                     </h5>
+                    <br>
                     <span>
                         {% if not event.to_evaluate %}
                         <span class="badge bg-warning">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-warning-circle"></use>
-                            </svg> {% trans "Evaluation to request" %}
+                            <i class="nav-icon bi bi-exclamation"></i> {% trans "Evaluation to request" %}
                         </span>
                         {% elif event.evaluation_request_date %}
                         <span class="badge bg-success">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
-                            </svg> {% trans "Evaluation requested" %}
+                            <i class="nav-icon bi bi-check"></i>{% trans "Evaluation requested" %}
                         </span>
                         <hr>
                         <ul style="font-size:1rem">
@@ -78,35 +73,26 @@
             <div class="card card-bg no-after">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <svg class="icon">
-                            <use href="{% static 'svg/sprites.svg' %}#it-box"></use>
-                        </svg>
+                        <i class="nav-icon bi bi-bank"></i>
                         {{ event.structure }}
                     </h5>
+                    <br>
                     <span>
                         {% if not event.operator_taken_date %}
                         <span class="badge bg-info">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                            </svg>  {% trans "To be handled" %}
+                            <i class="nav-icon bi bi-clock"></i>  {% trans "To be handled" %}
                         </span>
                         {% elif event.has_been_rejected %}
                         <span class="badge bg-danger">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-error"></use>
-                            </svg>  {% trans "Rejected (singular)" %}
+                            <i class="nav-icon bi bi-exclamation-octagon"></i>  {% trans "Rejected (singular)" %}
                         </span>
                         {% elif event.has_been_approved %}
                         <span class="badge bg-success">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
-                            </svg>  {% trans "Approved (singular)" %}
+                            <i class="nav-icon bi bi-check"></i>  {% trans "Approved (singular)" %}
                         </span>
                         {% elif event.operator_taken_date and not event.operator_evaluation_date%}
                         <span class="badge bg-warning">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                            </svg>  {% trans "To evaluate" %}
+                            <i class="nav-icon bi bi-clock"></i>  {% trans "To evaluate" %}
                         </span>
                         {% endif %}
 
@@ -149,35 +135,26 @@
             <div class="card card-bg no-after">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <svg class="icon">
-                            <use href="{% static 'svg/sprites.svg' %}#it-flag"></use>
-                        </svg>
+                        <i class="nav-icon bi bi-flag"></i>
                         {% trans 'Patronage' %}
                     </h5>
+                    <br>
                     <span>
                         {% if not event.patronage_operator_taken_date %}
                         <span class="badge bg-info">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                            </svg>  {% trans "To be handled" %}
+                            <i class="nav-icon bi bi-clock"></i>  {% trans "To be handled" %}
                         </span>
                         {% elif event.has_patronage_denied %}
                         <span class="badge bg-danger">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-error"></use>
-                            </svg>  {% trans "Denied patronage" %}
+                            <i class="nav-icon bi bi-exclamation-octagon"></i>  {% trans "Denied patronage" %}
                         </span>
                         {% elif event.has_patronage_granted %}
                         <span class="badge bg-success">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
-                            </svg>  {% trans "Patronage granted" %}
+                            <i class="nav-icon bi bi-check"></i>  {% trans "Patronage granted" %}
                         </span>
                         {% elif event.patronage_operator_taken_date and not event.patronage_granted_date%}
                         <span class="badge bg-warning">
-                            <svg class="icon icon-sm icon-white">
-                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-clock"></use>
-                            </svg>  {% trans "To evaluate" %}
+                            <i class="nav-icon bi bi-clock"></i>  {% trans "To evaluate" %}
                         </span>
                         {% endif %}
 
@@ -456,9 +433,9 @@
             </td>
             <td>
                 {% if event.report.monitoring_activity %}
-                <svg class="icon icon-sm icon-success"><use href="{% static 'svg/sprites.svg' %}#it-check-circle"></use></svg>
+                <i class="nav-icon bi bi-check-circle"></i>
                 {% else %}
-                <svg class="icon icon-sm icon-danger"><use href="{% static 'svg/sprites.svg' %}#it-close-circle"></use></svg>
+                <i class="nav-icon bi bi-x-circle"></i>
                 {% endif %}
             </td>
         </tr>
@@ -469,9 +446,9 @@
             </td>
             <td>
                 {% if event.report.impact_evaluation %}
-                <svg class="icon icon-sm icon-success"><use href="{% static 'svg/sprites.svg' %}#it-check-circle"></use></svg>
+                <i class="nav-icon bi bi-check-circle"></i>
                 {% else %}
-                <svg class="icon icon-sm icon-danger"><use href="{% static 'svg/sprites.svg' %}#it-close-circle"></use></svg>
+                <i class="nav-icon bi bi-x-circle"></i>
                 {% endif %}
             </td>
         </tr>
@@ -545,4 +522,4 @@
 <div class="mt-4">
     {% include "obj_logs.html" with logs=logs %}
 </div>
-{% endblock page_content %}
+{% endblock clean_content %}

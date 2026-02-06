@@ -10,10 +10,8 @@
     {% trans "In this section you can view the Public Engagement events for which you are referent or to which you have contributed. By clicking on the green button you can register a new initiative." %}
 </p>
 <div class="text-end mt-3 mb-5">
-    <a href="{% url 'pe_management:user_new_event_choose_referent' %}" class="btn btn-outline-success text-lg-end">
-        <svg class="icon icon-sm icon-success">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-plus-circle"></use>
-        </svg> {% trans "Add new event" %}
+    <a href="{% url 'pe_management:user_new_event_choose_referent' %}" class="btn btn-success text-lg-end">
+        <i class="nav-icon bi bi-plus-circle"></i> {% trans "Add new event" %}
     </a>
 </div>
 {% endblock top_content %}

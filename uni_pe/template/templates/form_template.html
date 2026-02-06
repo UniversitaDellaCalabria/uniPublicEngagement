@@ -6,7 +6,7 @@
         {% if field.field.widget.input_type != 'hidden' %}
         <div class="p-0 pb-4 mb-3">
             <span class="h6">
-                {{ field.label_tag }}{% if field.field.required %}*{% endif %}
+                <b>{{ field.label_tag }}{% if field.field.required %}*{% endif %}</b>
             </span>
         {% endif %}
         {{ field }}
@@ -28,9 +28,7 @@
     {% csrf_token %}
     <div class="d-grid gap-2">
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#action">
-            <svg class="icon icon-sm icon-white">
-                <use xlink:href="{% static 'svg/sprites.svg' %}#it-plus-circle"></use>
-            </svg>
+            <i class="nav-icon bi bi-plus-circle"></i>
             {% trans "Submit" %}
         </button>
     </div>
@@ -41,7 +39,7 @@
                 <div class="modal-header">
                    <h2 class="modal-title h5 " id="actionTitle">{% trans "Confirm" %}</h2>
                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
-                      <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
+                      <i class="nav-icon bi bi-x-circle"></i>
                    </button>
                 </div>
                 <div class="modal-body">

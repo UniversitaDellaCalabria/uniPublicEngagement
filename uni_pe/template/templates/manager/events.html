@@ -8,10 +8,8 @@
 <h2>{% trans "Events" %}</h2>
 <h3 style="font-weight: lighter">{{ structure_slug|upper }}</h3>
 <div class="text-end mt-3 mb-5">
-    <a href="{% url 'pe_management:manager_new_event_choose_referent' structure_slug=structure_slug %}" class="btn btn-outline-success text-lg-end">
-        <svg class="icon icon-sm icon-success">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-plus-circle"></use>
-        </svg> {% trans "Add new event" %}
+    <a href="{% url 'pe_management:manager_new_event_choose_referent' structure_slug=structure_slug %}" class="btn btn-success text-lg-end">
+        <i class="nav-icon bi bi-plus-circle"></i> {% trans "Add new event" %}
     </a>
 </div>
 {% endblock top_content %}

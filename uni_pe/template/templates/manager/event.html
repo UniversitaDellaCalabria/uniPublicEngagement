@@ -10,44 +10,33 @@
 <div class="text-end mt-5">
     {% if event.is_editable_by_manager %}
     <a class="btn btn-outline-secondary" href="{% url 'pe_management:manager_event_basic_info' structure_slug=structure_slug event_id=event.pk %}">
-        <svg class="icon icon-sm icon-info">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
-        </svg> {% trans "General informations" %}
+        <i class="nav-icon bi bi-pencil"></i> {% trans "General informations" %}
     </a>
     <a class="btn btn-{% if event.data %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:manager_event_data' structure_slug=structure_slug event_id=event.pk %}">
-        <svg class="icon icon-sm icon-{% if event.data %}info{% else %}white{% endif %}">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-{% if event.data %}pencil{% else %}plus-circle{% endif %}"></use>
-        </svg> {% trans "Event data" %}
+        <i class="nav-icon bi bi-{% if event.data %}pencil{% else %}plus-circle{% endif %}"></i>
+        {% trans "Event data" %}
     </a>
     {% endif %}
 
     {% if event.data and event.is_editable_by_manager %}
     <a class="btn btn-outline-secondary" href="{% url 'pe_management:manager_event_people' structure_slug=structure_slug event_id=event.pk %}">
-        <svg class="icon icon-sm icon-info">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
-        </svg> {% trans "Other involved personnel" %}
+        <i class="nav-icon bi bi-pencil"></i> {% trans "Other involved personnel" %}
     </a>
     <a class="btn btn-outline-secondary" href="{% url 'pe_management:manager_event_structures' structure_slug=structure_slug event_id=event.pk %}">
-        <svg class="icon icon-sm icon-info">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
-        </svg> {% trans "Other involved structures" %}
+        <i class="nav-icon bi bi-pencil"></i> {% trans "Other involved structures" %}
     </a>
     {% endif %}
 
     {% if event.has_report_editable_by_manager %}
     <a class="btn btn-xs btn-{% if event.report %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:manager_event_report' structure_slug=structure_slug event_id=event.pk %}">
-        <svg class="icon icon-sm icon-{% if event.report %}info{% else %}white{% endif %}">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-{% if event.report %}pencil{% else %}plus-circle{% endif %}"></use>
-        </svg> {% trans "Monitoring" %}
+        <i class="nav-icon bi bi-{% if event.report %}pencil{% else %}plus-circle{% endif %}"></i> {% trans "Monitoring" %}
     </a>
     {% endif %}
 
     {% if event.is_manageable_by_manager %}
     {% if event.is_active %}
     <a href="{% url 'pe_management:manager_event_enable_disable' structure_slug=structure_slug event_id=event.pk %}" class="btn btn-danger">
-        <svg class="icon icon-sm icon-white">
-            <use xlink:href="{% static 'svg/sprites.svg' %}#it-ban"></use>
-        </svg> {% trans "Disable" %}
+        <i class="nav-icon bi bi-ban"></i> {% trans "Disable" %}
     </a>
     {% else %}
     <a href="{% url 'pe_management:manager_event_enable_disable' structure_slug=structure_slug event_id=event.pk %}" class="btn btn-success">

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}}
+{% extends "adminlte/base.html" %}
 
 {% load i18n %}
 {% load static %}
@@ -19,6 +19,6 @@
 {% endif %}
 {% endblock top_content %}
 
-{% block page_content %}
+{% block clean_content %}
 {% include "form_template.html" with form=form %}
-{% endblock page_content %}
+{% endblock clean_content %}

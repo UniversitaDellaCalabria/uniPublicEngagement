@@ -3,11 +3,7 @@
 
 <div id="app_id_{{ widget.name }}" class="select-wrapper">
     <div class="input-group">
-        <span class="input-group-text">
-            <svg class="icon icon-sm">
-                <use href="{% static 'svg/sprites.svg' %}#it-search"></use>
-            </svg>
-        </span>
+        <span class="input-group-text"><i class="nav-icon bi bi-search"></i></span>
         <input type="text" class="form-control" id="{{ widget.name }}_search" @input="search" placeholder="Cerca...">
     </div>
     <select name="api_select_{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} @change="set_value" v-if="search_terms">

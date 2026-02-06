@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "adminlte/base.html" %}
 
 {% load i18n %}
 {% load static %}
@@ -10,7 +10,7 @@
 <h3 style="font-weight: lighter">{% trans "Other involved personnel" %}</h3>
 {% endblock top_content %}
 
-{% block page_content %}
+{% block clean_content %}
 {% pem_settings_value "API_ADDRESSBOOK" as api_addressbook %}
 <div id="addressbook">
     <div class="mt-3" v-if="person_id != ''">
@@ -41,27 +41,16 @@
     <div v-else>
         <div class="row">
             <div class="col-12">
-                <div class="card-wrapper card-space">
-                    <div class="card card-bg no-after">
-                        <div class="card-body">
-                            <div class="row form-group">
-                                <div class="col-md">
-                                    <div class="input-group">
-                                        <label for="search"></label>
-                                        <input type="text"
-                                               class="form-control"
-                                               id="search"
-                                               name="search"
-                                               placeholder="{% trans 'Surname' %}"
-                                               v-model="search_terms"
-                                               v-on:keyup.enter="search()">
-                                        <div class="input-group-append">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="nav-icon bi bi-search"></i></span>
+                    <input type="text"
+                    class="form-control"
+                    id="search"
+                    name="search"
+                    placeholder="{% trans 'Surname' %}"
+                    v-model="search_terms"
+                    v-on:keyup.enter="search()">
+                    <div class="input-group-append">
                     </div>
                 </div>
             </div>
@@ -86,9 +75,7 @@
                                             </div>
                                             <div v-for="email in item.Email">
                                                 <span>
-                                                    <svg class="icon icon-sm icon-muted me-2">
-                                                        <use xlink:href="{% static 'svg/sprites.svg' %}#it-mail"></use>
-                                                    </svg>
+                                                    <i class="nav-icon bi bi-envelope"></i>
                                                     <a :href="'mailto:'+email">[[ email ]]</a>
                                                 </span>
                                                 <br>
@@ -107,52 +94,52 @@
     </div>
 </div>
 <script>
-const app = Vue.createApp({
-    delimiters: ['[[', ']]'],
-    data () {
-        return {
-            data: [],
-            is_loading: true,
-            person_id: '',
-            person_name: '',
-            search_terms: '',
-            url: '{{ api_addressbook }}',
-            controller: null
-        }
-    },
-    mounted () {
-        this.getData()
-    },
-    methods: {
-        set_person(id, name, surname) {
-            this.person_id = id
-            this.person_name = name
+    const app = Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data () {
+            return {
+                data: [],
+                is_loading: true,
+                person_id: '',
+                person_name: '',
+                search_terms: '',
+                url: '{{ api_addressbook }}',
+                controller: null
+            }
         },
-        delete_selected_person() {
-            this.person_id = ''
-            this.person_name = ''
+        mounted () {
+            this.getData()
         },
-        search() {
-            this.controller.abort()
-            this.getData(page=1);
-        },
-        getData(page=1, search=this.search_terms) {
-            this.controller = new AbortController()
-            let signal = this.controller.signal
-            let url = this.url+'?page='+page
-            if(search) url += '&search='+search
-            this.is_loading = true
-            axios
+        methods: {
+            set_person(id, name, surname) {
+                this.person_id = id
+                this.person_name = name
+            },
+            delete_selected_person() {
+                this.person_id = ''
+                this.person_name = ''
+            },
+            search() {
+                this.controller.abort()
+                this.getData(page=1);
+            },
+            getData(page=1, search=this.search_terms) {
+                this.controller = new AbortController()
+                let signal = this.controller.signal
+                let url = this.url+'?page='+page
+                if(search) url += '&search='+search
+                this.is_loading = true
+                axios
                 .get(url, {signal})
                 .then(
-                    response => {
-                        this.is_loading = false
-                        this.data = response.data
-                    }
+                response => {
+                    this.is_loading = false
+                    this.data = response.data
+                }
                 )
                 .catch((error) => {});
+            },
         },
-    },
-}).mount('#addressbook')
+    }).mount('#addressbook')
 </script>
-{% endblock page_content %}
+{% endblock clean_content %}

@@ -3,24 +3,17 @@
 
 
 {% if breadcrumbs %}
-<nav class="breadcrumb-container" aria-label="Percorso di navigazione" style="border-bottom: 1px solid #ddd;">
-    <div class="container">
-        <div>
-            <ol class="breadcrumb my-2" style="padding-right: 16px; padding-left: 16px">
-            {% for k,v in breadcrumbs.items %}
-                {% if forloop.last %}
-                <li class="breadcrumb-item active" aria-current="page">
-                    <a class="breadcrumb-item-active-a" href="{{ k }}">{{ v|truncatechars:40 }}</a>
-                </li>
-                {% else %}
-                <li class="breadcrumb-item">
-                    <a href="{{ k }}">{{ v|truncatechars:25 }}</a>
-                    <span class="separator">/</span>
-                </li>
-                {% endif %}
-            {% endfor %}
-            </ol>
-        </div>
-    </div>
-</nav>
+<ul class="navbar-nav">
+    {% for k,v in breadcrumbs.items %}
+    {% if forloop.last %}
+    <li class="nav-item d-none d-md-block">
+        <a href="{{ k }}" class="nav-link">{{ v|truncatechars:40 }}</a>
+    </li>
+    {% else %}
+    <li class="nav-item d-none d-md-block">
+        <a href="{{ k }}" class="nav-link">{{ v|truncatechars:25 }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
 {% endif %}
