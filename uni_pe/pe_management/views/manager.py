@@ -43,7 +43,7 @@ def dashboard(request, structure=None):
 
 @login_required
 @is_manager
-def structures_management(request, structure=None):
+def structures_management(request):
     template = "manager/management.html"
     breadcrumbs = {
         reverse("pe_management:dashboard"): _("Home"),
