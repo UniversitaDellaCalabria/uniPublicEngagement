@@ -43,7 +43,7 @@ def dashboard(request, structure=None):
 
 @login_required
 @is_manager
-def management(request, structure=None):
+def structures_management(request, structure=None):
     template = "manager/management.html"
     breadcrumbs = {
         reverse("pe_management:dashboard"): _("Home"),
@@ -377,12 +377,10 @@ def event_basic_info(request, structure_slug, event_id, event=None, structure=No
     }
 
     template = "event_basic_info.html"
-    form = PublicEngagementEventOperatorForm(request=request, instance=event)
+    form = PublicEngagementEventOperatorForm(instance=event)
     # post
     if request.method == "POST":
-        form = PublicEngagementEventOperatorForm(
-            request=request, instance=event, data=request.POST
-        )
+        form = PublicEngagementEventOperatorForm(instance=event, data=request.POST)
         if form.is_valid():
             event = form.save(commit=False)
             if event.created_by_manager and not event.is_over():

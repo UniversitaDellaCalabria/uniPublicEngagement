@@ -268,12 +268,10 @@ def event_basic_info(request, structure_slug, event_id, structure=None, event=No
     }
 
     template = "event_basic_info.html"
-    form = PublicEngagementEventOperatorForm(request=request, instance=event)
+    form = PublicEngagementEventOperatorForm(instance=event)
     # post
     if request.method == "POST":
-        form = PublicEngagementEventOperatorForm(
-            request=request, instance=event, data=request.POST
-        )
+        form = PublicEngagementEventOperatorForm(instance=event, data=request.POST)
         if form.is_valid():
             event = form.save(commit=False)
             event.modified_by = request.user

@@ -232,7 +232,7 @@ urlpatterns = [
     path(f"{prefix}/{manager_prefix}/", manager.dashboard, name="manager_dashboard"),
     path(
         f"{prefix}/{manager_prefix}/{management_prefix}/",
-        manager.management,
+        manager.structures_management,
         name="manager_management",
     ),
     path(
