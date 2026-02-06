@@ -402,7 +402,7 @@ urlpatterns = [
     path(
         f"{prefix}/{api_prefix}/{operator_prefix}/{patronage_prefix}/<str:structure_slug>/events/",
         api_patronage_operator.PublicEngagementEventList.as_view(),
-        name="api_evaluation_operator_operator_events",
+        name="api_patronage_operator_events",
     ),
     # manager
     path(
