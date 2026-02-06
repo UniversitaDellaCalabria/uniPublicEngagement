@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext_lazy as _
 from organizational_area.models import *
@@ -58,7 +60,7 @@ def download_event_poster(request, event_id):
             permission_granted = True
 
     if not permission_granted:
-        raise Http403
+        raise PermissionDenied()
 
     data = getattr(event, "data", None)
     if data and data.poster:

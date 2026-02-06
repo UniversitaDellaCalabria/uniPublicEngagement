@@ -39,6 +39,7 @@ def is_editable_by_manager(func_to_decorate):
     def new_func(*original_args, **original_kwargs):
         request = original_args[0]
         event_id = original_kwargs["event_id"]
+        structure_slug = original_kwargs["structure_slug"]
         event = get_object_or_404(PublicEngagementEvent, pk=event_id)
         if event.is_editable_by_manager():
             original_kwargs["event"] = event
@@ -64,6 +65,7 @@ def is_manageable_by_manager(func_to_decorate):
     def new_func(*original_args, **original_kwargs):
         request = original_args[0]
         event_id = original_kwargs["event_id"]
+        structure_slug = original_kwargs["structure_slug"]
         event = get_object_or_404(PublicEngagementEvent, pk=event_id)
         if event.is_manageable_by_manager():
             original_kwargs["event"] = event

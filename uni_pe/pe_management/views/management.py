@@ -352,7 +352,7 @@ def event_structures(
                 messages.add_message(
                     request,
                     messages.ERROR,
-                    "{} {}".format(person, _("is the event referent")),
+                    "{} {}".format(structure, _("is the event structure")),
                 )
             elif data.involved_structure.filter(pk=new_structure.pk).exists():
                 messages.add_message(

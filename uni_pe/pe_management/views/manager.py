@@ -21,7 +21,7 @@ from ..utils import *
 
 @login_required
 @is_manager
-def dashboard(request, structure=None):
+def dashboard(request):
     template = "manager/dashboard.html"
     breadcrumbs = {reverse("pe_management:dashboard"): _("Home"), "#": _("Manager")}
 
@@ -266,7 +266,7 @@ def new_event_basic_info(request, structure_slug, structure=None):
             request=request, structure_slug=structure_slug, data=request.POST
         )
         if form.is_valid():
-            year = form.cleaned_data["start"].year
+            # year = form.cleaned_data["start"].year
             event = form.save(commit=False)
 
             # check sull'anno di inizio dell'evento
@@ -455,7 +455,7 @@ def event_data(request, structure_slug, event_id, event=None, structure=None):
         by_manager=True,
         structure=structure,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:manager_event",
             structure_slug=structure_slug,
@@ -476,7 +476,7 @@ def event_people(request, structure_slug, event_id, event=None, structure=None):
         by_manager=True,
         structure=structure,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:manager_event",
             structure_slug=structure_slug,
@@ -500,7 +500,7 @@ def event_people_delete(
         person_id=person_id,
         by_manager=True,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:manager_event",
             structure_slug=structure_slug,
@@ -521,7 +521,7 @@ def event_structures(request, structure_slug, event_id, event=None, structure=No
         by_manager=True,
         structure=structure,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:manager_event",
             structure_slug=structure_slug,
@@ -545,7 +545,7 @@ def event_structures_delete(
         structure_id=structure_id,
         by_manager=True,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:manager_event",
             structure_slug=structure_slug,
