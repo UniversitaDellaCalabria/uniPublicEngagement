@@ -25,9 +25,12 @@
 {% endif %}
 {% endcomment %}
 
-{% if not event.has_report_editable and event.evaluation_request_date %}
+{% if not event.has_report_editable.0 and event.evaluation_request_date %}
 <div class="alert alert-warning" role="alert">
-    {% trans "Unable to edit monitoring data" %}
+    {% trans "Unable to edit monitoring data" %}:
+    <ul style="font-size: 1rem">
+        <li>{{ event.has_report_editable.1 }}</li>
+    </ul>
 </div>
 {% endif %}
 
@@ -79,7 +82,7 @@
         </a>
         {% endif %}
 
-        {% if event.has_report_editable %}
+        {% if event.has_report_editable.0 %}
         <a class="btn btn-xs btn-{% if event.report %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:user_event_report' event_id=event.pk %}">
             <svg class="icon icon-sm icon-{% if event.report %}info{% else %}white{% endif %}">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-{% if event.report %}pencil{% else %}plus-circle{% endif %}"></use>

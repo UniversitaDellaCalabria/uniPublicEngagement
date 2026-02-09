@@ -1,18 +1,16 @@
 import sys
-
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
 from organizational_area.models import *
 from template.models import *
 from template.validators import validate_file_size
 
-from . settings import OPERATOR_OFFICE, EVALUATION_TIME_DELTA
-from . validators import validate_poster_extension
+from .settings import EVALUATION_TIME_DELTA
+from .validators import validate_poster_extension
 
 
 def _get_year_choices():
@@ -21,17 +19,18 @@ def _get_year_choices():
 
 
 _year_choices = _get_year_choices()
-if 'makemigrations' in sys.argv or 'migrate' in sys.argv:  # pragma: no cover
-    _year_choices = [('', '')]
+if "makemigrations" in sys.argv or "migrate" in sys.argv:  # pragma: no cover
+    _year_choices = [("", "")]
 
 
 def _poster_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return "public-engagement/events/{0}/{1}".format(instance.event.id,
-                                                     filename)
+    return "public-engagement/events/{0}/{1}".format(instance.event.id, filename)
 
 
-class PublicEngagementAnnualMonitoring(ActivableModel, CreatedModifiedBy, TimeStampedModel):
+class PublicEngagementAnnualMonitoring(
+    ActivableModel, CreatedModifiedBy, TimeStampedModel
+):
     # serve per definire chiudere o aprire le attività di PE in un anno
     year = models.IntegerField(unique=True)
 
@@ -60,61 +59,113 @@ class PublicEngagementEventType(ActivableModel, CreatedModifiedBy, TimeStampedMo
 
 
 class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel):
-    title = models.CharField(_("Event title"), default='', max_length=300)
+    title = models.CharField(_("Event title"), default="", max_length=300)
     start = models.DateTimeField(_("Start"))
     end = models.DateTimeField(_("End"))
     # dati referente
-    referent = models.ForeignKey(get_user_model(),
-                                 on_delete=models.PROTECT,
-                                 related_name='%(class)s_referent',
-                                 verbose_name=_("Referent"))
-    structure = models.ForeignKey(OrganizationalStructure,
-                                  on_delete=models.PROTECT,
-                                  limit_choices_to={
-                                      "is_active": True
-                                  },
-                                  verbose_name=_("Affiliation structure")
-                                  )
+    referent = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+        related_name="%(class)s_referent",
+        verbose_name=_("Referent"),
+    )
+    structure = models.ForeignKey(
+        OrganizationalStructure,
+        on_delete=models.PROTECT,
+        limit_choices_to={"is_active": True},
+        verbose_name=_("Affiliation structure"),
+    )
     # pronto per la validazione
-    to_evaluate = models.BooleanField(
-        "Richiesta di validazione", default=False)
+    to_evaluate = models.BooleanField("Richiesta di validazione", default=False)
     evaluation_request_date = models.DateTimeField(
-        "Data richiesta di validazione", null=True, blank=True)
-    evaluation_request_by = models.ForeignKey(get_user_model(
-    ), on_delete=models.PROTECT, null=True, blank=True, related_name='evaluation_request_by', verbose_name="Validazione richiesta da", )
+        "Data richiesta di validazione", null=True, blank=True
+    )
+    evaluation_request_by = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="evaluation_request_by",
+        verbose_name="Validazione richiesta da",
+    )
     # evaluation operator
     operator_taken_date = models.DateTimeField(
-        "Data presa in carico operatore", null=True, blank=True)
-    operator_taken_by = models.ForeignKey(get_user_model(
-    ), on_delete=models.PROTECT, null=True, blank=True, verbose_name="Presa in carico da operatore", related_name='operator_taken_by')
+        "Data presa in carico operatore", null=True, blank=True
+    )
+    operator_taken_by = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        verbose_name="Presa in carico da operatore",
+        related_name="operator_taken_by",
+    )
     operator_evaluation_date = models.DateTimeField(
-        "Data validazione operatore", null=True, blank=True)
+        "Data validazione operatore", null=True, blank=True
+    )
     operator_evaluation_success = models.BooleanField(
-        "Validazione operatore positiva", default=False)
-    operator_evaluated_by = models.ForeignKey(get_user_model(
-    ), on_delete=models.PROTECT, null=True, blank=True, related_name='operator_evaluated_by', verbose_name="Validazione eseguita da operatore",)
-    operator_notes = models.TextField("Note validazione operatore", default='', blank=True)
+        "Validazione operatore positiva", default=False
+    )
+    operator_evaluated_by = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="operator_evaluated_by",
+        verbose_name="Validazione eseguita da operatore",
+    )
+    operator_notes = models.TextField(
+        "Note validazione operatore", default="", blank=True
+    )
     # patronage operator
     patronage_operator_taken_date = models.DateTimeField(
-        "Data presa in carico operatore patrocinio", null=True, blank=True)
-    patronage_operator_taken_by = models.ForeignKey(get_user_model(
-    ), on_delete=models.PROTECT, null=True, blank=True, related_name='patronage_taken_by', verbose_name="Presa in carico da operatore patrocinio",)
-    patronage_granted = models.BooleanField("Patrocinio concesso", default=False,)
-    patronage_granted_date = models.DateTimeField("Data validazione richiesta patrocinio", null=True, blank=True,)
-    patronage_granted_by = models.ForeignKey(get_user_model(
-    ), on_delete=models.PROTECT, null=True, blank=True, related_name='patronage_granted_by', verbose_name="Validazione patrocinio eseguita da operatore",)
-    patronage_granted_notes = models.TextField("Note concessione patrocinio", default='', blank=True,)
+        "Data presa in carico operatore patrocinio", null=True, blank=True
+    )
+    patronage_operator_taken_by = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="patronage_taken_by",
+        verbose_name="Presa in carico da operatore patrocinio",
+    )
+    patronage_granted = models.BooleanField(
+        "Patrocinio concesso",
+        default=False,
+    )
+    patronage_granted_date = models.DateTimeField(
+        "Data validazione richiesta patrocinio",
+        null=True,
+        blank=True,
+    )
+    patronage_granted_by = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="patronage_granted_by",
+        verbose_name="Validazione patrocinio eseguita da operatore",
+    )
+    patronage_granted_notes = models.TextField(
+        "Note concessione patrocinio",
+        default="",
+        blank=True,
+    )
     # manager
     created_by_manager = models.BooleanField("Creato dal manager", default=False)
     edited_by_manager = models.BooleanField("Modificato dal manager", default=False)
-    disabled_notes = models.TextField("Note disabilitazione", default='', blank=True,)
+    disabled_notes = models.TextField(
+        "Note disabilitazione",
+        default="",
+        blank=True,
+    )
 
     class Meta:
         verbose_name = "Iniziativa di Public Engagement"
         verbose_name_plural = "Iniziative di Public Engagement"
 
     def __str__(self):
-        return f'{self.title} - {self.structure}'
+        return f"{self.title} - {self.structure}"
 
     def is_started(self):
         """
@@ -129,7 +180,9 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return self.end < timezone.now()
 
     def starts_in_time(self):
-        return self.start >= timezone.now() + timezone.timedelta(days=EVALUATION_TIME_DELTA)
+        return self.start >= timezone.now() + timezone.timedelta(
+            days=EVALUATION_TIME_DELTA
+        )
 
     def is_editable_by_user(self):
         """
@@ -159,29 +212,29 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         delegati ad altre funzioni
         """
         if not self.is_active:
-            return False
+            return (False, _("Event is not active"))
         # False: se il monitoraggio per l'anno è stato disabilitato
         if not self.check_year():
-            return False
+            return (False, _("Monitoring for the reference year is closed"))
         # False: se non ci sono i dati della fase 1
-        if not getattr(self, 'data', None):
-            return False
+        if not getattr(self, "data", None):
+            return (False, _("Missing event data"))
         # False: se non sono stati inserite le persone collegate
         # if not self.data.involved_personnel.exists():
-            # return False
+        # return False
         # False: se è stato creato dal manager
         if self.created_by_manager:
-            return False
+            return (False, _("Event created by manager"))
         # False: se i dati di monitoraggio sono stati editati dal manager
-        if hasattr(self, 'report') and self.report.edited_by_manager:
-            return False
+        if hasattr(self, "report") and self.report.edited_by_manager:
+            return (False, _("Report data edited by manager"))
         # False: se è stato bocciato
-        if self.has_been_rejected(): # or self.is_evaluated_negatively_by_manager():
-            return False
+        if self.has_been_rejected():  # or self.is_evaluated_negatively_by_manager():
+            return (False, _("Event rejected"))
         # True: se l'evento è terminato
         if self.is_over():
-            return True
-        return False
+            return (True, "")
+        return (False, _("Event is not over yet"))
 
     def has_report_editable_by_manager(self):
         """
@@ -189,13 +242,13 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         """
         # False: se il monitoraggio per l'anno è stato disabilitato
         # ~ if not self.check_year():
-            # ~ return False
+        # ~ return False
         # False: se non ci sono i dati della fase 1
-        if not getattr(self, 'data', None):
+        if not getattr(self, "data", None):
             return False
         # False: se non sono stati inserite le persone collegate
         # if not self.data.involved_personnel.exists():
-            # return False
+        # return False
         # True: se l'evento è terminato
         if not self.is_over():
             return False
@@ -223,25 +276,24 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         if self.to_evaluate:
             return False
         # False: se non ci sono i dati della fase 1
-        if not getattr(self, 'data', None):
+        if not getattr(self, "data", None):
             return False
         # False: se non sono stati inserite le persone collegate
         # if not self.data.involved_personnel.exists():
-            # return False
+        # return False
         # se l'evento deve ancora iniziare
         # si tiene conto del numero di giorni minimo
         # (settings.EVALUATION_TIME_DELTA)
         # ~ if self.starts_in_time():
-            # ~ return True
+        # ~ return True
         # se l'iniziativa è terminata
         # sono obbligatori anche i dati di monitoraggio
-        if self.is_over() and not getattr(self, 'report', None):
+        if self.is_over() and not getattr(self, "report", None):
             return False
         return True
 
     def evaluation_request_can_be_reviewed(self):
-        """
-        """
+        """ """
         if not self.is_active:
             return False
         # False: se il monitoraggio per l'anno è stato disabilitato
@@ -256,8 +308,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return True
 
     def can_be_handled_for_evaluation(self):
-        """
-        """
+        """ """
         if not self.is_active:
             return False
         # False: se il monitoraggio è chiuso per l'anno dell'iniziativa
@@ -275,8 +326,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return True
 
     def is_editable_by_operator(self):
-        """
-        """
+        """ """
         if not self.is_active:
             return False
         # False: se il monitoraggio è chiuso per l'anno dell'iniziativa
@@ -300,18 +350,17 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return True
 
     def is_ready_for_evaluation(self):
-        """
-        """
+        """ """
         if not self.is_active:
             return False
         # False: se il monitoraggio per l'anno è stato disabilitato
         if not self.check_year():
             return False
         # False: se non sono stati inseriti i dati dell'iniziativa
-        if not hasattr(self, 'data'):
+        if not hasattr(self, "data"):
             return False
         # if not self.data.involved_personnel.exists():
-            # return False
+        # return False
         # False: se è già stata valutata
         if self.operator_evaluation_date:
             return False
@@ -327,8 +376,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return True
 
     def evaluation_can_be_reviewed(self):
-        """
-        """
+        """ """
         if not self.is_active:
             return False
         # False: se il monitoraggio per l'anno è stato disabilitato
@@ -352,8 +400,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return PublicEngagementAnnualMonitoring.year_is_active(self.start.year)
 
     def can_be_handled_for_patronage(self):
-        """
-        """
+        """ """
         if not self.is_active:
             return False
         # False: se il monitoraggio è chiuso per l'anno dell'iniziativa
@@ -366,7 +413,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         if self.created_by_manager:
             return False
         # False: se non è stato richiesto il patrocinio
-        if not hasattr(self, 'data'):
+        if not hasattr(self, "data"):
             return False
         if not self.data.patronage_requested:
             return False
@@ -378,8 +425,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return True
 
     def is_ready_for_patronage_check(self):
-        """
-        """
+        """ """
         if not self.is_active:
             return False
         # False: se il monitoraggio è chiuso per l'anno dell'iniziativa
@@ -395,7 +441,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         if self.created_by_manager:
             return False
         # False: se non è stato richiesto il patrocinio
-        if not hasattr(self, 'data'):
+        if not hasattr(self, "data"):
             return False
         if not self.data.patronage_requested:
             return False
@@ -405,8 +451,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return True
 
     def patronage_can_be_reviewed(self):
-        """
-        """
+        """ """
         if not self.is_active:
             return False
         # False: se il monitoraggio per l'anno è stato disabilitato
@@ -422,9 +467,9 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         if self.created_by_manager:
             return False
         # if self.edited_by_manager:
-            # return False
+        # return False
         # False: se non è stato richiesto il patrocinio
-        if not hasattr(self, 'data'):
+        if not hasattr(self, "data"):
             return False
         if not self.data.patronage_requested:
             return False
@@ -435,11 +480,10 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return True
 
     def is_editable_by_manager(self):
-        """
-        """
+        """ """
         # False: se il monitoraggio è chiuso per l'anno dell'iniziativa
         # ~ if not self.check_year():
-            # ~ return False
+        # ~ return False
         # True: se è creato dal manager, sempre editabile
         if self.created_by_manager:
             return True
@@ -448,22 +492,25 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
             return False
         # False: se il patrocinio è stato richiesto ed è stato concesso (dati immutabili)
         # ~ if self.data.patronage_requested and self.patronage_granted:
-            # ~ return False
+        # ~ return False
         # True: se l'evento è finito
         if self.is_over():
             return True
         # False: se il patrocinio è stato richiesto
         # l'operatore di patrocinio l'ha preso in carico ma non è stato ancora emesso un responso
-        if self.data.patronage_requested and self.patronage_operator_taken_date and not self.patronage_granted_date:
+        if (
+            self.data.patronage_requested
+            and self.patronage_operator_taken_date
+            and not self.patronage_granted_date
+        ):
             return False
         return True
 
     def is_manageable_by_manager(self):
-        """
-        """
+        """ """
         # False: se il monitoraggio è chiuso per l'anno dell'iniziativa
         # ~ if not self.check_year():
-            # ~ return False
+        # ~ return False
         # True: se è creato dal manager, sempre editabile
         if self.created_by_manager:
             return True
@@ -485,14 +532,16 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         return self.patronage_granted_date and self.patronage_granted
 
     def clear_promo_info(self):
-        if hasattr(self, 'data'):
+        if hasattr(self, "data"):
             self.data.promo_channel.clear()
             self.data.promo_tool.clear()
             self.data.patronage_requested = False
-            self.data.save(update_fields=['patronage_requested'])
+            self.data.save(update_fields=["patronage_requested"])
 
 
-class PublicEngagementEventMethodOfExecution(ActivableModel, CreatedModifiedBy, TimeStampedModel):
+class PublicEngagementEventMethodOfExecution(
+    ActivableModel, CreatedModifiedBy, TimeStampedModel
+):
     description = models.CharField(max_length=254)
 
     class Meta:
@@ -513,7 +562,9 @@ class PublicEngagementEventTarget(ActivableModel, CreatedModifiedBy, TimeStamped
         return self.description
 
 
-class PublicEngagementEventPromoChannel(ActivableModel, CreatedModifiedBy, TimeStampedModel):
+class PublicEngagementEventPromoChannel(
+    ActivableModel, CreatedModifiedBy, TimeStampedModel
+):
     description = models.CharField(max_length=254)
     is_global = models.BooleanField(default=True)
 
@@ -525,29 +576,38 @@ class PublicEngagementEventPromoChannel(ActivableModel, CreatedModifiedBy, TimeS
         return self.description
 
     def get_contacts(self, structure=None):
-        contacts = PublicEngagementEventPromoChannelContact.objects.filter(promo_channel=self,
-                                                                    is_active=True)
+        contacts = PublicEngagementEventPromoChannelContact.objects.filter(
+            promo_channel=self, is_active=True
+        )
         if not self.is_global and structure:
             contacts = contacts.filter(structure=structure)
-        return contacts.values_list('email', flat=True)
+        return contacts.values_list("email", flat=True)
 
 
-class PublicEngagementEventPromoChannelContact(ActivableModel, CreatedModifiedBy, TimeStampedModel):
-    promo_channel = models.ForeignKey(PublicEngagementEventPromoChannel,
-                                      on_delete=models.CASCADE,
-                                      verbose_name=_("Contact"))
+class PublicEngagementEventPromoChannelContact(
+    ActivableModel, CreatedModifiedBy, TimeStampedModel
+):
+    promo_channel = models.ForeignKey(
+        PublicEngagementEventPromoChannel,
+        on_delete=models.CASCADE,
+        verbose_name=_("Contact"),
+    )
     email = models.EmailField(max_length=254)
-    structure = models.ForeignKey(OrganizationalStructure,
-                                  blank=True,
-                                  null=True,
-                                  verbose_name=_("Structure"),
-                                  on_delete=models.CASCADE)
+    structure = models.ForeignKey(
+        OrganizationalStructure,
+        blank=True,
+        null=True,
+        verbose_name=_("Structure"),
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return f"{self.promo_channel} - {self.email}"
 
 
-class PublicEngagementEventPromoTool(ActivableModel, CreatedModifiedBy, TimeStampedModel):
+class PublicEngagementEventPromoTool(
+    ActivableModel, CreatedModifiedBy, TimeStampedModel
+):
     description = models.CharField(max_length=254)
 
     class Meta:
@@ -558,7 +618,9 @@ class PublicEngagementEventPromoTool(ActivableModel, CreatedModifiedBy, TimeStam
         return self.description
 
 
-class PublicEngagementEventRecipient(ActivableModel, CreatedModifiedBy, TimeStampedModel):
+class PublicEngagementEventRecipient(
+    ActivableModel, CreatedModifiedBy, TimeStampedModel
+):
     description = models.CharField(max_length=254)
 
     class Meta:
@@ -569,7 +631,9 @@ class PublicEngagementEventRecipient(ActivableModel, CreatedModifiedBy, TimeStam
         return self.description
 
 
-class PublicEngagementEventScientificArea(ActivableModel, CreatedModifiedBy, TimeStampedModel):
+class PublicEngagementEventScientificArea(
+    ActivableModel, CreatedModifiedBy, TimeStampedModel
+):
     description = models.CharField(max_length=254)
 
     class Meta:
@@ -580,7 +644,9 @@ class PublicEngagementEventScientificArea(ActivableModel, CreatedModifiedBy, Tim
         return self.description
 
 
-class PublicEngagementEventCollaboratorType(ActivableModel, CreatedModifiedBy, TimeStampedModel):
+class PublicEngagementEventCollaboratorType(
+    ActivableModel, CreatedModifiedBy, TimeStampedModel
+):
     description = models.CharField(max_length=254)
 
     class Meta:
@@ -592,77 +658,118 @@ class PublicEngagementEventCollaboratorType(ActivableModel, CreatedModifiedBy, T
 
 
 class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
-    event = models.OneToOneField(PublicEngagementEvent,
-                                 on_delete=models.CASCADE,
-                                 related_name='data')
-    event_type = models.ForeignKey(PublicEngagementEventType,
-                                   on_delete=models.CASCADE,
-                                   limit_choices_to={"is_active": True},
-                                   verbose_name=_("Event type"))
-    description = models.TextField(_("Short description"),
-                                   max_length=1500,
-                                   help_text=_("This text will be used for any promotion on institutional channels. Max 1500 chars"))
-    involved_personnel = models.ManyToManyField(get_user_model(),
-                                                verbose_name=_("Other UNICAL staff members involved in organizing/executing the initiative"))
-    involved_structure = models.ManyToManyField(OrganizationalStructure,
-                                                limit_choices_to={
-                                                    "is_active": True
-                                                },
-                                                verbose_name=_("Other UNICAL structures involved in organizing/executing the initiative"))
-    project_name = models.ForeignKey(PublicEngagementEvent,
-                                     on_delete=models.PROTECT,
-                                     null=True, blank=True,
-                                     verbose_name=_("If the event is linked to a larger project, indicate which one"))
-    recipient = models.ManyToManyField(PublicEngagementEventRecipient,
-                                       limit_choices_to={'is_active': True},
-                                       verbose_name=_("Recipients"))
+    event = models.OneToOneField(
+        PublicEngagementEvent, on_delete=models.CASCADE, related_name="data"
+    )
+    event_type = models.ForeignKey(
+        PublicEngagementEventType,
+        on_delete=models.CASCADE,
+        limit_choices_to={"is_active": True},
+        verbose_name=_("Event type"),
+    )
+    description = models.TextField(
+        _("Short description"),
+        max_length=1500,
+        help_text=_(
+            "This text will be used for any promotion on institutional channels. Max 1500 chars"
+        ),
+    )
+    involved_personnel = models.ManyToManyField(
+        get_user_model(),
+        verbose_name=_(
+            "Other UNICAL staff members involved in organizing/executing the initiative"
+        ),
+    )
+    involved_structure = models.ManyToManyField(
+        OrganizationalStructure,
+        limit_choices_to={"is_active": True},
+        verbose_name=_(
+            "Other UNICAL structures involved in organizing/executing the initiative"
+        ),
+    )
+    project_name = models.ForeignKey(
+        PublicEngagementEvent,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        verbose_name=_(
+            "If the event is linked to a larger project, indicate which one"
+        ),
+    )
+    recipient = models.ManyToManyField(
+        PublicEngagementEventRecipient,
+        limit_choices_to={"is_active": True},
+        verbose_name=_("Recipients"),
+    )
     other_recipients = models.CharField(
-        _("Other recipients"), default='', blank=True, max_length=254)
-    target = models.ManyToManyField(PublicEngagementEventTarget,
-                                    limit_choices_to={'is_active': True},
-                                    blank=True,
-                                    verbose_name=_("Sustainable Development Goals (SDGs)"))
-    method_of_execution = models.ForeignKey(PublicEngagementEventMethodOfExecution,
-                                            on_delete=models.PROTECT,
-                                            limit_choices_to={'is_active': True},
-                                            verbose_name=_("Execution method"))
+        _("Other recipients"), default="", blank=True, max_length=254
+    )
+    target = models.ManyToManyField(
+        PublicEngagementEventTarget,
+        limit_choices_to={"is_active": True},
+        blank=True,
+        verbose_name=_("Sustainable Development Goals (SDGs)"),
+    )
+    method_of_execution = models.ForeignKey(
+        PublicEngagementEventMethodOfExecution,
+        on_delete=models.PROTECT,
+        limit_choices_to={"is_active": True},
+        verbose_name=_("Execution method"),
+    )
     geographical_dimension = models.CharField(
         _("Geographical dimension"),
-        default='',
+        default="",
         choices=[
-            ('Internazionale', _('International')),
-            ('Nazionale', _('National')),
-            ('Regionale', _('Regional')),
-            ('Locale', _('Local')),
+            ("Internazionale", _("International")),
+            ("Nazionale", _("National")),
+            ("Regionale", _("Regional")),
+            ("Locale", _("Local")),
         ],
-        max_length=14
+        max_length=14,
     )
     organizing_subject = models.CharField(
         _("Main organizing entity of the initiative"),
-        default='',
+        default="",
         choices=[
-            ('UniCal', _('University of Calabria (University, Department, or other structure)')),
-            ('Altra università', _('Another university')),
-            ('Altro ente pubblico', _('Another public entity')),
-            ('Ente privato', _('Private entity')),
+            (
+                "UniCal",
+                _(
+                    "University of Calabria (University, Department, or other structure)"
+                ),
+            ),
+            ("Altra università", _("Another university")),
+            ("Altro ente pubblico", _("Another public entity")),
+            ("Ente privato", _("Private entity")),
         ],
-        max_length=20
+        max_length=20,
     )
-    promo_channel = models.ManyToManyField(PublicEngagementEventPromoChannel,
-                                           limit_choices_to={'is_active': True},
-                                           blank=True,
-                                           verbose_name=_("Request for the initiative to be promoted through the following institutional communication channels"))
+    promo_channel = models.ManyToManyField(
+        PublicEngagementEventPromoChannel,
+        limit_choices_to={"is_active": True},
+        blank=True,
+        verbose_name=_(
+            "Request for the initiative to be promoted through the following institutional communication channels"
+        ),
+    )
     patronage_requested = models.BooleanField(
-        _("Request for the patronage of the Department/Center for the initiative"), default=False)
-    promo_tool = models.ManyToManyField(PublicEngagementEventPromoTool,
-                                        limit_choices_to={'is_active': True},
-                                        blank=True,
-                                        verbose_name=_("Request to use the Department/Center’s name and/or logo in the following communication tools"))
-    poster = models.FileField(_("Poster attached"),
-                              upload_to=_poster_directory_path,
-                              null=True, blank=True,
-                              validators=[validate_poster_extension,
-                                          validate_file_size])
+        _("Request for the patronage of the Department/Center for the initiative"),
+        default=False,
+    )
+    promo_tool = models.ManyToManyField(
+        PublicEngagementEventPromoTool,
+        limit_choices_to={"is_active": True},
+        blank=True,
+        verbose_name=_(
+            "Request to use the Department/Center’s name and/or logo in the following communication tools"
+        ),
+    )
+    poster = models.FileField(
+        _("Poster attached"),
+        upload_to=_poster_directory_path,
+        null=True,
+        blank=True,
+        validators=[validate_poster_extension, validate_file_size],
+    )
 
     class Meta:
         verbose_name = _("Event data")
@@ -673,32 +780,44 @@ class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
 
 
 class PublicEngagementEventReport(CreatedModifiedBy, TimeStampedModel):
-    event = models.OneToOneField(PublicEngagementEvent,
-                                 on_delete=models.CASCADE,
-                                 related_name='report')
+    event = models.OneToOneField(
+        PublicEngagementEvent, on_delete=models.CASCADE, related_name="report"
+    )
     participants = models.IntegerField(
-        _("Non-academic audience participating in the initiative or reached via web/social resources, or outreach publications"))
+        _(
+            "Non-academic audience participating in the initiative or reached via web/social resources, or outreach publications"
+        )
+    )
     budget = models.FloatField(_("Total budget (in Euro)"))
     monitoring_activity = models.BooleanField(
-        _("Is the initiative accompanied by monitoring activities (e.g., collection of information on activities, attendance, satisfaction, etc.)?"), default=False)
+        _(
+            "Is the initiative accompanied by monitoring activities (e.g., collection of information on activities, attendance, satisfaction, etc.)?"
+        ),
+        default=False,
+    )
     impact_evaluation = models.BooleanField(
-        _("Is the initiative accompanied by an impact evaluation plan?"), default=False)
+        _("Is the initiative accompanied by an impact evaluation plan?"), default=False
+    )
     # other_structure = models.ManyToManyField(OrganizationalStructure,
-                                             # limit_choices_to={
-                                                 # "is_internal": True,
-                                                 # "is_public_engagement_enabled": True,
-                                                 # "is_active": True
-                                             # },
-                                             # verbose_name=_("Which other UNICAL structures (Departments or Centers) collaborated on this initiative?"))
-    scientific_area = models.ManyToManyField(PublicEngagementEventScientificArea,
-                                             verbose_name=_("Scientific areas"))
-    collaborator_type = models.ManyToManyField(PublicEngagementEventCollaboratorType,
-                                               limit_choices_to={"is_active": True},
-                                               verbose_name=_("Which collaborators were involved in organizing/managing the initiative?"),
-                                               blank=True)
-    website = models.URLField(
-        _("Initiative’s website"), blank=True, null=True)
-    notes = models.TextField(_("Notes"), default='', blank=True)
+    # limit_choices_to={
+    # "is_internal": True,
+    # "is_public_engagement_enabled": True,
+    # "is_active": True
+    # },
+    # verbose_name=_("Which other UNICAL structures (Departments or Centers) collaborated on this initiative?"))
+    scientific_area = models.ManyToManyField(
+        PublicEngagementEventScientificArea, verbose_name=_("Scientific areas")
+    )
+    collaborator_type = models.ManyToManyField(
+        PublicEngagementEventCollaboratorType,
+        limit_choices_to={"is_active": True},
+        verbose_name=_(
+            "Which collaborators were involved in organizing/managing the initiative?"
+        ),
+        blank=True,
+    )
+    website = models.URLField(_("Initiative’s website"), blank=True, null=True)
+    notes = models.TextField(_("Notes"), default="", blank=True)
     edited_by_manager = models.BooleanField("Modificato dal manager", default=False)
 
     class Meta:
