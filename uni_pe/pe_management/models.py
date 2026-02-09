@@ -245,20 +245,20 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         # ~ return False
         # False: se non ci sono i dati della fase 1
         if not getattr(self, "data", None):
-            return False
+            return (False, _("Missing event data"))
         # False: se non sono stati inserite le persone collegate
         # if not self.data.involved_personnel.exists():
         # return False
         # True: se l'evento è terminato
         if not self.is_over():
-            return False
+            return (False, _("Event is not over yet"))
         # True: se l'ha creata il manager stesso
         if self.created_by_manager:
-            return True
+            return (True, "")
         # False: se non è stato approvato
         if self.has_been_approved():
-            return True
-        return False
+            return (True, "")
+        return (False, _("Event rejected"))
 
     def is_ready_for_request_evaluation(self):
         """

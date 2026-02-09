@@ -93,9 +93,11 @@ def has_report_editable_by_manager(func_to_decorate):
         event = original_kwargs.get("event") or get_object_or_404(
             PublicEngagementEvent, pk=original_kwargs["event_id"]
         )
-        if event.has_report_editable_by_manager():
+        if event.has_report_editable_by_manager()[0]:
             return func_to_decorate(*original_args, **original_kwargs)
-        messages.add_message(request, messages.ERROR, _("Access denied"))
+        messages.add_message(
+            request, messages.ERROR, event.has_report_editable_by_manager()[1]
+        )
         return redirect(
             "pe_management:manager_event",
             structure_slug=original_kwargs["structure_slug"],
