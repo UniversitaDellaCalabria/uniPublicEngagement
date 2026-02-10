@@ -83,6 +83,7 @@ class PublicEngagementEventList(generics.ListAPIView):
 
 class PublicEngagementApprovedEventList(PublicEngagementEventList):
     serializer_class = PublicEngagementEventLiteSerializer
+    permission_classes = []
 
     def get_queryset(self, **kwargs):
         """ """
