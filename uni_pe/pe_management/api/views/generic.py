@@ -102,5 +102,5 @@ class PublicEngagementApprovedEventDetail(generics.RetrieveAPIView):
 
 
 class OrganizationalStructureList(OrganizationalStructureList):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = []
     queryset = OrganizationalStructure.objects.filter(is_active=True)

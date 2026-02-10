@@ -1,9 +1,12 @@
+from organizational_area.api.serializers import OrganizationalStructureSerializer
 from rest_framework import serializers
 
 from ..models import PublicEngagementEvent
 
 
 class PublicEngagementEventLiteSerializer(serializers.ModelSerializer):
+    structure = OrganizationalStructureSerializer(read_only=True)
+
     class Meta:
         model = PublicEngagementEvent
         fields = ["id", "title", "referent", "structure", "start", "end"]
@@ -11,7 +14,7 @@ class PublicEngagementEventLiteSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data["referent"] = f"{instance.referent}"
-        data["structure"] = f"{instance.structure.name}"
+        # data["structure"] = f"{instance.structure.name}"
         return data
 
 
