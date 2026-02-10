@@ -13,5 +13,5 @@ class PublicEngagementEventFilter(django_filters.FilterSet):
             "referent__last_name": ["exact", "icontains"],
             "to_evaluate": ["exact"],
             "operator_evaluation_success": ["exact"],
-            "structure__name": ["icontains"],
+            "structure__unique_code": ["exact"],
         }
