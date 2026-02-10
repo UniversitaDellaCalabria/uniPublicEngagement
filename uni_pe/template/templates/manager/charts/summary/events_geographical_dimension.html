@@ -1,14 +1,14 @@
 {% load i18n %}
 {% load pe_management_tags %}
 
-{% pem_settings_value "DASHBOARD_OPERATOR_KPI_LIST" as titles %}
+{% pem_settings_value "DASHBOARD_MANAGER_KPI_LIST" as titles %}
 <div class="col-12">
   <div class="card-wrapper card-space">
     <div class="card card-bg no-after">
       <div class="card-body">
         <p class="card-title h5">
           {% for title in titles %}
-          {% if title.0 == request.GET.i %}
+          {% if title.0 == "events_geographical_dimension" %}
           {{ title.1 }}
           {% endif %}
           {% endfor %}
@@ -28,34 +28,27 @@
 
 <script>
   var options_geographical_dimension_counters = {
-    series: [{
-      data: []
-    }],
+    labels: [],
+    series: [],
     chart: {
-      height: 350,
-      type: 'bar',
-    },
-    plotOptions: {
-      bar: {
-        columnWidth: '45%',
-        distributed: true,
-      }
-    },
-    dataLabels: {
-      enabled: false
+      type: 'donut',
     },
     legend: {
-      show: false
+      position: 'right',
+      verticalAlign: 'middle',
+      width: 200,
+      
     },
-    xaxis: {
-      categories: [],
-      labels: {
-        style: {
-          colors: [],
-          fontSize: '12px'
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        
+        legend: {
+          position: 'bottom',
+          width: "100%"
         }
       }
-    },
+    }]
   };
   
   const app_geographical_dimension_counters = Vue.createApp({
@@ -70,8 +63,8 @@
     },
     methods: {
       myFunction(item) {
-        options_geographical_dimension_counters.xaxis.categories.push(item.geographical_dimension)
-        options_geographical_dimension_counters.series[0].data.push(item.num)
+        options_geographical_dimension_counters.labels.push(item.geographical_dimension)
+        options_geographical_dimension_counters.series.push(item.num)
       },
       getCounters() {
         axios

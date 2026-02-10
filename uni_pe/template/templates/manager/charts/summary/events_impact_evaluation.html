@@ -8,18 +8,18 @@
       <div class="card-body">
         <p class="card-title h5">
           {% for title in titles %}
-          {% if title.0 == request.GET.i %}
+          {% if title.0 == "events_impact_evaluation" %}
           {{ title.1 }}
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_events_monitoring_data_provided">
+        <div id="app_events_impact_evaluation">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_events_monitoring_data_provided" v-else></div>
+          <div id="chart_events_impact_evaluation" v-else></div>
         </div>
       </div>
     </div>
@@ -27,50 +27,29 @@
 </div>
 
 <script>
-  var options_events_monitoring_data_provided = {
+  var options_events_impact_evaluation = {
+    labels: [],
     series: [],
     chart: {
-      type: 'bar',
-      height: 150,
-      stacked: true
+      type: 'donut',
     },
-    colors: ['#008FFB', '#FF4560'],
-    plotOptions: {
-      bar: {
-        borderRadius: 5,
-        borderRadiusApplication: 'end', // 'around', 'end'
-        borderRadiusWhenStacked: 'all', // 'all', 'last'
-        horizontal: true,
-        barHeight: '80%',
-      },
+    legend: {
+      position: 'right',
+      verticalAlign: 'middle',
+      width: 200,
     },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      width: 1,
-      colors: ["#fff"]
-    },
-    
-    grid: {
-      xaxis: {
-        lines: {
-          show: false
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        legend: {
+          position: 'bottom',
+          width: "100%"
         }
       }
-    },
-    yaxis: {
-      stepSize: 1
-    },
-    tooltip: {
-      shared: false,
-    },
-    xaxis: {
-      categories: ['Num']
-    },
+    }]
   };
   
-  const app_events_monitoring_data_provided = Vue.createApp({
+  const app_events_impact_evaluation = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -87,12 +66,9 @@
           let num = value
           if(key == 'no') {
             label = "No"
-            num = value * -1
           }
-          options_events_monitoring_data_provided.series.push({
-            'name': label,
-            'data': [num]
-          })
+          options_events_impact_evaluation.labels.push(label)
+          options_events_impact_evaluation.series.push(num)
         }
       },
       getCounters() {
@@ -106,7 +82,7 @@
           this.error_msg = ""
           this.error_status = null
           this.myFunction(response.data)
-          var chart = new ApexCharts(document.querySelector("#chart_events_monitoring_data_provided"), options_events_monitoring_data_provided)
+          var chart = new ApexCharts(document.querySelector("#chart_events_impact_evaluation"), options_events_impact_evaluation)
           chart.render()
         })
         .catch(error => {
@@ -119,6 +95,6 @@
         })
       },
     }
-  }).mount('#app_events_monitoring_data_provided')
+  }).mount('#app_events_impact_evaluation')
   
 </script>

@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load pe_management_tags %}
 
-{% pem_settings_value "DASHBOARD_KPI_LIST" as titles %}
+{% pem_settings_value "DASHBOARD_MANAGER_KPI_LIST" as titles %}
 <div class="col-12">
   <div class="card-wrapper card-space">
     <div class="card card-bg no-after">
@@ -70,7 +70,7 @@
     },
   };
   
-  const app_events_patronage_requested = Vue.createApp({
+  const app_events_impact_evaluation = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {

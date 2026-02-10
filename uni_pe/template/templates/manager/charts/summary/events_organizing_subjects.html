@@ -1,25 +1,25 @@
 {% load i18n %}
 {% load pe_management_tags %}
 
-{% pem_settings_value "DASHBOARD_OPERATOR_KPI_LIST" as titles %}
+{% pem_settings_value "DASHBOARD_MANAGER_KPI_LIST" as titles %}
 <div class="col-12">
   <div class="card-wrapper card-space">
     <div class="card card-bg no-after">
       <div class="card-body">
         <p class="card-title h5">
           {% for title in titles %}
-          {% if title.0 == request.GET.i %}
+          {% if title.0 == "events_organizing_subjects" %}
           {{ title.1 }}
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_geographical_dimension_counters">
+        <div id="app_events_organizing_subjects">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_geographical_dimension_counter" v-else></div>
+          <div id="chart_events_organizing_subjects" v-else></div>
         </div>
       </div>
     </div>
@@ -27,38 +27,31 @@
 </div>
 
 <script>
-  var options_geographical_dimension_counters = {
-    series: [{
-      data: []
-    }],
+  var options_events_organizing_subjects = {
+    labels: [],
+    series: [],
     chart: {
-      height: 350,
-      type: 'bar',
-    },
-    plotOptions: {
-      bar: {
-        columnWidth: '45%',
-        distributed: true,
-      }
-    },
-    dataLabels: {
-      enabled: false
+      type: 'donut',
     },
     legend: {
-      show: false
+      position: 'right',
+      verticalAlign: 'middle',
+      width: 200,
+      
     },
-    xaxis: {
-      categories: [],
-      labels: {
-        style: {
-          colors: [],
-          fontSize: '12px'
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        
+        legend: {
+          position: 'bottom',
+          width: "100%"
         }
       }
-    },
+    }]
   };
   
-  const app_geographical_dimension_counters = Vue.createApp({
+  const app_events_organizing_subjects = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -70,8 +63,8 @@
     },
     methods: {
       myFunction(item) {
-        options_geographical_dimension_counters.xaxis.categories.push(item.geographical_dimension)
-        options_geographical_dimension_counters.series[0].data.push(item.num)
+        options_events_organizing_subjects.labels.push(item.organizing_subject)
+        options_events_organizing_subjects.series.push(item.num)
       },
       getCounters() {
         axios
@@ -84,7 +77,7 @@
           this.error_msg = ""
           this.error_status = null
           response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_geographical_dimension_counter"), options_geographical_dimension_counters)
+          var chart = new ApexCharts(document.querySelector("#chart_events_organizing_subjects"), options_events_organizing_subjects)
           chart.render()
         })
         .catch(error => {
@@ -96,5 +89,5 @@
         })
       },
     }
-  }).mount('#app_geographical_dimension_counters')
+  }).mount('#app_events_organizing_subjects')
 </script>

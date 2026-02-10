@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 10:24+0100\n"
-"PO-Revision-Date: 2026-02-09 10:26+0100\n"
+"POT-Creation-Date: 2026-02-10 11:11+0100\n"
+"PO-Revision-Date: 2026-02-10 11:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -195,26 +195,24 @@ msgstr "Email aggiornata con successo"
 #: pe_management/decorators/manager.py:25
 #: pe_management/decorators/manager.py:47
 #: pe_management/decorators/manager.py:73
-#: pe_management/decorators/manager.py:98
 #: pe_management/decorators/operator.py:26
 #: pe_management/decorators/operator.py:46
 #: pe_management/decorators/operator.py:69
 #: pe_management/decorators/patronage.py:26
 #: pe_management/decorators/patronage.py:46
 #: pe_management/decorators/patronage.py:69 pe_management/decorators/user.py:40
-#: pe_management/decorators/user.py:59 pe_management/decorators/user.py:80
-#: pe_management/views/manager.py:165 pe_management/views/manager.py:178
-#: pe_management/views/manager.py:218 pe_management/views/operator.py:227
-#: pe_management/views/operator.py:438 pe_management/views/operator.py:442
-#: pe_management/views/operator.py:571 pe_management/views/operator.py:575
-#: pe_management/views/patronage.py:160 pe_management/views/patronage.py:165
-#: pe_management/views/patronage.py:210 pe_management/views/patronage.py:216
-#: pe_management/views/patronage.py:315 pe_management/views/patronage.py:321
-#: pe_management/views/user.py:70 pe_management/views/user.py:369
-#: pe_management/views/user.py:382 pe_management/views/user.py:446
-#: pe_management/views/user.py:503 pe_management/views/user.py:564
-#: pe_management/views/user.py:596 pe_management/views/user.py:709
-#: pe_management/views/user.py:776
+#: pe_management/decorators/user.py:59 pe_management/views/manager.py:165
+#: pe_management/views/manager.py:178 pe_management/views/manager.py:218
+#: pe_management/views/operator.py:227 pe_management/views/operator.py:438
+#: pe_management/views/operator.py:442 pe_management/views/operator.py:571
+#: pe_management/views/operator.py:575 pe_management/views/patronage.py:160
+#: pe_management/views/patronage.py:165 pe_management/views/patronage.py:210
+#: pe_management/views/patronage.py:216 pe_management/views/patronage.py:315
+#: pe_management/views/patronage.py:321 pe_management/views/user.py:70
+#: pe_management/views/user.py:369 pe_management/views/user.py:382
+#: pe_management/views/user.py:446 pe_management/views/user.py:503
+#: pe_management/views/user.py:564 pe_management/views/user.py:596
+#: pe_management/views/user.py:709 pe_management/views/user.py:776
 msgid "Access denied"
 msgstr "Accesso negato"
 
@@ -394,7 +392,7 @@ msgstr "Iniziativa disattivata"
 msgid "Monitoring for the reference year is closed"
 msgstr "Il monitoraggio per l'anno di riferimento è chiuso"
 
-#: pe_management/models.py:221
+#: pe_management/models.py:221 pe_management/models.py:248
 msgid "Missing event data"
 msgstr "Dati di base dell'iniziativa mancanti"
 
@@ -406,11 +404,11 @@ msgstr "Iniziativa creata da un operatore di Ateneo"
 msgid "Report data edited by manager"
 msgstr "Dati di monitoraggio modificati da un operatore di Ateneo"
 
-#: pe_management/models.py:233
+#: pe_management/models.py:233 pe_management/models.py:261
 msgid "Event rejected"
 msgstr "Iniziativa respinta"
 
-#: pe_management/models.py:237
+#: pe_management/models.py:237 pe_management/models.py:254
 msgid "Event is not over yet"
 msgstr "Iniziativa non ancora terminata"
 
@@ -1278,7 +1276,7 @@ msgstr "Anno"
 
 #: template/templates/events.html:47
 msgid "All"
-msgstr ""
+msgstr "Tutti"
 
 #: template/templates/events.html:56
 msgid "Sorting"
@@ -1460,6 +1458,17 @@ msgstr ""
 #: template/templates/manager/charts/events_targets.html:19
 #: template/templates/manager/charts/events_types.html:19
 #: template/templates/manager/charts/structure_counters.html:19
+#: template/templates/manager/charts/summary/events_geographical_dimension.html:19
+#: template/templates/manager/charts/summary/events_impact_evaluation.html:19
+#: template/templates/manager/charts/summary/events_methods_of_execution.html:19
+#: template/templates/manager/charts/summary/events_monitoring_data_provided.html:19
+#: template/templates/manager/charts/summary/events_organizing_subjects.html:19
+#: template/templates/manager/charts/summary/events_patronage_requested.html:19
+#: template/templates/manager/charts/summary/events_promo_channels.html:19
+#: template/templates/manager/charts/summary/events_recipients.html:19
+#: template/templates/manager/charts/summary/events_targets.html:19
+#: template/templates/manager/charts/summary/events_types.html:19
+#: template/templates/manager/charts/summary/structure_counters.html:19
 #: template/templates/operator/charts/events_geographical_dimension.html:19
 #: template/templates/operator/charts/events_impact_evaluation.html:19
 #: template/templates/operator/charts/events_methods_of_execution.html:19
@@ -1491,16 +1500,18 @@ msgid "Indicator"
 msgstr "Indicatore"
 
 #: template/templates/manager/dashboard.html:33
+msgid "Tutti"
+msgstr ""
+
 #: template/templates/manager/dashboard.html:44
 #: template/templates/operator/data_visualization.html:26
 #: template/templates/operator/data_visualization.html:37
 msgid "select"
 msgstr "seleziona"
 
-#: template/templates/manager/dashboard.html:166
-#: template/templates/operator/data_visualization.html:152
-msgid "Select the indicator and the reference year"
-msgstr "Seleziona l'indicatore e l'anno di riferimento"
+#: template/templates/manager/dashboard.html:172
+msgid "Select the reference year"
+msgstr "Seleziona l'anno di riferimento"
 
 #: template/templates/manager/event.html:41
 #: template/templates/user/event.html:89
@@ -1569,6 +1580,10 @@ msgid ""
 msgstr ""
 "I contatori prendono in carico solo le iniziative per le quali l'anno di "
 "monitoraggio è ancora attivo"
+
+#: template/templates/operator/data_visualization.html:152
+msgid "Select the indicator and the reference year"
+msgstr "Seleziona l'indicatore e l'anno di riferimento"
 
 #: template/templates/operator/event.html:20
 msgid "Evaluation request not sent"
@@ -1692,9 +1707,6 @@ msgstr "Dimensione del file troppo grande: {} bytes. Massimo {} bytes"
 msgid "File name length too large: {} characters. Max {} characters"
 msgstr ""
 "Lunghezza del nome file troppo grande: {} caratteri. Massimo {} caratteri"
-
-#~ msgid "Select the KPI and the reference year"
-#~ msgstr "Seleziona il KPI e l'anno di riferimento"
 
 #~ msgid "Discarded (plural)"
 #~ msgstr "Non approvate"

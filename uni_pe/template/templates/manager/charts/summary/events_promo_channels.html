@@ -1,14 +1,14 @@
 {% load i18n %}
 {% load pe_management_tags %}
 
-{% pem_settings_value "DASHBOARD_OPERATOR_KPI_LIST" as titles %}
+{% pem_settings_value "DASHBOARD_MANAGER_KPI_LIST" as titles %}
 <div class="col-12">
   <div class="card-wrapper card-space">
     <div class="card card-bg no-after">
       <div class="card-body">
         <p class="card-title h5">
           {% for title in titles %}
-          {% if title.0 == request.GET.i %}
+          {% if title.0 == "events_promo_channels" %}
           {{ title.1 }}
           {% endif %}
           {% endfor %}
@@ -28,77 +28,27 @@
 
 <script>
   var options_events_promo_channels = {
-    series: [{
-      name: '',
-      data: []
-    }],
+    labels: [],
+    series: [],
     chart: {
-      height: 350,
-      type: 'bar',
+      type: 'donut',
     },
-    plotOptions: {
-      bar: {
-        borderRadius: 10,
-        dataLabels: {
-          position: 'top', // top, center, bottom
-        },
-      }
-    },
-    dataLabels: {
-      enabled: true,
-      offsetY: -20,
-      style: {
-        fontSize: '12px',
-        colors: ["#304758"]
-      }
-    },
-    
-    xaxis: {
-      categories: [],
-      position: 'top',
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-      crosshairs: {
-        fill: {
-          type: 'gradient',
-          gradient: {
-            colorFrom: '#D8E3F0',
-            colorTo: '#BED1E6',
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5,
-          }
-        }
-      },
-      tooltip: {
-        enabled: true,
-      }
-    },
-    yaxis: {
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false,
-      },
-      labels: {
-        show: false,
-      }
+    legend: {
+      position: 'right',
+      verticalAlign: 'middle',
+      width: 200,
+      
     },
     responsive: [{
-      breakpoint: 768, // Sotto i 768px (tablet/mobile)
+      breakpoint: 480,
       options: {
-        xaxis: {
-          labels: {
-            show: false,
-          }
-        },
+        
+        legend: {
+          position: 'bottom',
+          width: "100%"
+        }
       }
-    }],
+    }]
   };
   
   const app_events_promo_channels = Vue.createApp({
@@ -113,8 +63,8 @@
     },
     methods: {
       myFunction(item) {
-        options_events_promo_channels.xaxis.categories.push(item.promo_channel__description || "Nessuno")
-        options_events_promo_channels.series[0].data.push(item.num)
+        options_events_promo_channels.labels.push(item.promo_channel__description || "Nessuno")
+        options_events_promo_channels.series.push(item.num)
       },
       getCounters() {
         axios
