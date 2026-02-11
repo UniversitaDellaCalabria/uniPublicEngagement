@@ -90,7 +90,11 @@ class PublicEngagementApprovedEventList(PublicEngagementEventList):
         events = (
             PublicEngagementEvent.objects.prefetch_related("data", "report")
             .select_related("referent", "structure")
-            .filter(structure__is_active=True, operator_evaluation_success=True)
+            .filter(
+                is_active=True,
+                structure__is_active=True,
+                operator_evaluation_success=True,
+            )
         )
 
         return events
