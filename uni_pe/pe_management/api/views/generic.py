@@ -11,7 +11,7 @@ from ..serializers import *
 
 class PublicEngagementEventList(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = PublicEngagementEventSerializer
+    serializer_class = PublicEngagementEventListSerializer
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
@@ -82,7 +82,7 @@ class PublicEngagementEventList(generics.ListAPIView):
 
 
 class PublicEngagementApprovedEventList(PublicEngagementEventList):
-    serializer_class = PublicEngagementEventLiteSerializer
+    serializer_class = PublicEngagementEventListLiteSerializer
     permission_classes = []
 
     def get_queryset(self, **kwargs):
@@ -101,8 +101,17 @@ class PublicEngagementApprovedEventList(PublicEngagementEventList):
 
 
 class PublicEngagementApprovedEventDetail(generics.RetrieveAPIView):
-    serializer_class = PublicEngagementEventLiteSerializer
-    queryset = PublicEngagementEvent.objects.all()
+    permission_classes = []
+    serializer_class = PublicEngagementEventDetailLiteSerializer
+    queryset = (
+        PublicEngagementEvent.objects.prefetch_related("data", "report")
+        .select_related("referent", "structure")
+        .filter(
+            is_active=True,
+            structure__is_active=True,
+            operator_evaluation_success=True,
+        )
+    )
 
 
 class OrganizationalStructureList(OrganizationalStructureList):
