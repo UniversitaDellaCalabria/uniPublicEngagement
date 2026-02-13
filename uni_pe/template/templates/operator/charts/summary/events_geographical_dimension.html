@@ -1,0 +1,93 @@
+{% load i18n %}
+{% load pe_management_tags %}
+
+{% pem_settings_value "DASHBOARD_OPERATOR_KPI_LIST" as titles %}
+<div class="col-12">
+  <div class="card-wrapper card-space">
+    <div class="card card-bg no-after">
+      <div class="card-body">
+        <p class="card-title h5">
+          {% for title in titles %}
+          {% if title.0 == "events_geographical_dimension" %}
+          {{ title.1 }}
+          {% endif %}
+          {% endfor %}
+        </p>
+        <div id="app_geographical_dimension_counters">
+          <div v-if="error">
+            <div class="alert alert-danger" role="alert">
+              {% trans "Data retrieval failed. Please check your search parameters" %}
+            </div>
+          </div>
+          <div id="chart_geographical_dimension_counter" v-else></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var options_geographical_dimension_counters = {
+    labels: [],
+    series: [],
+    chart: {
+      type: 'donut',
+    },
+    legend: {
+      position: 'right',
+      verticalAlign: 'middle',
+      width: 200,
+      
+    },
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        
+        legend: {
+          position: 'bottom',
+          width: "100%"
+        }
+      }
+    }]
+  };
+  
+  const app_geographical_dimension_counters = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data () {
+      return {
+        error: false
+      }
+    },
+    mounted () {
+      this.getCounters()
+    },
+    methods: {
+      myFunction(item) {
+        options_geographical_dimension_counters.labels.push(item.geographical_dimension)
+        options_geographical_dimension_counters.series.push(item.num)
+      },
+      getCounters() {
+        axios
+        .get("{{ api_url }}", {
+          params: {
+            year: "{{ year }}"
+          }
+        })
+        .then(response => {
+          this.error_msg = ""
+          this.error_status = null
+          response.data.forEach(this.myFunction)
+          var chart = new ApexCharts(document.querySelector("#chart_geographical_dimension_counter"), options_geographical_dimension_counters)
+          chart.render()
+        })
+        .catch(error => {
+          if(error) {
+            this.error = true
+            this.error_msg = error.response.data.detail
+            this.error_status = error.response.status
+          }
+        })
+      },
+    }
+  }).mount('#app_geographical_dimension_counters')
+</script>

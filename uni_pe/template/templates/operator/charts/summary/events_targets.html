@@ -8,7 +8,7 @@
       <div class="card-body">
         <p class="card-title h5">
           {% for title in titles %}
-          {% if title.0 == request.GET.i %}
+          {% if title.0 == "events_goals" %}
           {{ title.1 }}
           {% endif %}
           {% endfor %}
@@ -28,86 +28,27 @@
 
 <script>
   var options_events_targets = {
-    series: [{
-      data: []
-    }],
+    labels: [],
+    series: [],
     chart: {
-      type: 'bar',
-      height: 600
+      type: 'donut',
     },
-    plotOptions: {
-      bar: {
-        barHeight: '100%',
-        distributed: true,
-        horizontal: true,
-        dataLabels: {
-          position: 'bottom'
-        },
-      }
-    },
-    colors: [
-    '#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-    '#f48024', '#69d2e7'
-    ],
-    dataLabels: {
-      enabled: false,
-      textAnchor: 'start',
-      style: {
-        colors: ['#fff']
-      },
-      formatter: function (val, opt) {
-        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
-      },
-      offsetX: 0,
-      dropShadow: {
-        enabled: true
-      }
-    },
-    stroke: {
-      width: 1,
-      colors: ['#fff']
-    },
-    xaxis: {
-      categories: [],
-    },
-    yaxis: {
-      labels: {
-        show: true
-      }
-    },
-    title: {},
-    subtitle: {},
-    tooltip: {
-      theme: 'dark',
-      x: {
-        show: false
-      },
-      y: {
-        title: {
-          formatter: function () {
-            return ''
-          }
-        }
-      }
+    legend: {
+      position: 'right',
+      verticalAlign: 'middle',
+      width: 200,
+      
     },
     responsive: [{
-      breakpoint: 768, // Sotto i 768px (tablet/mobile)
+      breakpoint: 480,
       options: {
-        chart: {
-          height: 600 // Aumenta l'altezza per far respirare le barre
-        },
-        yaxis: {
-          labels: {
-            show: true
-          }
-        },
-        plotOptions: {
-          bar: {
-            barHeight: '80%', // Riduci leggermente per dare spazio tra le barre
-          }
+        
+        legend: {
+          position: 'bottom',
+          width: "100%"
         }
       }
-    }],
+    }]
   };
   
   const app_events_targets = Vue.createApp({
@@ -122,8 +63,8 @@
     },
     methods: {
       myFunction(item) {
-        options_events_targets.xaxis.categories.push(item.target__description)
-        options_events_targets.series[0].data.push(item.num)
+        options_events_targets.labels.push(item.target__description)
+        options_events_targets.series.push(item.num)
       },
       getCounters() {
         axios
