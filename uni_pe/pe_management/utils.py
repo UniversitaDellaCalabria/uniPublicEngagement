@@ -1,53 +1,50 @@
 import csv
-import requests
 
 from django.conf import settings
+
 # from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
 from organizational_area.models import *
 from organizational_area.utils import user_in_office
+from template.settings import MSG_FOOTER, MSG_HEADER
 
-from template.settings import MSG_HEADER, MSG_FOOTER
-from . models import *
-from . settings import *
-
+from .models import *
+from .settings import *
 
 # def user_is_teacher(matricola='', encrypted=False):
-    # if not matricola:
-        # return False
-    # if not encrypted:
-        # response = requests.post(f'{API_ENCRYPTED_ID}',
-                                 # data={'id': matricola},
-                                 # headers={'Authorization': f'Token {settings.STORAGE_TOKEN}'})
-        # if response.status_code == 200:
-            # matricola = response.json()
-        # else:
-            # return False
-    # response = requests.get(f"{API_TEACHER_URL}{matricola}")
-    # if response.status_code == 200:
-        # return True
-    # return False
+# if not matricola:
+# return False
+# if not encrypted:
+# response = requests.post(f'{API_ENCRYPTED_ID}',
+# data={'id': matricola},
+# headers={'Authorization': f'Token {settings.STORAGE_TOKEN}'})
+# if response.status_code == 200:
+# matricola = response.json()
+# else:
+# return False
+# response = requests.get(f"{API_TEACHER_URL}{matricola}")
+# if response.status_code == 200:
+# return True
+# return False
 
 
 def user_is_operator(user, structure=None):
-    return user_in_office(user=user,
-                          office_slug_list=[OPERATOR_OFFICE],
-                          structure=structure)
+    return user_in_office(
+        user=user, office_slug_list=[OPERATOR_OFFICE], structure=structure
+    )
 
 
 def user_is_patronage_operator(user, structure=None):
-    return user_in_office(user=user,
-                          office_slug_list=[PATRONAGE_OFFICE],
-                          structure=structure)
+    return user_in_office(
+        user=user, office_slug_list=[PATRONAGE_OFFICE], structure=structure
+    )
 
 
 def user_is_manager(user):
-    return user_in_office(user=user,
-                          office_slug_list=[MANAGER_OFFICE])
+    return user_in_office(user=user, office_slug_list=[MANAGER_OFFICE])
 
 
 def _send_email(subject, body, attachment=None, recipients=[]):
@@ -57,7 +54,8 @@ def _send_email(subject, body, attachment=None, recipients=[]):
         from_email=settings.DEFAULT_FROM_EMAIL,
         to=recipients,
     )
-    if attachment: email.attach_file(attachment.path)
+    if attachment:
+        email.attach_file(attachment.path)
     email.send(fail_silently=True)
 
 
@@ -69,34 +67,50 @@ def send_email_to_event_referents(event, subject, body):
 
 
 def send_email_to_operators(structure, subject, body):
-    recipients = OrganizationalStructureOfficeEmployee.objects.filter(employee__is_active=True,
-                                                                      office__is_active=True,
-                                                                      office__slug=OPERATOR_OFFICE,
-                                                                      office__organizational_structure=structure,
-                                                                      office__organizational_structure__is_active=True).values_list('employee__email', flat=True)
+    recipients = OrganizationalStructureOfficeEmployee.objects.filter(
+        employee__is_active=True,
+        office__is_active=True,
+        office__slug=OPERATOR_OFFICE,
+        office__organizational_structure=structure,
+        office__organizational_structure__is_active=True,
+    ).values_list("employee__email", flat=True)
     _send_email(subject=subject, body=body, recipients=recipients)
 
 
 def send_email_to_patronage_operators(structure, subject, body):
-    recipients = OrganizationalStructureOfficeEmployee.objects.filter(employee__is_active=True,
-                                                                      office__is_active=True,
-                                                                      office__slug=PATRONAGE_OFFICE,
-                                                                      office__organizational_structure=structure,
-                                                                      office__organizational_structure__is_active=True).values_list('employee__email', flat=True)
+    recipients = OrganizationalStructureOfficeEmployee.objects.filter(
+        employee__is_active=True,
+        office__is_active=True,
+        office__slug=PATRONAGE_OFFICE,
+        office__organizational_structure=structure,
+        office__organizational_structure__is_active=True,
+    ).values_list("employee__email", flat=True)
     _send_email(subject=subject, body=body, recipients=recipients)
 
 
 def send_email_to_managers(subject, body, to_alias=True):
     recipients = MANAGER_ALIAS_EMAILS
     if not to_alias:
-        recipients = OrganizationalStructureOfficeEmployee.objects.filter(employee__is_active=True,
-                                                                          office__is_active=True,
-                                                                          office__slug=MANAGER_OFFICE,
-                                                                          office__organizational_structure__is_active=True).values_list('employee__email', flat=True)
+        recipients = OrganizationalStructureOfficeEmployee.objects.filter(
+            employee__is_active=True,
+            office__is_active=True,
+            office__slug=MANAGER_OFFICE,
+            office__organizational_structure__is_active=True,
+        ).values_list("employee__email", flat=True)
     _send_email(subject=subject, body=body, recipients=recipients)
 
 
-def send_email_to_promoters(channel, title, start, end, description, structure, referent, poster=None, recipients=[]):
+def send_email_to_promoters(
+    channel,
+    title,
+    start,
+    end,
+    description,
+    structure,
+    referent,
+    poster=None,
+    recipients=[],
+):
     body = """
        Canale di promozione: {channel}
 
@@ -108,24 +122,28 @@ def send_email_to_promoters(channel, title, start, end, description, structure, 
        Struttura: {structure}
        Referente scientifico: {referent}
        Descrizione: {description}
-    """.format(channel=channel,
-               title=title,
-               start=timezone.localtime(start),
-               end=timezone.localtime(end),
-               description=description,
-               structure=structure,
-               referent=referent)
+    """.format(
+        channel=channel,
+        title=title,
+        start=timezone.localtime(start),
+        end=timezone.localtime(end),
+        description=description,
+        structure=structure,
+        referent=referent,
+    )
 
-    _send_email(subject=f"Promozione evento Public Engagement: {channel}",
-                body=body,
-                attachment=poster,
-                recipients=recipients)
+    _send_email(
+        subject=f"Promozione evento Public Engagement: {channel}",
+        body=body,
+        attachment=poster,
+        recipients=recipients,
+    )
 
 
 def export_csv(events, file_name):
     response = HttpResponse(
         content_type="text/csv",
-        headers={'Content-Disposition': f'attachment; filename="{file_name}.csv"'},
+        headers={"Content-Disposition": f'attachment; filename="{file_name}.csv"'},
     )
 
     writer = csv.writer(response)
@@ -145,16 +163,23 @@ def export_csv(events, file_name):
         PublicEngagementEvent._meta.get_field("operator_taken_date").verbose_name,
         PublicEngagementEvent._meta.get_field("operator_taken_by").verbose_name,
         PublicEngagementEvent._meta.get_field("operator_evaluation_date").verbose_name,
-        PublicEngagementEvent._meta.get_field("operator_evaluation_success").verbose_name,
+        PublicEngagementEvent._meta.get_field(
+            "operator_evaluation_success"
+        ).verbose_name,
         PublicEngagementEvent._meta.get_field("operator_evaluated_by").verbose_name,
         PublicEngagementEvent._meta.get_field("operator_notes").verbose_name,
-        PublicEngagementEvent._meta.get_field("patronage_operator_taken_date").verbose_name,
-        PublicEngagementEvent._meta.get_field("patronage_operator_taken_by").verbose_name,
+        PublicEngagementEvent._meta.get_field(
+            "patronage_operator_taken_date"
+        ).verbose_name,
+        PublicEngagementEvent._meta.get_field(
+            "patronage_operator_taken_by"
+        ).verbose_name,
         PublicEngagementEvent._meta.get_field("patronage_granted").verbose_name,
         PublicEngagementEvent._meta.get_field("patronage_granted_date").verbose_name,
         PublicEngagementEvent._meta.get_field("patronage_granted_by").verbose_name,
         PublicEngagementEvent._meta.get_field("patronage_granted_notes").verbose_name,
         PublicEngagementEvent._meta.get_field("created_by_manager").verbose_name,
+        PublicEngagementEvent._meta.get_field("edited_by_operator").verbose_name,
         PublicEngagementEvent._meta.get_field("edited_by_manager").verbose_name,
         # PublicEngagementEvent._meta.get_field("is_active").verbose_name,
         _("Not eligible"),
@@ -169,7 +194,9 @@ def export_csv(events, file_name):
         PublicEngagementEventData._meta.get_field("other_recipients").verbose_name,
         PublicEngagementEventData._meta.get_field("target").verbose_name,
         PublicEngagementEventData._meta.get_field("method_of_execution").verbose_name,
-        PublicEngagementEventData._meta.get_field("geographical_dimension").verbose_name,
+        PublicEngagementEventData._meta.get_field(
+            "geographical_dimension"
+        ).verbose_name,
         PublicEngagementEventData._meta.get_field("organizing_subject").verbose_name,
         PublicEngagementEventData._meta.get_field("promo_channel").verbose_name,
         PublicEngagementEventData._meta.get_field("patronage_requested").verbose_name,
@@ -183,23 +210,48 @@ def export_csv(events, file_name):
         PublicEngagementEventReport._meta.get_field("collaborator_type").verbose_name,
         PublicEngagementEventReport._meta.get_field("website").verbose_name,
         PublicEngagementEventReport._meta.get_field("notes").verbose_name,
+        PublicEngagementEventReport._meta.get_field("edited_by_operator").verbose_name,
         PublicEngagementEventReport._meta.get_field("edited_by_manager").verbose_name,
     ]
 
     writer.writerow(header)
 
     for event in events:
-
-        evaluation_request_date = timezone.localtime(event.evaluation_request_date) if event.evaluation_request_date else ""
-        operator_taken_date = timezone.localtime(event.operator_taken_date) if event.operator_taken_date else ""
-        operator_evaluation_date = timezone.localtime(event.operator_evaluation_date) if event.operator_evaluation_date else ""
-        operator_evaluation_success = _("Yes") if event.operator_evaluation_success else _("No")
-        operator_evaluation_success = operator_evaluation_success if operator_evaluation_date else ""
-        patronage_operator_taken_date = timezone.localtime(event.patronage_operator_taken_date) if event.patronage_operator_taken_date else ""
-        patronage_granted_date = timezone.localtime(event.patronage_granted_date) if event.patronage_granted_date else ""
+        evaluation_request_date = (
+            timezone.localtime(event.evaluation_request_date)
+            if event.evaluation_request_date
+            else ""
+        )
+        operator_taken_date = (
+            timezone.localtime(event.operator_taken_date)
+            if event.operator_taken_date
+            else ""
+        )
+        operator_evaluation_date = (
+            timezone.localtime(event.operator_evaluation_date)
+            if event.operator_evaluation_date
+            else ""
+        )
+        operator_evaluation_success = (
+            _("Yes") if event.operator_evaluation_success else _("No")
+        )
+        operator_evaluation_success = (
+            operator_evaluation_success if operator_evaluation_date else ""
+        )
+        patronage_operator_taken_date = (
+            timezone.localtime(event.patronage_operator_taken_date)
+            if event.patronage_operator_taken_date
+            else ""
+        )
+        patronage_granted_date = (
+            timezone.localtime(event.patronage_granted_date)
+            if event.patronage_granted_date
+            else ""
+        )
         patronage_granted = _("Yes") if event.patronage_granted else _("No")
         patronage_granted = patronage_granted if patronage_granted_date else ""
         created_by_manager = _("Yes") if event.created_by_manager else _("No")
+        edited_by_operator = _("Yes") if event.edited_by_operator else _("No")
         edited_by_manager = _("Yes") if event.edited_by_manager else _("No")
         is_active = _("Not eligible") if not event.is_active else ""
 
@@ -227,46 +279,70 @@ def export_csv(events, file_name):
             event.patronage_granted_by,
             event.patronage_granted_notes,
             created_by_manager,
+            edited_by_operator,
             edited_by_manager,
             is_active,
             event.disabled_notes,
         ]
 
-        if hasattr(event, 'data'):
-            patronage_requested = _("Yes") if event.data.patronage_requested else _("No")
+        if hasattr(event, "data"):
+            patronage_requested = (
+                _("Yes") if event.data.patronage_requested else _("No")
+            )
 
-            data.extend([
-                event.data.event_type,
-                event.data.description,
-                ", ".join(str(p) for p in event.data.involved_personnel.all()),
-                ", ".join(str(s) for s in event.data.involved_structure.all()),
-                event.data.project_name,
-                ", ".join(event.data.recipient.values_list("description", flat=True)),
-                event.data.other_recipients,
-                ", ".join(event.data.target.values_list("description", flat=True)),
-                event.data.method_of_execution.description,
-                event.data.geographical_dimension,
-                event.data.organizing_subject,
-                ", ".join(event.data.promo_channel.values_list("description", flat=True)),
-                patronage_requested,
-                ", ".join(event.data.promo_tool.values_list("description", flat=True)),
-            ])
+            data.extend(
+                [
+                    event.data.event_type,
+                    event.data.description,
+                    ", ".join(str(p) for p in event.data.involved_personnel.all()),
+                    ", ".join(str(s) for s in event.data.involved_structure.all()),
+                    event.data.project_name,
+                    ", ".join(
+                        event.data.recipient.values_list("description", flat=True)
+                    ),
+                    event.data.other_recipients,
+                    ", ".join(event.data.target.values_list("description", flat=True)),
+                    event.data.method_of_execution.description,
+                    event.data.geographical_dimension,
+                    event.data.organizing_subject,
+                    ", ".join(
+                        event.data.promo_channel.values_list("description", flat=True)
+                    ),
+                    patronage_requested,
+                    ", ".join(
+                        event.data.promo_tool.values_list("description", flat=True)
+                    ),
+                ]
+            )
 
-        if hasattr(event, 'report'):
-            monitoring_activity = _("Yes") if event.report.monitoring_activity else _("No")
+        if hasattr(event, "report"):
+            monitoring_activity = (
+                _("Yes") if event.report.monitoring_activity else _("No")
+            )
             impact_evaluation = _("Yes") if event.report.impact_evaluation else _("No")
 
-            data.extend([
-                event.report.participants,
-                event.report.budget,
-                monitoring_activity,
-                impact_evaluation,
-                ", ".join(event.report.scientific_area.values_list("description", flat=True)),
-                ", ".join(event.report.collaborator_type.values_list("description", flat=True)),
-                event.report.website,
-                event.report.notes,
-                event.report.edited_by_manager,
-            ])
+            data.extend(
+                [
+                    event.report.participants,
+                    event.report.budget,
+                    monitoring_activity,
+                    impact_evaluation,
+                    ", ".join(
+                        event.report.scientific_area.values_list(
+                            "description", flat=True
+                        )
+                    ),
+                    ", ".join(
+                        event.report.collaborator_type.values_list(
+                            "description", flat=True
+                        )
+                    ),
+                    event.report.website,
+                    event.report.notes,
+                    event.report.edited_by_operator,
+                    event.report.edited_by_manager,
+                ]
+            )
 
         writer.writerow(data)
 

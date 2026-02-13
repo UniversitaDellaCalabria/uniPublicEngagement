@@ -70,13 +70,14 @@ def event_data(
 
             if by_manager:
                 event.edited_by_manager = True
-
+            else:
+                event.edited_by_operator = True
             event.save()
 
             if by_manager:
                 msg = "[Operatore di Ateneo] Dati iniziativa modificati"
             else:
-                msg = "[Operatore {}] Dati iniziativa modificati".format(structure_slug)
+                msg = "[Operatore di Struttura] Dati iniziativa modificati"
 
             log_action(user=request.user, obj=event, flag=CHANGE, msg=msg)
 
@@ -211,7 +212,8 @@ def event_people(
 
             if by_manager:
                 event.edited_by_manager = True
-
+            else:
+                event.edited_by_operator = True
             event.save()
 
             if by_manager:
@@ -219,8 +221,8 @@ def event_people(
                     person
                 )
             else:
-                msg = "[Operatore {}] Altro personale coinvolto: aggiunto {}".format(
-                    structure_slug, person
+                msg = "[Operatore di Struttura] Altro personale coinvolto: aggiunto {}".format(
+                    person
                 )
 
             log_action(user=request.user, obj=event, flag=CHANGE, msg=msg)
@@ -268,7 +270,8 @@ def event_people_delete(
 
         if by_manager:
             event.edited_by_manager = True
-
+        else:
+            event.edited_by_operator = True
         event.save()
 
         if by_manager:
@@ -276,8 +279,10 @@ def event_people_delete(
                 person
             )
         else:
-            msg = "[Operatore {}] Altro personale coinvolto: rimosso {}".format(
-                structure_slug, person
+            msg = (
+                "[Operatore di Struttura] Altro personale coinvolto: rimosso {}".format(
+                    person
+                )
             )
 
         log_action(user=request.user, obj=event, flag=CHANGE, msg=msg)
@@ -368,7 +373,8 @@ def event_structures(
 
                 if by_manager:
                     event.edited_by_manager = True
-
+                else:
+                    event.edited_by_operator = True
                 event.save()
 
                 if by_manager:
@@ -376,10 +382,8 @@ def event_structures(
                         new_structure
                     )
                 else:
-                    msg = (
-                        "[Operatore {}] Altra struttura coinvolta: aggiunto {}".format(
-                            structure_slug, new_structure
-                        )
+                    msg = "[Operatore di Struttura] Altra struttura coinvolta: aggiunto {}".format(
+                        new_structure
                     )
 
                 log_action(user=request.user, obj=event, flag=CHANGE, msg=msg)
@@ -440,7 +444,8 @@ def event_structures_delete(
 
         if by_manager:
             event.edited_by_manager = True
-
+        else:
+            event.edited_by_operator = True
         event.save()
 
         if by_manager:
@@ -448,8 +453,10 @@ def event_structures_delete(
                 structure
             )
         else:
-            msg = "[Operatore {}] Altra struttura coinvolta: rimosso {}".format(
-                structure_slug, structure
+            msg = (
+                "[Operatore di Struttura] Altra struttura coinvolta: rimosso {}".format(
+                    structure
+                )
             )
 
         log_action(user=request.user, obj=event, flag=CHANGE, msg=msg)

@@ -237,7 +237,7 @@ def take_event(request, structure_slug, event_id, structure=None):
         user=request.user,
         obj=event,
         flag=CHANGE,
-        msg="[Operatore {}] Iniziativa presa in carico".format(structure_slug),
+        msg="[Operatore di Struttura] Iniziativa presa in carico",
     )
 
     # invia email al referente/compilatore
@@ -274,6 +274,7 @@ def event_basic_info(request, structure_slug, event_id, structure=None, event=No
         form = PublicEngagementEventOperatorForm(instance=event, data=request.POST)
         if form.is_valid():
             event = form.save(commit=False)
+            event.edited_by_operator = True
             event.modified_by = request.user
             event.save()
 
@@ -281,9 +282,7 @@ def event_basic_info(request, structure_slug, event_id, structure=None, event=No
                 user=request.user,
                 obj=event,
                 flag=CHANGE,
-                msg="[Operatore {}] Informazioni generali modificate".format(
-                    structure_slug
-                ),
+                msg="[Operatore di Struttura] Informazioni generali modificate",
             )
 
             messages.add_message(
@@ -386,6 +385,84 @@ def event_people_delete(
 
 @login_required
 @is_structure_evaluation_operator
+@has_report_editable_by_operator
+def event_report(request, structure_slug, event_id, structure=None):
+    template = "user/event_report.html"
+    event = get_object_or_404(
+        PublicEngagementEvent, pk=event_id, structure__slug=structure_slug
+    )
+    instance = PublicEngagementEventReport.objects.filter(event=event).first()
+    form = PublicEngagementEventReportForm(instance=instance)
+
+    breadcrumbs = {
+        reverse("pe_management:dashboard"): _("Home"),
+        reverse("pe_management:operator_dashboard"): _("Structure operator"),
+        reverse(
+            "pe_management:operator_events", kwargs={"structure_slug": structure_slug}
+        ): structure.name,
+        reverse(
+            "pe_management:operator_event",
+            kwargs={"event_id": event_id, "structure_slug": structure_slug},
+        ): event.title,
+        "#": _("Evaluation"),
+        "#": _("Monitoring data"),
+    }
+
+    if request.method == "POST":
+        form = PublicEngagementEventReportForm(instance=instance, data=request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.event = event
+            report.modified_by = request.user
+            if not instance:
+                report.created_by = request.user
+            report.edited_by_operator = True
+            report.save()
+
+            form.save_m2m()
+            event.edited_by_operator = True
+            event.modified_by = request.user
+            event.save()
+
+            log_action(
+                user=request.user,
+                obj=event,
+                flag=CHANGE,
+                msg="[Operatore di Struttura] Dati di monitoraggio modificati"
+                if instance
+                else "[Operatore di Struttura] Dati di monitoraggio inseriti",
+            )
+
+            messages.add_message(
+                request, messages.SUCCESS, _("Monitoring data modified successfully")
+            )
+            return redirect(
+                "pe_management:operator_event",
+                structure_slug=structure_slug,
+                event_id=event_id,
+            )
+        else:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "<b>{}</b>: {}".format(
+                    _("Alert"), _("the errors in the form below need to be fixed")
+                ),
+            )
+    return render(
+        request,
+        template,
+        {
+            "breadcrumbs": breadcrumbs,
+            "event": event,
+            "form": form,
+            "structure_slug": structure_slug,
+        },
+    )
+
+
+@login_required
+@is_structure_evaluation_operator
 @is_editable_by_operator
 def event_structures(request, structure_slug, event_id, structure=None, event=None):
     result = management.event_structures(
@@ -474,9 +551,7 @@ def event_evaluation(request, structure_slug, event_id, structure=None):
             log_result = (
                 "approvata" if form.cleaned_data["success"] == "True" else "rifiutata"
             )
-            msg = "[Operatore {}] Esito valutazione: {}".format(
-                structure_slug, log_result
-            )
+            msg = "[Operatore di Struttura] Esito valutazione: {}".format(log_result)
             if not form.cleaned_data["success"] == "True":
                 msg += " {}".format(event.operator_notes)
 
@@ -587,7 +662,7 @@ def event_reopen_evaluation(request, structure_slug, event_id, structure=None):
         user=request.user,
         obj=event,
         flag=CHANGE,
-        msg="[Operatore {}] Valutazione riaperta".format(structure_slug),
+        msg="[Operatore di Struttura] Valutazione riaperta",
     )
 
     messages.add_message(request, messages.SUCCESS, _("Evaluation reopened"))

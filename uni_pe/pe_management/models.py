@@ -153,6 +153,7 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
     )
     # manager
     created_by_manager = models.BooleanField("Creato dal manager", default=False)
+    edited_by_operator = models.BooleanField("Modificato dall'operatore", default=False)
     edited_by_manager = models.BooleanField("Modificato dal manager", default=False)
     disabled_notes = models.TextField(
         "Note disabilitazione",
@@ -225,6 +226,9 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         # False: se è stato creato dal manager
         if self.created_by_manager:
             return (False, _("Event created by manager"))
+        # False: se i dati di monitoraggio sono stati editati dall'operatore
+        if hasattr(self, "report") and self.report.edited_by_operator:
+            return (False, _("Report data edited by operator"))
         # False: se i dati di monitoraggio sono stati editati dal manager
         if hasattr(self, "report") and self.report.edited_by_manager:
             return (False, _("Report data edited by manager"))
@@ -235,6 +239,33 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         if self.is_over():
             return (True, "")
         return (False, _("Event is not over yet"))
+
+    def has_report_editable_by_operator(self):
+        """
+        ci dice se i dati di reportistica dell'evento (fase 2) sono editabili dall'operatore
+        """
+        # False: se il monitoraggio per l'anno è stato disabilitato
+        if not self.check_year():
+            return (False, _("Monitoring year closed"))
+        # False: se non ci sono i dati della fase 1
+        if not getattr(self, "data", None):
+            return (False, _("Missing event data"))
+        # False: se non sono stati inserite le persone collegate
+        # if not self.data.involved_personnel.exists():
+        # return False
+        # True: se l'evento è terminato
+        if not self.is_over():
+            return (False, _("Event is not over yet"))
+        # True: se l'ha creata il manager stesso
+        if self.created_by_manager:
+            return (False, _("Event created by manager"))
+        # False: se i dati di monitoraggio sono stati editati dal manager
+        if hasattr(self, "report") and self.report.edited_by_manager:
+            return (False, _("Report data edited by manager"))
+        # False: se non è stato approvato
+        if self.has_been_approved():
+            return (True, "")
+        return (False, _("Event rejected"))
 
     def has_report_editable_by_manager(self):
         """
@@ -466,8 +497,6 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
         # False: il manager l'ha preso in carico
         if self.created_by_manager:
             return False
-        # if self.edited_by_manager:
-        # return False
         # False: se non è stato richiesto il patrocinio
         if not hasattr(self, "data"):
             return False
@@ -818,6 +847,7 @@ class PublicEngagementEventReport(CreatedModifiedBy, TimeStampedModel):
     )
     website = models.URLField(_("Initiative’s website"), blank=True, null=True)
     notes = models.TextField(_("Notes"), default="", blank=True)
+    edited_by_operator = models.BooleanField("Modificato dall'operatore", default=False)
     edited_by_manager = models.BooleanField("Modificato dal manager", default=False)
 
     class Meta:

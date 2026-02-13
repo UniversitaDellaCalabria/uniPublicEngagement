@@ -181,6 +181,11 @@ urlpatterns = [
         operator.event_reopen_evaluation,
         name="operator_event_reopen_evaluation",
     ),
+    path(
+        f"{prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events/<int:event_id>/report/",
+        operator.event_report,
+        name="operator_event_report",
+    ),
     # patronage operator
     path(
         f"{prefix}/{operator_prefix}/{patronage_prefix}/",

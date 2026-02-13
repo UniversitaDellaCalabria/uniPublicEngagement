@@ -592,10 +592,6 @@ def event_structures_delete(request, event_id, structure_id, event=None):
 @has_access_to_my_event
 @has_report_editable
 def event_report(request, event_id, event=None):
-    if getattr(event, "report", None) and event.report.edited_by_manager:
-        messages.add_message(request, messages.ERROR, _("Access denied"))
-        return redirect("pe_management:user_event", event_id=event_id)
-
     template = "user/event_report.html"
     instance = PublicEngagementEventReport.objects.filter(event=event).first()
     form = PublicEngagementEventReportForm(instance=instance)

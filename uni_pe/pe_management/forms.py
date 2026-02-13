@@ -230,6 +230,7 @@ class PublicEngagementEventReportForm(forms.ModelForm):
             "modified",
             "modified_by",
             "event",
+            "edited_by_operator",
             "edited_by_manager",
         )
         widgets = {
