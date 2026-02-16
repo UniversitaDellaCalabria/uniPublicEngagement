@@ -39,6 +39,7 @@ class PublicEngagementAnnualMonitoring(
     class Meta:
         verbose_name = "Anno di monitoraggio"
         verbose_name_plural = "Anni di monitoraggio"
+        ordering = ("year",)
 
     def __str__(self):
         return str(self.year)
