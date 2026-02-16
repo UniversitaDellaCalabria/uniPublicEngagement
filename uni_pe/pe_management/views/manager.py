@@ -52,9 +52,7 @@ def structures_management(request):
     }
 
     structures = OrganizationalStructure.objects.filter(is_active=True)
-    active_years = PublicEngagementAnnualMonitoring.objects.filter(
-        is_active=True
-    ).values_list("year", flat=True)
+    active_years = PublicEngagementAnnualMonitoring.get_active_years()
 
     monitoring_years = (
         PublicEngagementAnnualMonitoring.objects.all()

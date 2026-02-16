@@ -32,6 +32,8 @@ class PublicEngagementAnnualMonitoring(
     ActivableModel, CreatedModifiedBy, TimeStampedModel
 ):
     # serve per definire chiudere o aprire le attività di PE in un anno
+    start = models.DateTimeField(_("Start"))
+    end = models.DateTimeField(_("End"))
     year = models.IntegerField(unique=True)
 
     class Meta:
@@ -41,10 +43,20 @@ class PublicEngagementAnnualMonitoring(
     def __str__(self):
         return str(self.year)
 
-    @staticmethod
-    def year_is_active(year):
-        cls = PublicEngagementAnnualMonitoring
-        return cls.objects.filter(year=year, is_active=True).exists()
+    @classmethod
+    def year_is_active(cls, year):
+        return cls.objects.filter(
+            year=year,
+            start__lte=timezone.now(),
+            end__gte=timezone.now(),
+            is_active=True,
+        ).exists()
+
+    @classmethod
+    def get_active_years(cls):
+        return cls.objects.filter(
+            tart__lte=timezone.now(), end__gte=timezone.now(), is_active=True
+        ).values_list("year", flat=True)
 
 
 class PublicEngagementEventType(ActivableModel, CreatedModifiedBy, TimeStampedModel):

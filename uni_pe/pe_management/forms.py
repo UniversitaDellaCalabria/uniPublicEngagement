@@ -61,7 +61,7 @@ class PublicEngagementEventForm(forms.ModelForm):
             self.add_error("end", _("The start date cannot be later than the end date"))
 
         active_years = PublicEngagementAnnualMonitoring.objects.filter(
-            is_active=True
+            start__lte=timezone.now(), end__gte=timezone.now()
         ).values_list("year", flat=True)
         if start and start.year not in active_years:
             self.add_error(

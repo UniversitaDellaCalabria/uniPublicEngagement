@@ -34,9 +34,7 @@ class PublicEngagementEventList(generics.ListAPIView):
 
         status = self.request.query_params.get("status")
         if status == "to_handle" or status == "to_evaluate":
-            active_years = PublicEngagementAnnualMonitoring.objects.filter(
-                is_active=True
-            ).values_list("year", flat=True)
+            active_years = PublicEngagementAnnualMonitoring.get_active_years()
             years_query = Q()
             for year in active_years:
                 years_query |= Q(start__year=year)

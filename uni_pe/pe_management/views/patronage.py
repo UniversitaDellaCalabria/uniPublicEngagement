@@ -30,9 +30,7 @@ def dashboard(request, structures=None):
         "#": _("Patronage operator"),
     }
 
-    active_years = PublicEngagementAnnualMonitoring.objects.filter(
-        is_active=True
-    ).values_list("year", flat=True)
+    active_years = PublicEngagementAnnualMonitoring.get_active_years()
     years_query = Q()
     for year in active_years:
         years_query |= Q(start__year=year)
