@@ -56,7 +56,7 @@ class PublicEngagementAnnualMonitoring(
     @classmethod
     def get_active_years(cls):
         return cls.objects.filter(
-            tart__lte=timezone.now(), end__gte=timezone.now(), is_active=True
+            start__lte=timezone.now(), end__gte=timezone.now(), is_active=True
         ).values_list("year", flat=True)
 
 
