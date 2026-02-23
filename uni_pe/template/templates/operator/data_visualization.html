@@ -6,14 +6,13 @@
 
 
 {% block top_content %}
-<p class="h2">{% trans "Dashboard" %}</p>
-<hr class="my-4">
+<p class="h2">{% trans "Data visualization" %}</p>
+<h3 style="font-weight: lighter">{{ structure.unique_code|upper }}</h3>
 {% endblock top_content %}
 
 {% block clean_content %}
 
 {% pem_settings_value 'DASHBOARD_OPERATOR_KPI_LIST' as dashboard_kpi_list %}
-<p class="h4">{% trans "Data visualization" %}</p>
 {% comment %} <p>{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." %}</p> {% endcomment %}
 
 <form method="GET" action="">

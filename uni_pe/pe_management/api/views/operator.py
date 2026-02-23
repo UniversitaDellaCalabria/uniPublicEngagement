@@ -7,7 +7,7 @@ from ...models import (
     PublicEngagementEventData,
     PublicEngagementEventScientificArea,
 )
-from ..permissions import IsStructureEvaluationOperator
+from ..permissions import IsStructureEvaluationOperator, IsStructurePatronageOperator
 from .generic import PublicEngagementEventList
 
 
@@ -16,7 +16,10 @@ class PublicEngagementEventList(PublicEngagementEventList):
 
 
 class PublicEngagementEventTypesList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -45,7 +48,10 @@ class PublicEngagementEventTypesList(generics.ListAPIView):
 
 
 class PublicEngagementMainProjectsList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -75,7 +81,10 @@ class PublicEngagementMainProjectsList(generics.ListAPIView):
 
 
 class PublicEngagementEventsRecipientsList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -104,7 +113,10 @@ class PublicEngagementEventsRecipientsList(generics.ListAPIView):
 
 
 class PublicEngagementEventsTargetsList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -134,7 +146,10 @@ class PublicEngagementEventsTargetsList(generics.ListAPIView):
 
 
 class PublicEngagementEventsMethodsOfExecutionList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -164,7 +179,10 @@ class PublicEngagementEventsMethodsOfExecutionList(generics.ListAPIView):
 
 
 class PublicEngagementEventsGeographicalDimensionList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -194,7 +212,10 @@ class PublicEngagementEventsGeographicalDimensionList(generics.ListAPIView):
 
 
 class PublicEngagementEventsOrganizingSubjectList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -224,7 +245,10 @@ class PublicEngagementEventsOrganizingSubjectList(generics.ListAPIView):
 
 
 class PublicEngagementEventsPromoChannelList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -253,7 +277,10 @@ class PublicEngagementEventsPromoChannelList(generics.ListAPIView):
 
 
 class PublicEngagementEventsPatronageRequestedList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -281,7 +308,10 @@ class PublicEngagementEventsPatronageRequestedList(generics.ListAPIView):
 
 
 class PublicEngagementEventsMonitoringDataProvidedList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -307,7 +337,10 @@ class PublicEngagementEventsMonitoringDataProvidedList(generics.ListAPIView):
 
 
 class PublicEngagementEventsImpactEvaluationList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):
@@ -341,7 +374,10 @@ class PublicEngagementEventsImpactEvaluationList(generics.ListAPIView):
 
 
 class PublicEngagementEventsScientificAreasList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsStructureEvaluationOperator]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
 
     def get_queryset(self, **kwargs):
         if not kwargs.get("structure"):

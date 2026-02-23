@@ -16,6 +16,7 @@ from ..forms import *
 from ..models import *
 from ..settings import *
 from ..utils import *
+from .operator import data_visualization
 
 
 @login_required
@@ -68,6 +69,23 @@ def dashboard(request, structures=None):
             "event_counts": event_counts,
             "structures": organizational_structures,
         },
+    )
+
+
+@login_required
+@is_structure_patronage_operator
+def patronage_data_visualization(request, structure_slug, structure=None):
+    breadcrumbs = {
+        reverse("pe_management:dashboard"): _("Home"),
+        reverse("pe_management:patronage_operator_dashboard"): _("Patronage operator"),
+        reverse(
+            "pe_management:patronage_operator_events",
+            kwargs={"structure_slug": structure_slug},
+        ): structure.name,
+        "#": _("Data visualization"),
+    }
+    return data_visualization(
+        request=request, structure=structure, breadcrumbs=breadcrumbs
     )
 
 

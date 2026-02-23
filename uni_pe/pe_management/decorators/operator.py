@@ -30,6 +30,29 @@ def evaluation_operator_structures(func_to_decorate):
     return new_func
 
 
+# def is_structure_operator(func_to_decorate):
+#     """
+#     controlla che l'utente sia un operatore (non importa di che tipo)
+#     della struttura
+#     """
+
+#     def new_func(*original_args, **original_kwargs):
+#         request = original_args[0]
+#         structure_slug = original_kwargs["structure_slug"]
+#         structure = get_object_or_404(
+#             OrganizationalStructure, slug=structure_slug, is_active=True
+#         )
+#         original_kwargs["structure"] = structure
+#         if user_is_operator(
+#             user=request.user, structure=structure
+#         ) or user_is_patronage_operator(user=request.user, structure=structure):
+#             return func_to_decorate(*original_args, **original_kwargs)
+#         messages.add_message(request, messages.ERROR, _("Access denied"))
+#         return redirect("pe_management:dashboard")
+
+#     return new_func
+
+
 def is_structure_evaluation_operator(func_to_decorate):
     """
     controlla esclusivamente la tipologia dell'utente

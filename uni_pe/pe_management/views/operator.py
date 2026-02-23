@@ -122,20 +122,8 @@ def dashboard(request, structures=None):
     )
 
 
-@login_required
-@is_structure_evaluation_operator
-def data_visualization(request, structure_slug, structure=None):
+def data_visualization(request, structure, breadcrumbs):
     template = "operator/data_visualization.html"
-
-    breadcrumbs = {
-        reverse("pe_management:dashboard"): _("Home"),
-        reverse("pe_management:operator_dashboard"): _("Structure operator"),
-        reverse(
-            "pe_management:operator_events", kwargs={"structure_slug": structure_slug}
-        ): structure.name,
-        "#": _("Data visualization"),
-    }
-
     monitoring_years = (
         PublicEngagementAnnualMonitoring.objects.all()
         .order_by("-year")
@@ -146,6 +134,22 @@ def data_visualization(request, structure_slug, structure=None):
         request,
         template,
         {"breadcrumbs": breadcrumbs, "years": monitoring_years, "structure": structure},
+    )
+
+
+@login_required
+@is_structure_evaluation_operator
+def validator_data_visualization(request, structure_slug, structure=None):
+    breadcrumbs = {
+        reverse("pe_management:dashboard"): _("Home"),
+        reverse("pe_management:operator_dashboard"): _("Structure operator"),
+        reverse(
+            "pe_management:operator_events", kwargs={"structure_slug": structure.slug}
+        ): structure.name,
+        "#": _("Data visualization"),
+    }
+    return data_visualization(
+        request=request, structure=structure, breadcrumbs=breadcrumbs
     )
 
 

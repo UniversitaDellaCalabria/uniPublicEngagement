@@ -117,8 +117,8 @@ urlpatterns = [
         name="operator_dashboard",
     ),
     path(
-        f"{prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/data-visualization/",
-        operator.data_visualization,
+        f"{prefix}/{operator_prefix}/<str:structure_slug>/data-visualization/",
+        operator.validator_data_visualization,
         name="operator_data_visualization",
     ),
     path(
@@ -191,6 +191,11 @@ urlpatterns = [
         f"{prefix}/{operator_prefix}/{patronage_prefix}/",
         patronage.dashboard,
         name="patronage_operator_dashboard",
+    ),
+    path(
+        f"{prefix}/{operator_prefix}/{patronage_prefix}/<str:structure_slug>/data-visualization/",
+        patronage.patronage_data_visualization,
+        name="patronage_operator_data_visualization",
     ),
     path(
         f"{prefix}/{operator_prefix}/{patronage_prefix}/<str:structure_slug>/events/",

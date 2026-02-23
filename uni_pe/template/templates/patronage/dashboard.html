@@ -49,6 +49,12 @@
                             <use href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
                         </svg>
                     </a>
+                    <a style="left: 50%" class="read-more" href="{% url 'pe_management:patronage_operator_data_visualization' structure_slug=structure.slug %}">
+                        <span class="text text-primary">{% trans "Data visualization" %}</span>
+                        <svg class="icon">
+                            <use href="{% static 'svg/sprites.svg' %}#it-arrow-right-circle"></use>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
