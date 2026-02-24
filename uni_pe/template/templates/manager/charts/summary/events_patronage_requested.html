@@ -61,13 +61,15 @@
     },
     methods: {
       myFunction(item) {
-        let num = item.num
-        let label = "Richiesto"
-        if(!item.patronage_requested) {
-          label = "Non richiesto"
+        for (const [key, value] of Object.entries(item)) {
+          let label = "Si"
+          let num = value
+          if(key == 'no') {
+            label = "No"
+          }
+          options_events_patronage_requested.labels.push(label)
+          options_events_patronage_requested.series.push(num)
         }
-        options_events_patronage_requested.labels.push(label)
-        options_events_patronage_requested.series.push(num)
       },
       getCounters() {
         axios
@@ -79,7 +81,7 @@
         .then(response => {
           this.error_msg = ""
           this.error_status = null
-          response.data.forEach(this.myFunction)
+          this.myFunction(response.data)
           var chart = new ApexCharts(document.querySelector("#chart_events_patronage_requested"), options_events_patronage_requested)
           chart.render()
         })
