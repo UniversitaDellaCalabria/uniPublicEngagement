@@ -233,17 +233,15 @@ class PublicEngagementEventsPatronageRequestedList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
-        events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-            )
-            .values("patronage_requested")
-            .annotate(num=Count("id"))
+        return PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+        ).aggregate(
+            yes=Count("id", filter=Q(patronage_requested=True), distinct=True),
+            no=Count("id", filter=Q(patronage_requested=False)),
         )
-        return events
 
     def get(self, request):
         return Response(self.get_queryset(year=request.GET.get("year")))

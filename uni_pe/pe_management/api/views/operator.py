@@ -287,19 +287,17 @@ class PublicEngagementEventsPatronageRequestedList(generics.ListAPIView):
             return []
         if not kwargs.get("year"):
             return []
-        events = (
-            PublicEngagementEventData.objects.filter(
-                event__structure__slug=kwargs.get("structure"),
-                event__structure__is_active=True,
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-            )
-            .values("patronage_requested")
-            .annotate(num=Count("id"))
+        return PublicEngagementEventData.objects.filter(
+            event__structure__slug=kwargs.get("structure"),
+            event__structure__is_active=True,
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+        ).aggregate(
+            yes=Count("id", filter=Q(patronage_requested=True), distinct=True),
+            no=Count("id", filter=Q(patronage_requested=False)),
         )
-        return events
 
     def get(self, request, structure_slug):
         return Response(
