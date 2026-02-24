@@ -141,7 +141,7 @@
         .then(response => {
           this.error_msg = ""
           this.error_status = null
-          response.data.forEach(this.myFunction)
+          this.myFunction(response.data)
           var chart = new ApexCharts(document.querySelector("#chart_events_patronage_requested"), options_events_patronage_requested)
           chart.render()
         })
