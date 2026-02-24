@@ -28,46 +28,85 @@
 
 <script>
   var options_events_impact_evaluation = {
-    series: [],
+    series: [{
+      data: []
+    }],
     chart: {
       type: 'bar',
-      height: 150,
-      stacked: true
+      height: 200
     },
-    colors: ['#008FFB', '#FF4560'],
     plotOptions: {
       bar: {
-        borderRadius: 5,
-        borderRadiusApplication: 'end', // 'around', 'end'
-        borderRadiusWhenStacked: 'all', // 'all', 'last'
+        barHeight: '100%',
+        distributed: true,
         horizontal: true,
-        barHeight: '80%',
-      },
+        dataLabels: {
+          position: 'bottom'
+        },
+      }
     },
+    colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+    '#f48024', '#69d2e7'
+    ],
     dataLabels: {
-      enabled: false
+      enabled: false,
+      textAnchor: 'start',
+      style: {
+        colors: ['#fff']
+      },
+      formatter: function (val, opt) {
+        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+      },
+      offsetX: 0,
+      dropShadow: {
+        enabled: true
+      }
     },
     stroke: {
       width: 1,
-      colors: ["#fff"]
+      colors: ['#fff']
     },
-    
-    grid: {
-      xaxis: {
-        lines: {
-          show: false
+    xaxis: {
+      categories: [],
+    },
+    yaxis: {
+      labels: {
+        show: true
+      }
+    },
+    title: {},
+    subtitle: {},
+    tooltip: {
+      theme: 'dark',
+      x: {
+        show: false
+      },
+      y: {
+        title: {
+          formatter: function () {
+            return ''
+          }
         }
       }
     },
-    yaxis: {
-      stepSize: 1
-    },
-    tooltip: {
-      shared: false,
-    },
-    xaxis: {
-      categories: ['Num']
-    },
+    responsive: [{
+      breakpoint: 768, // Sotto i 768px (tablet/mobile)
+      options: {
+        chart: {
+          height: 600 // Aumenta l'altezza per far respirare le barre
+        },
+        yaxis: {
+          labels: {
+            show: true
+          }
+        },
+        plotOptions: {
+          bar: {
+            barHeight: '80%', // Riduci leggermente per dare spazio tra le barre
+          }
+        }
+      }
+    }],
   };
   
   const app_events_impact_evaluation = Vue.createApp({
@@ -87,12 +126,9 @@
           let num = value
           if(key == 'no') {
             label = "No"
-            num = value * -1
           }
-          options_events_impact_evaluation.series.push({
-            'name': label,
-            'data': [num]
-          })
+          options_events_impact_evaluation.xaxis.categories.push(label.toUpperCase())
+          options_events_impact_evaluation.series[0].data.push(num)
         }
       },
       getCounters() {
