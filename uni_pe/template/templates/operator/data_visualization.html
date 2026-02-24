@@ -13,7 +13,6 @@
 {% block clean_content %}
 
 {% pem_settings_value 'DASHBOARD_OPERATOR_KPI_LIST' as dashboard_kpi_list %}
-{% comment %} <p>{% trans "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." %}</p> {% endcomment %}
 
 <form method="GET" action="">
     <div class="row my-5">
@@ -141,7 +140,7 @@
     <div class="card-wrapper card-space">
     <div class="card card-bg no-after">
     <div class="card-body">
-    <p class="card-title h5">Lorem ipsum</p>
+    <p class="card-title h5"> ipsum</p>
     {% url 'pe_management:api_evaluation_operator_main_projects' structure_slug=structure.slug  as main_projects_url %}
     {% include "operator/charts/main_projects.html" with api_url=main_projects_url year=request.GET.year %}
     </div>
