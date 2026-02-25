@@ -738,6 +738,14 @@ class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
             "If the event is linked to a larger project, indicate which one"
         ),
     )
+    # PROJECT NAME TEMPORARY MOD
+    project_full_name = models.CharField(
+        _("If the event is linked to a larger project, indicate which one"),
+        max_length=254,
+        default="",
+        blank=True,
+    )
+    # END PROJECT NAME TEMPORARY MOD
     recipient = models.ManyToManyField(
         PublicEngagementEventRecipient,
         limit_choices_to={"is_active": True},

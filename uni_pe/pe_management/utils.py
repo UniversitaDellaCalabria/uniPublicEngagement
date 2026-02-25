@@ -189,7 +189,10 @@ def export_csv(events, file_name):
         PublicEngagementEventData._meta.get_field("description").verbose_name,
         PublicEngagementEventData._meta.get_field("involved_personnel").verbose_name,
         PublicEngagementEventData._meta.get_field("involved_structure").verbose_name,
-        PublicEngagementEventData._meta.get_field("project_name").verbose_name,
+        # PROJECT NAME TEMPORARY MOD
+        # PublicEngagementEventData._meta.get_field("project_name").verbose_name,
+        PublicEngagementEventData._meta.get_field("project_full_name").verbose_name,
+        # END PROJECT NAME TEMPORARY MOD
         PublicEngagementEventData._meta.get_field("recipient").verbose_name,
         PublicEngagementEventData._meta.get_field("other_recipients").verbose_name,
         PublicEngagementEventData._meta.get_field("target").verbose_name,
@@ -296,7 +299,10 @@ def export_csv(events, file_name):
                     event.data.description,
                     ", ".join(str(p) for p in event.data.involved_personnel.all()),
                     ", ".join(str(s) for s in event.data.involved_structure.all()),
-                    event.data.project_name,
+                    # PROJECT NAME TEMPORARY MOD
+                    # event.data.project_name,
+                    event.data.project_full_name,
+                    # END PROJECT NAME TEMPORARY MOD
                     ", ".join(
                         event.data.recipient.values_list("description", flat=True)
                     ),

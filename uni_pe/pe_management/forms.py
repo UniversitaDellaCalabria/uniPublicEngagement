@@ -151,6 +151,9 @@ class PublicEngagementEventDataForm(forms.ModelForm):
             "event",
             "involved_personnel",
             "involved_structure",
+            # PROJECT NAME TEMPORARY MOD
+            "project_name",
+            # END PROJECT NAME TEMPORARY MOD
         )
         widgets = {
             "event_type": BootstrapItaliaRadioWidget(),
@@ -161,7 +164,9 @@ class PublicEngagementEventDataForm(forms.ModelForm):
             "target": BootstrapItaliaMultiCheckboxWidget(),
             "promo_channel": BootstrapItaliaMultiCheckboxWidget(),
             "promo_tool": BootstrapItaliaMultiCheckboxWidget(),
-            "project_name": BootstrapItaliaAPISelectEventWidget(),
+            # PROJECT NAME TEMPORARY MOD
+            # "project_name": BootstrapItaliaAPISelectEventWidget(),
+            # END PROJECT NAME TEMPORARY MOD
             "patronage_requested": BootstrapItaliaToggleWidget(),
             "description": forms.Textarea(attrs={"rows": 2}),
         }
@@ -190,11 +195,14 @@ class PublicEngagementEventDataForm(forms.ModelForm):
             )
         # se si stanno modificando dei dati
         if self.instance.id:
+            # PROJECT NAME TEMPORARY MOD
             # se il nome dell'evento scelto corrisponde a quello dell'evento stesso
-            if self.instance.event == cleaned_data.get("project_name", None):
-                self.add_error(
-                    "project_name", _("It is not possible to connect to the same event")
-                )
+            # if self.instance.event == cleaned_data.get("project_name", None):
+            # self.add_error(
+            # "project_name", _("It is not possible to connect to the same event")
+            # )
+            # END PROJECT NAME TEMPORARY MOD
+
             # se la richiesta di patrocinio viene modificata ma
             # l'operatore di patrocinio aveva già preso in carico l'iniziativa
             # ~ if self.instance.event.patronage_operator_taken_date and not patronage_requested:

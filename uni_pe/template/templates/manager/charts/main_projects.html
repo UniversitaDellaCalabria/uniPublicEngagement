@@ -26,7 +26,12 @@ const app_main_projects = Vue.createApp({
     },
     methods: {
         myFunction(item) {
+            {% comment %}
+            # PROJECT NAME TEMPORARY MOD
             options_main_projects.series[0].data.push({'x': item.project_name__title, 'y': item.num})
+            # END PROJECT NAME TEMPORARY MOD
+            {% endcomment %}
+            options_main_projects.series[0].data.push({'x': item.project_full_name, 'y': item.num})
         },
         getCounters() {
             axios

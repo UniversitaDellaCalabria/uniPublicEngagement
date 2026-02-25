@@ -273,12 +273,23 @@
         </tr>
         <tr>
             <td>
+                {% comment %}
+                # PROJECT NAME TEMPORARY MOD
                 {% get_field_label event.data 'project_name' as field_label %}
+                # END PROJECT NAME TEMPORARY MOD
+                {% endcomment %}
+                {% get_field_label event.data 'project_full_name' as field_label %}
                 {{ field_label }}
             </td>
             <td>
+                {% comment %}
+                # PROJECT NAME TEMPORARY MOD
                 {% if event.data.project_name %}
                 {{ event.data.project_name }}
+                # END PROJECT NAME TEMPORARY MOD
+                {% endcomment %}
+                {% if event.data.project_full_name %}
+                {{ event.data.project_full_name }}
                 {% else %}
                 {% trans "No" %}
                 {% endif %}

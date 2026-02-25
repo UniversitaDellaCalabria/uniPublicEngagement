@@ -66,10 +66,17 @@ class PublicEngagementMainProjectsList(generics.ListAPIView):
                 event__operator_evaluation_success=True,
                 event__operator_evaluation_date__isnull=False,
                 event__start__year=kwargs["year"],
-                project_name__isnull=False,
+                # PROJECT NAME TEMPORARY MOD
+                # project_name__isnull=False,
+                project_full_name__isnull=False,
+                # END PROJECT NAME TEMPORARY MOD
             )
-            .values("project_name__title")
-            .annotate(num=Count("id"))
+            # PROJECT NAME TEMPORARY MOD
+            # .values("project_name__title")
+            # .annotate(num=Count("id"))
+            .values("project_name")
+            .annotate(num=Count("project_name"))
+            # END PROJECT NAME TEMPORARY MOD
             .order_by("-num")
         )
         return events
