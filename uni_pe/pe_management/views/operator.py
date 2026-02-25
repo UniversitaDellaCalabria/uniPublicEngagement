@@ -326,14 +326,27 @@ def event_basic_info(request, structure_slug, event_id, structure=None, event=No
 @is_structure_evaluation_operator
 @is_editable_by_operator
 def event_data(request, structure_slug, event_id, structure=None, event=None):
+    breadcrumbs = {
+        reverse("pe_management:dashboard"): _("Home"),
+        reverse("pe_management:operator_dashboard"): _("Structure operator"),
+        reverse(
+            "pe_management:operator_events",
+            kwargs={"structure_slug": structure_slug},
+        ): structure.name,
+        reverse(
+            "pe_management:operator_event",
+            kwargs={"event_id": event_id, "structure_slug": structure_slug},
+        ): event.title,
+        "#": _("Event data"),
+    }
+
     result = management.event_data(
         request=request,
         structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
-        structure=structure,
+        breadcrumbs=breadcrumbs,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:operator_event",
             structure_slug=structure_slug,
@@ -346,14 +359,27 @@ def event_data(request, structure_slug, event_id, structure=None, event=None):
 @is_structure_evaluation_operator
 @is_editable_by_operator
 def event_people(request, structure_slug, event_id, structure=None, event=None):
+    breadcrumbs = {
+        reverse("pe_management:dashboard"): _("Home"),
+        reverse("pe_management:operator_dashboard"): _("Structure operator"),
+        reverse(
+            "pe_management:operator_events",
+            kwargs={"structure_slug": structure_slug},
+        ): structure.name,
+        reverse(
+            "pe_management:operator_event",
+            kwargs={"event_id": event_id, "structure_slug": structure_slug},
+        ): event.title,
+        "#": _("Other involved personnel"),
+    }
+
     result = management.event_people(
         request=request,
         structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
-        structure=structure,
+        breadcrumbs=breadcrumbs,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:operator_event",
             structure_slug=structure_slug,
@@ -372,11 +398,10 @@ def event_people_delete(
     result = management.event_people_delete(
         request=request,
         structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
         person_id=person_id,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:operator_event",
             structure_slug=structure_slug,
@@ -467,14 +492,27 @@ def event_report(request, structure_slug, event_id, structure=None):
 @is_structure_evaluation_operator
 @is_editable_by_operator
 def event_structures(request, structure_slug, event_id, structure=None, event=None):
+    breadcrumbs = {
+        reverse("pe_management:dashboard"): _("Home"),
+        reverse("pe_management:operator_dashboard"): _("Structure operator"),
+        reverse(
+            "pe_management:operator_events",
+            kwargs={"structure_slug": structure_slug},
+        ): structure.name,
+        reverse(
+            "pe_management:operator_event",
+            kwargs={"event_id": event_id, "structure_slug": structure_slug},
+        ): event.title,
+        "#": _("Other involved structures"),
+    }
+
     result = management.event_structures(
         request=request,
         structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
-        structure=structure,
+        breadcrumbs=breadcrumbs,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:operator_event",
             structure_slug=structure_slug,
@@ -492,12 +530,11 @@ def event_structures_delete(
 ):
     result = management.event_structures_delete(
         request=request,
-        structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
+        structure_slug=structure_slug,
         structure_id=structure_id,
     )
-    if result == True:
+    if isinstance(result, bool):
         return redirect(
             "pe_management:operator_event",
             structure_slug=structure_slug,

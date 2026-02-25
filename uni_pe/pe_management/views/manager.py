@@ -445,14 +445,29 @@ def event_basic_info(request, structure_slug, event_id, event=None, structure=No
 @is_manager
 @is_editable_by_manager
 def event_data(request, structure_slug, event_id, event=None, structure=None):
+    breadcrumbs = {
+        reverse("pe_management:dashboard"): _("Home"),
+        reverse("pe_management:manager_dashboard"): _("Manager"),
+        reverse("pe_management:manager_management"): _("Management"),
+        reverse(
+            "pe_management:manager_events",
+            kwargs={"structure_slug": structure_slug},
+        ): structure.name,
+        reverse(
+            "pe_management:manager_event",
+            kwargs={"event_id": event_id, "structure_slug": structure_slug},
+        ): event.title,
+        "#": _("Event data"),
+    }
+
     result = management.event_data(
         request=request,
         structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
         by_manager=True,
-        structure=structure,
+        breadcrumbs=breadcrumbs,
     )
+
     if isinstance(result, bool):
         return redirect(
             "pe_management:manager_event",
@@ -466,13 +481,27 @@ def event_data(request, structure_slug, event_id, event=None, structure=None):
 @is_manager
 @is_editable_by_manager
 def event_people(request, structure_slug, event_id, event=None, structure=None):
+    breadcrumbs = {
+        reverse("pe_management:dashboard"): _("Home"),
+        reverse("pe_management:manager_dashboard"): _("Manager"),
+        reverse("pe_management:manager_management"): _("Management"),
+        reverse(
+            "pe_management:manager_events",
+            kwargs={"structure_slug": structure_slug},
+        ): structure.name,
+        reverse(
+            "pe_management:manager_event",
+            kwargs={"event_id": event_id, "structure_slug": structure_slug},
+        ): event.title,
+        "#": _("Other involved personnel"),
+    }
+
     result = management.event_people(
         request=request,
         structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
         by_manager=True,
-        structure=structure,
+        breadcrumbs=breadcrumbs,
     )
     if isinstance(result, bool):
         return redirect(
@@ -493,7 +522,6 @@ def event_people_delete(
     result = management.event_people_delete(
         request=request,
         structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
         person_id=person_id,
         by_manager=True,
@@ -511,13 +539,27 @@ def event_people_delete(
 @is_manager
 @is_editable_by_manager
 def event_structures(request, structure_slug, event_id, event=None, structure=None):
+    breadcrumbs = {
+        reverse("pe_management:dashboard"): _("Home"),
+        reverse("pe_management:manager_dashboard"): _("Manager"),
+        reverse("pe_management:manager_management"): _("Management"),
+        reverse(
+            "pe_management:manager_events",
+            kwargs={"structure_slug": structure_slug},
+        ): structure.name,
+        reverse(
+            "pe_management:manager_event",
+            kwargs={"event_id": event_id, "structure_slug": structure_slug},
+        ): event.title,
+        "#": _("Other involved structures"),
+    }
+
     result = management.event_structures(
         request=request,
         structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
         by_manager=True,
-        structure=structure,
+        breadcrumbs=breadcrumbs,
     )
     if isinstance(result, bool):
         return redirect(
@@ -537,12 +579,12 @@ def event_structures_delete(
 ):
     result = management.event_structures_delete(
         request=request,
-        structure_slug=structure_slug,
-        event_id=event_id,
         event=event,
+        structure_slug=structure_slug,
         structure_id=structure_id,
         by_manager=True,
     )
+
     if isinstance(result, bool):
         return redirect(
             "pe_management:manager_event",

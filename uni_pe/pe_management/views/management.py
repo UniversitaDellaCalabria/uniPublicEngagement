@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.admin.models import CHANGE
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import redirect, render, reverse
+from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
 from organizational_area.models import OrganizationalStructure
 from template.utils import *
@@ -16,38 +16,12 @@ from ..utils import *
 
 
 def event_data(
-    request, structure_slug, event_id, by_manager=False, event=None, structure=None
+    request,
+    structure_slug,
+    breadcrumbs,
+    event,
+    by_manager=False,
 ):
-    if by_manager:
-        breadcrumbs = {
-            reverse("pe_management:dashboard"): _("Home"),
-            reverse("pe_management:manager_dashboard"): _("Manager"),
-            reverse("pe_management:manager_management"): _("Management"),
-            reverse(
-                "pe_management:manager_events",
-                kwargs={"structure_slug": structure_slug},
-            ): structure.name,
-            reverse(
-                "pe_management:manager_event",
-                kwargs={"event_id": event_id, "structure_slug": structure_slug},
-            ): event.title,
-            "#": _("Event data"),
-        }
-    else:
-        breadcrumbs = {
-            reverse("pe_management:dashboard"): _("Home"),
-            reverse("pe_management:operator_dashboard"): _("Structure operator"),
-            reverse(
-                "pe_management:operator_events",
-                kwargs={"structure_slug": structure_slug},
-            ): structure.name,
-            reverse(
-                "pe_management:operator_event",
-                kwargs={"event_id": event_id, "structure_slug": structure_slug},
-            ): event.title,
-            "#": _("Event data"),
-        }
-
     template = "event_data.html"
     form = PublicEngagementEventDataForm(
         instance=getattr(event, "data", None), event=event
@@ -121,40 +95,14 @@ def event_data(
 
 
 def event_people(
-    request, structure_slug, event_id, by_manager=False, event=None, structure=None
+    request,
+    structure_slug,
+    breadcrumbs,
+    event,
+    by_manager=False,
 ):
     data = event.data
     template = "event_people.html"
-
-    if by_manager:
-        breadcrumbs = {
-            reverse("pe_management:dashboard"): _("Home"),
-            reverse("pe_management:manager_dashboard"): _("Manager"),
-            reverse("pe_management:manager_management"): _("Management"),
-            reverse(
-                "pe_management:manager_events",
-                kwargs={"structure_slug": structure_slug},
-            ): structure.name,
-            reverse(
-                "pe_management:manager_event",
-                kwargs={"event_id": event_id, "structure_slug": structure_slug},
-            ): event.title,
-            "#": _("Other involved personnel"),
-        }
-    else:
-        breadcrumbs = {
-            reverse("pe_management:dashboard"): _("Home"),
-            reverse("pe_management:operator_dashboard"): _("Structure operator"),
-            reverse(
-                "pe_management:operator_events",
-                kwargs={"structure_slug": structure_slug},
-            ): structure.name,
-            reverse(
-                "pe_management:operator_event",
-                kwargs={"event_id": event_id, "structure_slug": structure_slug},
-            ): event.title,
-            "#": _("Other involved personnel"),
-        }
 
     if request.method == "POST":
         # recupero dati completi del referente (in entrambi i casi)
@@ -254,9 +202,7 @@ def event_people(
     )
 
 
-def event_people_delete(
-    request, structure_slug, event_id, person_id, by_manager=False, event=None
-):
+def event_people_delete(request, structure_slug, person_id, event, by_manager=False):
     if not person_id:
         raise PermissionDenied()
     person = event.data.involved_personnel.filter(pk=person_id).first()
@@ -305,45 +251,20 @@ def event_people_delete(
             send_email_to_operators(event.structure, subject, body)
 
     return redirect(
-        "pe_management:manager_event", structure_slug=structure_slug, event_id=event_id
+        "pe_management:manager_event", structure_slug=structure_slug, event_id=event.pk
     )
 
 
 def event_structures(
-    request, structure_slug, event_id, by_manager=False, event=None, structure=None
+    request,
+    structure_slug,
+    breadcrumbs,
+    event,
+    by_manager=False,
 ):
     data = event.data
     template = "event_structures.html"
     form = PublicEngagementStructureForm()
-    if by_manager:
-        breadcrumbs = {
-            reverse("pe_management:dashboard"): _("Home"),
-            reverse("pe_management:manager_dashboard"): _("Manager"),
-            reverse("pe_management:manager_management"): _("Management"),
-            reverse(
-                "pe_management:manager_events",
-                kwargs={"structure_slug": structure_slug},
-            ): structure.name,
-            reverse(
-                "pe_management:manager_event",
-                kwargs={"event_id": event_id, "structure_slug": structure_slug},
-            ): event.title,
-            "#": _("Other involved structures"),
-        }
-    else:
-        breadcrumbs = {
-            reverse("pe_management:dashboard"): _("Home"),
-            reverse("pe_management:operator_dashboard"): _("Structure operator"),
-            reverse(
-                "pe_management:operator_events",
-                kwargs={"structure_slug": structure_slug},
-            ): structure.name,
-            reverse(
-                "pe_management:operator_event",
-                kwargs={"event_id": event_id, "structure_slug": structure_slug},
-            ): event.title,
-            "#": _("Other involved structures"),
-        }
 
     if request.method == "POST":
         form = PublicEngagementStructureForm(request.POST)
@@ -429,7 +350,7 @@ def event_structures(
 
 
 def event_structures_delete(
-    request, structure_slug, event_id, structure_id, by_manager=False, event=None
+    request, structure_slug, structure_id, event, by_manager=False
 ):
     if not structure_id:
         raise PermissionDenied()
@@ -479,5 +400,5 @@ def event_structures_delete(
             send_email_to_operators(event.structure, subject, body)
 
     return redirect(
-        "pe_management:manager_event", structure_slug=structure_slug, event_id=event_id
+        "pe_management:manager_event", structure_slug=structure_slug, event_id=event.pk
     )
