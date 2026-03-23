@@ -57,12 +57,12 @@
 <div class="clearfix mt-5">
     <div class="text-start float-lg-start">
         {% if event.is_editable_by_user %}
-        <a class="btn btn-xs btn-outline-secondary" href="{% url 'pe_management:user_event_basic_info' event_id=event.pk %}">
+        <a class="btn btn-outline-secondary" href="{% url 'pe_management:user_event_basic_info' event_id=event.pk %}">
             <svg class="icon icon-sm icon-info">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
             </svg> {% trans "General informations" %}
         </a>
-        <a class="btn btn-xs btn-{% if event.data %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:user_event_data' event_id=event.pk %}">
+        <a class="btn btn-{% if event.data %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:user_event_data' event_id=event.pk %}">
             <svg class="icon icon-sm icon-{% if event.data %}info{% else %}white{% endif %}">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-{% if event.data %}pencil{% else %}plus-circle{% endif %}"></use>
             </svg> {% trans "Event data" %}
@@ -70,12 +70,12 @@
         {% endif %}
 
         {% if event.data and event.is_editable_by_user %}
-        <a class="btn btn-xs btn-outline-secondary" href="{% url 'pe_management:user_event_people' event_id=event.pk %}">
+        <a class="btn btn-outline-secondary" href="{% url 'pe_management:user_event_people' event_id=event.pk %}">
             <svg class="icon icon-sm icon-info">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
             </svg> {% trans "Other involved personnel" %}
         </a>
-        <a class="btn btn-xs btn-outline-secondary" href="{% url 'pe_management:user_event_structures' event_id=event.pk %}">
+        <a class="btn btn-outline-secondary" href="{% url 'pe_management:user_event_structures' event_id=event.pk %}">
             <svg class="icon icon-sm icon-info">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
             </svg> {% trans "Other involved structures" %}
@@ -83,7 +83,7 @@
         {% endif %}
 
         {% if event.has_report_editable.0 %}
-        <a class="btn btn-xs btn-{% if event.report %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:user_event_report' event_id=event.pk %}">
+        <a class="btn btn-{% if event.report %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:user_event_report' event_id=event.pk %}">
             <svg class="icon icon-sm icon-{% if event.report %}info{% else %}white{% endif %}">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-{% if event.report %}pencil{% else %}plus-circle{% endif %}"></use>
             </svg> {% trans "Final report" %}
@@ -93,7 +93,7 @@
 
     <div class="float-lg-end">
         {% if event.is_ready_for_request_evaluation %}
-        <button type="button" class="btn btn-xs btn-success" data-bs-toggle="modal" data-bs-target="#request_evaluation">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#request_evaluation">
             <svg class="icon icon-sm icon-white">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
             </svg> {% trans "Request evaluation" %}
@@ -124,7 +124,7 @@
            </div>
         </div>
         {% elif event.evaluation_request_can_be_reviewed %}
-        <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#cancel_request_evaluation">
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cancel_request_evaluation">
             <svg class="icon icon-sm icon-white">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-check"></use>
             </svg> {% trans "Cancel evaluation request" %}
@@ -156,7 +156,7 @@
         </div>
         {% endif %}
 
-        <button type="button" class="btn btn-xs btn-outline-primary" data-bs-toggle="modal" data-bs-target="#clone_event">
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#clone_event">
             <svg class="icon icon-sm icon-info">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-copy"></use>
             </svg>
@@ -185,7 +185,7 @@
         </div>
 
         {% if not event.to_evaluate and not event.created_by_manager %}
-        <button type="button" class="btn btn-xs btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_event">
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_event">
             <svg class="icon icon-sm icon-danger">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-delete"></use>
             </svg>
@@ -231,7 +231,7 @@
             <td>{{ person }}</td>
             <td class="text-end">
                 {% if event.is_editable_by_user %}
-                <button type="button" class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ person.pk }}">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ person.pk }}">
                     <svg class="icon icon-sm icon-white">
                         <use xlink:href="{% static 'svg/sprites.svg' %}#it-delete"></use>
                     </svg>

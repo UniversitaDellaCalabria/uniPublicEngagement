@@ -35,7 +35,7 @@
     {% endif %}
 
     {% if event.has_report_editable_by_manager.0 %}
-    <a class="btn btn-xs btn-{% if event.report %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:manager_event_report' structure_slug=structure_slug event_id=event.pk %}">
+    <a class="btn btn-{% if event.report %}outline-secondary{% else %}success{% endif %}" href="{% url 'pe_management:manager_event_report' structure_slug=structure_slug event_id=event.pk %}">
         <svg class="icon icon-sm icon-{% if event.report %}info{% else %}white{% endif %}">
             <use xlink:href="{% static 'svg/sprites.svg' %}#it-{% if event.report %}pencil{% else %}plus-circle{% endif %}"></use>
         </svg> {% trans "Final report" %}
