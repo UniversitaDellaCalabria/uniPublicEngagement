@@ -729,6 +729,13 @@ class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
             "Other UNICAL structures involved in organizing/executing the initiative"
         ),
     )
+    involved_external_structures = models.TextField(
+        _(
+            "Other external (not UNICAL) structures involved in organizing/executing the initiative"
+        ),
+        default="",
+        max_length=500,
+    )
     project_name = models.ForeignKey(
         PublicEngagementEvent,
         on_delete=models.PROTECT,
@@ -740,7 +747,7 @@ class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
     )
     # PROJECT NAME TEMPORARY MOD
     project_full_name = models.CharField(
-        _("If the event is linked to a larger project, indicate which one"),
+        _("If the event is linked to a larger project or event, indicate which one"),
         max_length=254,
         default="",
         blank=True,
