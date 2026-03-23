@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 12:33+0100\n"
-"PO-Revision-Date: 2026-03-23 12:34+0100\n"
+"POT-Creation-Date: 2026-03-23 12:52+0100\n"
+"PO-Revision-Date: 2026-03-23 12:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -457,7 +457,12 @@ msgstr ""
 "Altre strutture UNICAL coinvolte nell’organizzazione/realizzazione "
 "dell’iniziativa"
 
-#: pe_management/models.py:738 pe_management/models.py:743
+#: pe_management/models.py:738
+msgid "If the event is linked to a larger project or event, indicate which one"
+msgstr ""
+"Se l'iniziativa è collegata a un progetto o evento più ampio, indicare quale"
+
+#: pe_management/models.py:743
 msgid "If the event is linked to a larger project, indicate which one"
 msgstr "Se l'iniziativa è collegata a un progetto più ampio, indicare quale"
 
@@ -675,16 +680,16 @@ msgid "Involved structure operator"
 msgstr "Operatore di struttura coinvolta"
 
 #: pe_management/views/involved_structures.py:59
-#: pe_management/views/management.py:82 pe_management/views/management.py:337
-#: pe_management/views/manager.py:316 pe_management/views/manager.py:436
-#: pe_management/views/manager.py:660 pe_management/views/manager.py:754
-#: pe_management/views/operator.py:190 pe_management/views/operator.py:317
-#: pe_management/views/operator.py:476 pe_management/views/operator.py:662
-#: pe_management/views/patronage.py:130 pe_management/views/patronage.py:309
-#: pe_management/views/user.py:161 pe_management/views/user.py:198
-#: pe_management/views/user.py:270 pe_management/views/user.py:336
+#: pe_management/views/management.py:83 pe_management/views/management.py:338
+#: pe_management/views/manager.py:317 pe_management/views/manager.py:437
+#: pe_management/views/manager.py:661 pe_management/views/manager.py:755
+#: pe_management/views/operator.py:190 pe_management/views/operator.py:318
+#: pe_management/views/operator.py:477 pe_management/views/operator.py:663
+#: pe_management/views/patronage.py:130 pe_management/views/patronage.py:310
+#: pe_management/views/user.py:161 pe_management/views/user.py:199
+#: pe_management/views/user.py:271 pe_management/views/user.py:337
 #: pe_management/views/user.py:353 pe_management/views/user.py:482
-#: pe_management/views/user.py:550 pe_management/views/user.py:637
+#: pe_management/views/user.py:551 pe_management/views/user.py:638
 #: pe_management/views/user.py:694 template/templates/event.html:34
 msgid "Alert"
 msgstr "Attenzione"
@@ -722,17 +727,6 @@ msgstr "Dati modificati"
 #: pe_management/views/operator.py:301
 msgid "has modified the data of the event"
 msgstr "ha modificato i dati dell'iniziativa"
-
-#: pe_management/views/management.py:82 pe_management/views/management.py:337
-#: pe_management/views/manager.py:316 pe_management/views/manager.py:436
-#: pe_management/views/manager.py:660 pe_management/views/manager.py:754
-#: pe_management/views/operator.py:317 pe_management/views/operator.py:476
-#: pe_management/views/operator.py:662 pe_management/views/patronage.py:309
-#: pe_management/views/user.py:198 pe_management/views/user.py:270
-#: pe_management/views/user.py:336 pe_management/views/user.py:550
-#: pe_management/views/user.py:637
-msgid "the errors in the form below need to be fixed"
-msgstr "ci sono errori nel form che devono essere corretti"
 
 #: pe_management/views/management.py:149 pe_management/views/user.py:409
 msgid "is the event referent"
@@ -1550,8 +1544,8 @@ msgstr "Seleziona l'anno di riferimento"
 #: template/templates/manager/event.html:41
 #: template/templates/operator/event.html:129
 #: template/templates/user/event.html:89
-msgid "Monitoring"
-msgstr "Monitoraggio"
+msgid "Final report"
+msgstr "Rendiconto finale"
 
 #: template/templates/manager/event.html:50
 msgid "Disable"
@@ -1742,6 +1736,12 @@ msgstr "Dimensione del file troppo grande: {} bytes. Massimo {} bytes"
 msgid "File name length too large: {} characters. Max {} characters"
 msgstr ""
 "Lunghezza del nome file troppo grande: {} caratteri. Massimo {} caratteri"
+
+#~ msgid "Monitoring"
+#~ msgstr "Monitoraggio"
+
+#~ msgid "the errors in the form below need to be fixed"
+#~ msgstr "ci sono errori nel form che devono essere corretti"
 
 #~ msgid "It is not possible to connect to the same event"
 #~ msgstr "Non è possibile collegare all'evento medesimo"

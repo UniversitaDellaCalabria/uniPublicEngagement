@@ -735,7 +735,7 @@ class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
         null=True,
         blank=True,
         verbose_name=_(
-            "If the event is linked to a larger project, indicate which one"
+            "If the event is linked to a larger project or event, indicate which one"
         ),
     )
     # PROJECT NAME TEMPORARY MOD
