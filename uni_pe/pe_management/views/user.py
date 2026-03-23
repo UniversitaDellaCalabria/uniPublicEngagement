@@ -191,13 +191,13 @@ def new_event_basic_info(request):
                 request.session.pop("referent", None)
                 return redirect("pe_management:user_event", event_id=event.pk)
         else:  # pragma: no cover
-            messages.add_message(
-                request,
-                messages.ERROR,
-                "<b>{}</b>: {}".format(
-                    _("Alert"), _("the errors in the form below need to be fixed")
-                ),
-            )
+            for error in form.errors.get_json_data():
+                for message in form.errors.get_json_data()[error]:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                    )
     return render(request, template, {"breadcrumbs": breadcrumbs, "form": form})
 
 
@@ -263,13 +263,13 @@ def event_basic_info(request, event_id, event=None):
             )
             return redirect("pe_management:user_event", event_id=event.pk)
         else:  # pragma: no cover
-            messages.add_message(
-                request,
-                messages.ERROR,
-                "<b>{}</b>: {}".format(
-                    _("Alert"), _("the errors in the form below need to be fixed")
-                ),
-            )
+            for error in form.errors.get_json_data():
+                for message in form.errors.get_json_data()[error]:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                    )
     return render(
         request, template, {"breadcrumbs": breadcrumbs, "event": event, "form": form}
     )
@@ -329,13 +329,13 @@ def event_data(request, event_id, event=None):
             )
             return redirect("pe_management:user_event", event_id=event.pk)
         else:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                "<b>{}</b>: {}".format(
-                    _("Alert"), _("the errors in the form below need to be fixed")
-                ),
-            )
+            for error in form.errors.get_json_data():
+                for message in form.errors.get_json_data()[error]:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                    )
     return render(
         request, template, {"breadcrumbs": breadcrumbs, "event": event, "form": form}
     )
@@ -543,13 +543,13 @@ def event_structures(request, event_id, event=None):
                 )
             return redirect("pe_management:user_event", event_id=event.pk)
         else:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                "<b>{}</b>: {}".format(
-                    _("Alert"), _("the errors in the form below need to be fixed")
-                ),
-            )
+            for error in form.errors.get_json_data():
+                for message in form.errors.get_json_data()[error]:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                    )
     return render(
         request, template, {"breadcrumbs": breadcrumbs, "event": event, "form": form}
     )
@@ -630,13 +630,13 @@ def event_report(request, event_id, event=None):
             )
             return redirect("pe_management:user_event", event_id=event.pk)
         else:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                "<b>{}</b>: {}".format(
-                    _("Alert"), _("the errors in the form below need to be fixed")
-                ),
-            )
+            for error in form.errors.get_json_data():
+                for message in form.errors.get_json_data()[error]:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                    )
     return render(
         request, template, {"breadcrumbs": breadcrumbs, "event": event, "form": form}
     )

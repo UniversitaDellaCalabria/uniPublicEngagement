@@ -181,11 +181,14 @@ class PublicEngagementEventDataForm(forms.ModelForm):
         patronage_requested = cleaned_data.get("patronage_requested")
         promo_tool = cleaned_data.get("promo_tool")
         poster = cleaned_data.get("poster")
+        organizing_subject = cleaned_data.get("organizing_subject")
+        other_organizing_subject = cleaned_data.get("other_organizing_subject")
 
         if patronage_requested and not promo_tool:
             self.add_error(
                 "promo_tool", _("Make at least one choice if you require patronage")
             )
+
         if promo_channel and not poster:
             self.add_error(
                 "poster",
@@ -193,6 +196,13 @@ class PublicEngagementEventDataForm(forms.ModelForm):
                     "Mandatory field if you require the event to be promoted on institutional communication channels"
                 ),
             )
+
+        if organizing_subject == "Altro" and not other_organizing_subject:
+            self.add_error(
+                "other_organizing_subject",
+                _("Specify the organizing entity"),
+            )
+
         # se si stanno modificando dei dati
         if self.instance.id:
             # PROJECT NAME TEMPORARY MOD

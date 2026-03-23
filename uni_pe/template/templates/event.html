@@ -353,6 +353,15 @@
             </td>
             <td>{{ event.data.organizing_subject }}</td>
         </tr>
+        {% if event.data.other_organizing_subject %}
+        <tr>
+            <td>
+                {% get_field_label event.data 'other_organizing_subject' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.data.other_organizing_subject }}</td>
+        </tr>
+        {% endif %}
         {% if event.data.promo_channel.all %}
         <tr>
             <td>

@@ -790,8 +790,16 @@ class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
             ("Altra università", _("Another university")),
             ("Altro ente pubblico", _("Another public entity")),
             ("Ente privato", _("Private entity")),
+            ("Ente del Terzo Settore", _("Third Sector entity")),
+            ("Altro", _("Other (specify)")),
         ],
-        max_length=20,
+        max_length=30,
+    )
+    other_organizing_subject = models.CharField(
+        _("Other organizing entity"),
+        default="",
+        blank=True,
+        max_length=255,
     )
     promo_channel = models.ManyToManyField(
         PublicEngagementEventPromoChannel,

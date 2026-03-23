@@ -302,13 +302,13 @@ def event_evaluation(request, structure_slug, event_id, structure=None):
                 event_id=event_id,
             )
         else:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                "<b>{}</b>: {}".format(
-                    _("Alert"), _("the errors in the form below need to be fixed")
-                ),
-            )
+            for error in form.errors.get_json_data():
+                for message in form.errors.get_json_data()[error]:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                    )
     return render(
         request,
         template,

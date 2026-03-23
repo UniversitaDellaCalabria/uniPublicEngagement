@@ -65,6 +65,7 @@ class PublicEngagementEventDetailLiteSerializer(serializers.ModelSerializer):
         data["recipients"] = [str(r) for r in instance.data.recipient.all()]
         data["other_recipients"] = f"{instance.data.other_recipients}"
         data["organizing_subject"] = f"{instance.data.organizing_subject}"
+        data["other_organizing_subject"] = f"{instance.data.other_organizing_subject}"
         data["goals"] = [str(r) for r in instance.data.target.all()]
         data["involved_structures"] = [
             str(r) for r in instance.data.involved_structure.all()

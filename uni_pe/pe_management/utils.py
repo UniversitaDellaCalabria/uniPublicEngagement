@@ -201,6 +201,9 @@ def export_csv(events, file_name):
             "geographical_dimension"
         ).verbose_name,
         PublicEngagementEventData._meta.get_field("organizing_subject").verbose_name,
+        PublicEngagementEventData._meta.get_field(
+            "other_organizing_subject"
+        ).verbose_name,
         PublicEngagementEventData._meta.get_field("promo_channel").verbose_name,
         PublicEngagementEventData._meta.get_field("patronage_requested").verbose_name,
         PublicEngagementEventData._meta.get_field("promo_tool").verbose_name,
@@ -314,6 +317,7 @@ def export_csv(events, file_name):
                     ", ".join(
                         event.data.promo_channel.values_list("description", flat=True)
                     ),
+                    event.data.other_organizing_subject,
                     patronage_requested,
                     ", ".join(
                         event.data.promo_tool.values_list("description", flat=True)
