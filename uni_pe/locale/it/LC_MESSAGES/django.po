@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 13:21+0100\n"
-"PO-Revision-Date: 2026-03-23 13:22+0100\n"
+"POT-Creation-Date: 2026-03-23 13:24+0100\n"
+"PO-Revision-Date: 2026-03-23 13:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -1106,8 +1106,8 @@ msgid "Dashboard"
 msgstr ""
 
 #: template/templates/base.html:39
-msgid "Documentation"
-msgstr "Documentazione"
+msgid "User guide"
+msgstr "Guida all'utilizzo"
 
 #: template/templates/base.html:50
 msgid "Logout"
@@ -1740,6 +1740,9 @@ msgstr "Dimensione del file troppo grande: {} bytes. Massimo {} bytes"
 msgid "File name length too large: {} characters. Max {} characters"
 msgstr ""
 "Lunghezza del nome file troppo grande: {} caratteri. Massimo {} caratteri"
+
+#~ msgid "Documentation"
+#~ msgstr "Documentazione"
 
 #~ msgid "If the event is linked to a larger project, indicate which one"
 #~ msgstr "Se l'iniziativa è collegata a un progetto più ampio, indicare quale"
