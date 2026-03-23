@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 13:24+0100\n"
-"PO-Revision-Date: 2026-03-23 13:24+0100\n"
+"POT-Creation-Date: 2026-03-23 13:26+0100\n"
+"PO-Revision-Date: 2026-03-23 13:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -1407,8 +1407,8 @@ msgid "Download"
 msgstr ""
 
 #: template/templates/form_template.html:34
-msgid "Submit"
-msgstr "Invia"
+msgid "Save"
+msgstr "Salva"
 
 #: template/templates/form_template.html:42
 #: template/templates/manager/event.html:84
@@ -1740,6 +1740,9 @@ msgstr "Dimensione del file troppo grande: {} bytes. Massimo {} bytes"
 msgid "File name length too large: {} characters. Max {} characters"
 msgstr ""
 "Lunghezza del nome file troppo grande: {} caratteri. Massimo {} caratteri"
+
+#~ msgid "Submit"
+#~ msgstr "Invia"
 
 #~ msgid "Documentation"
 #~ msgstr "Documentazione"
