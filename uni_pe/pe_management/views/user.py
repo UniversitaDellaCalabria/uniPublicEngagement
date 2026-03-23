@@ -488,7 +488,7 @@ def event_structures(request, event_id, event=None):
         reverse("pe_management:dashboard"): _("Home"),
         reverse("pe_management:user_events"): _("Events"),
         reverse("pe_management:user_event", kwargs={"event_id": event_id}): event.title,
-        "#": _("Other involved structures"),
+        "#": _("Other involved UniCal structures"),
     }
 
     form = PublicEngagementStructureForm()

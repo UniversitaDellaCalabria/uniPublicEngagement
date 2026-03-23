@@ -353,6 +353,15 @@
             </td>
             <td>{{ event.data.organizing_subject }}</td>
         </tr>
+        {% if event.data.involved_external_structures %}
+        <tr>
+            <td>
+                {% get_field_label event.data 'involved_external_structures' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>{{ event.data.involved_external_structures }}</td>
+        </tr>
+        {% endif %}
         {% if event.data.other_organizing_subject %}
         <tr>
             <td>
@@ -436,7 +445,7 @@
 
 {% block structures %}
 {% if event.data.involved_structure.all %}
-<div class="mt-5 h5"><b>{% trans "Other involved structures" %}</b></div>
+<div class="mt-5 h5"><b>{% trans "Other involved UniCal structures" %}</b></div>
 <hr />
 <div class="table-responsive">
     <table class="table table-hover table-striped">

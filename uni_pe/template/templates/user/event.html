@@ -78,7 +78,7 @@
         <a class="btn btn-xs btn-outline-secondary" href="{% url 'pe_management:user_event_structures' event_id=event.pk %}">
             <svg class="icon icon-sm icon-info">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-pencil"></use>
-            </svg> {% trans "Other involved structures" %}
+            </svg> {% trans "Other involved UniCal structures" %}
         </a>
         {% endif %}
 
@@ -272,7 +272,7 @@
 
 {% block structures %}
 {% if event.data.involved_structure.all %}
-<div class="mt-5 h5"><b>{% trans "Other involved structures" %}</b></div>
+<div class="mt-5 h5"><b>{% trans "Other involved UniCal structures" %}</b></div>
 <hr />
 <div class="table-responsive">
     <table class="table table-hover table-striped">

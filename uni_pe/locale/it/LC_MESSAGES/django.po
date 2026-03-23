@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 12:52+0100\n"
-"PO-Revision-Date: 2026-03-23 12:54+0100\n"
+"POT-Creation-Date: 2026-03-23 13:21+0100\n"
+"PO-Revision-Date: 2026-03-23 13:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -446,95 +446,99 @@ msgstr ""
 
 #: pe_management/models.py:722
 msgid ""
-"Other UNICAL staff members involved in organizing/executing the initiative"
+"Other UniCal staff members involved in organizing/executing the initiative"
 msgstr ""
-"Nominativi di altro personale UNICAL coinvolto nell’organizzazione/"
+"Nominativi di altro personale UniCal coinvolto nell’organizzazione/"
 "realizzazione dell’iniziativa"
 
 #: pe_management/models.py:729
-msgid "Other UNICAL structures involved in organizing/executing the initiative"
+msgid "Other UniCal structures involved in organizing/executing the initiative"
 msgstr ""
-"Altre strutture UNICAL coinvolte nell’organizzazione/realizzazione "
+"Altre strutture UniCal coinvolte nell’organizzazione/realizzazione "
 "dell’iniziativa"
 
-#: pe_management/models.py:738
+#: pe_management/models.py:734
+msgid ""
+"Other external (not UniCal) structures involved in organizing/executing the "
+"initiative"
+msgstr ""
+"Altre strutture esterne (non UniCal) coinvolte nell’organizzazione/"
+"realizzazione dell’iniziativa"
+
+#: pe_management/models.py:745 pe_management/models.py:750
 msgid "If the event is linked to a larger project or event, indicate which one"
 msgstr ""
 "Se l'iniziativa è collegata a un progetto o evento più ampio, indicare quale"
 
-#: pe_management/models.py:743
-msgid "If the event is linked to a larger project, indicate which one"
-msgstr "Se l'iniziativa è collegata a un progetto più ampio, indicare quale"
-
-#: pe_management/models.py:752 pe_management/settings.py:58
+#: pe_management/models.py:759 pe_management/settings.py:58
 msgid "Recipients"
 msgstr "Destinatari"
 
-#: pe_management/models.py:755
+#: pe_management/models.py:762
 msgid "Other recipients"
 msgstr "Altri destinatari"
 
-#: pe_management/models.py:761 pe_management/settings.py:59
+#: pe_management/models.py:768 pe_management/settings.py:59
 msgid "Sustainable Development Goals (SDGs)"
 msgstr "Obiettivi di sviluppo sostenibile  (SDG)"
 
-#: pe_management/models.py:767 pe_management/settings.py:60
+#: pe_management/models.py:774 pe_management/settings.py:60
 msgid "Execution method"
 msgstr "Modalità di svolgimento"
 
-#: pe_management/models.py:770 pe_management/settings.py:61
+#: pe_management/models.py:777 pe_management/settings.py:61
 msgid "Geographical dimension"
 msgstr "Dimensione Geografica"
 
-#: pe_management/models.py:773
+#: pe_management/models.py:780
 msgid "International"
 msgstr "Internazionale"
 
-#: pe_management/models.py:774
+#: pe_management/models.py:781
 msgid "National"
 msgstr "Nazionale"
 
-#: pe_management/models.py:775
+#: pe_management/models.py:782
 msgid "Regional"
 msgstr "Regionale"
 
-#: pe_management/models.py:776
+#: pe_management/models.py:783
 msgid "Local"
 msgstr "Locale"
 
-#: pe_management/models.py:781 pe_management/settings.py:62
+#: pe_management/models.py:788 pe_management/settings.py:62
 msgid "Main organizing entity of the initiative"
 msgstr "Ente organizzatore principale dell’iniziativa"
 
-#: pe_management/models.py:787
+#: pe_management/models.py:794
 msgid "University of Calabria (University, Department, or other structure)"
 msgstr "Università della Calabria (Ateneo, Dipartimento o altra struttura)"
 
-#: pe_management/models.py:790
+#: pe_management/models.py:797
 msgid "Another university"
 msgstr "Altra università"
 
-#: pe_management/models.py:791
+#: pe_management/models.py:798
 msgid "Another public entity"
 msgstr "Altro ente pubblico"
 
-#: pe_management/models.py:792
+#: pe_management/models.py:799
 msgid "Private entity"
 msgstr "Struttura privata"
 
-#: pe_management/models.py:793
+#: pe_management/models.py:800
 msgid "Third Sector entity"
 msgstr ""
 
-#: pe_management/models.py:794
+#: pe_management/models.py:801
 msgid "Other (specify)"
 msgstr "Altro (specificare)"
 
-#: pe_management/models.py:799
+#: pe_management/models.py:806
 msgid "Other organizing entity"
 msgstr "Altro ente organizzatore"
 
-#: pe_management/models.py:809
+#: pe_management/models.py:816
 msgid ""
 "Request for the initiative to be promoted through the following "
 "institutional communication channels"
@@ -542,12 +546,12 @@ msgstr ""
 "Si richiede che la seguente iniziativa sia promossa sui seguenti canali di "
 "comunicazione istituzionale"
 
-#: pe_management/models.py:813
+#: pe_management/models.py:820
 msgid "Request for the patronage of the Department/Center for the initiative"
 msgstr ""
 "Si richiede il patrocinio del Dipartimento/Centro per  la seguente iniziativa"
 
-#: pe_management/models.py:821
+#: pe_management/models.py:828
 msgid ""
 "Request to use the Department/Center’s name and/or logo in the following "
 "communication tools"
@@ -555,11 +559,11 @@ msgstr ""
 "Si richiede di utilizzare la dicitura e/o il logo del Dipartimento/Centro "
 "nei seguenti strumenti di comunicazione"
 
-#: pe_management/models.py:825
+#: pe_management/models.py:832
 msgid "Poster attached"
 msgstr "Locandina allegata"
 
-#: pe_management/models.py:833 pe_management/views/manager.py:460
+#: pe_management/models.py:840 pe_management/views/manager.py:460
 #: pe_management/views/operator.py:340 pe_management/views/user.py:290
 #: template/templates/event.html:256 template/templates/manager/event.html:20
 #: template/templates/operator/event.html:69
@@ -567,11 +571,11 @@ msgstr "Locandina allegata"
 msgid "Event data"
 msgstr "Dati dell'iniziativa"
 
-#: pe_management/models.py:834
+#: pe_management/models.py:841
 msgid "Event data records"
 msgstr "Dati dell'iniziativa"
 
-#: pe_management/models.py:846
+#: pe_management/models.py:853
 msgid ""
 "Non-academic audience participating in the initiative or reached via web/"
 "social resources, or outreach publications"
@@ -579,11 +583,11 @@ msgstr ""
 "Pubblico non accademico partecipante all'iniziativa o pubblico raggiunto "
 "attraverso risorse web/social, pubblicazioni divulgative"
 
-#: pe_management/models.py:849
+#: pe_management/models.py:856
 msgid "Total budget (in Euro)"
 msgstr "Budget complessivo (in Euro)"
 
-#: pe_management/models.py:852
+#: pe_management/models.py:859
 msgid ""
 "Is the initiative accompanied by monitoring activities (e.g., collection of "
 "information on activities, attendance, satisfaction, etc.)?"
@@ -591,35 +595,35 @@ msgstr ""
 "L’iniziativa è accompagnata da attività di monitoraggio (es. raccolta di "
 "informazioni sulle attività, sulle presenze, sul gradimento, ecc.)?"
 
-#: pe_management/models.py:857
+#: pe_management/models.py:864
 msgid "Is the initiative accompanied by an impact evaluation plan?"
 msgstr "L’iniziativa è accompagnata da un piano per la valutazione d’impatto?"
 
-#: pe_management/models.py:867 pe_management/settings.py:67
+#: pe_management/models.py:874 pe_management/settings.py:67
 msgid "Scientific areas"
 msgstr "Aree scientifiche"
 
-#: pe_management/models.py:873
+#: pe_management/models.py:880
 msgid ""
 "Which collaborators were involved in organizing/managing the initiative?"
 msgstr ""
 "All’organizzazione/gestione dell’iniziativa sono stati coinvolti in qualità "
 "di collaboratori?"
 
-#: pe_management/models.py:877
+#: pe_management/models.py:884
 msgid "Initiative’s website"
 msgstr "Sito web dell'iniziativa"
 
-#: pe_management/models.py:878 pe_management/views/manager.py:715
+#: pe_management/models.py:885 pe_management/views/manager.py:715
 #: pe_management/views/operator.py:614 pe_management/views/patronage.py:293
 msgid "Notes"
 msgstr "Note"
 
-#: pe_management/models.py:883
+#: pe_management/models.py:890
 msgid "Event monitoring"
 msgstr "Monitoraggio iniziativa"
 
-#: pe_management/models.py:884
+#: pe_management/models.py:891
 msgid "Event monitoring records"
 msgstr "Monitoraggio iniziativa"
 
@@ -652,7 +656,7 @@ msgstr "Non ammissibile"
 #: pe_management/utils.py:259 pe_management/utils.py:260
 #: pe_management/utils.py:261 pe_management/utils.py:296
 #: pe_management/utils.py:330 pe_management/utils.py:332
-#: template/templates/event.html:389
+#: template/templates/event.html:398
 msgid "Yes"
 msgstr "Si"
 
@@ -660,7 +664,7 @@ msgstr "Si"
 #: pe_management/utils.py:259 pe_management/utils.py:260
 #: pe_management/utils.py:261 pe_management/utils.py:296
 #: pe_management/utils.py:330 pe_management/utils.py:332
-#: template/templates/event.html:296 template/templates/event.html:391
+#: template/templates/event.html:296 template/templates/event.html:400
 msgid "No"
 msgstr ""
 
@@ -820,7 +824,7 @@ msgstr "Informazioni generali modificate correttamente"
 
 #: pe_management/views/manager.py:496 pe_management/views/operator.py:373
 #: pe_management/views/user.py:362 template/templates/dashboard.html:108
-#: template/templates/event.html:425 template/templates/event_people.html:10
+#: template/templates/event.html:434 template/templates/event_people.html:10
 #: template/templates/manager/event.html:28
 #: template/templates/manager/event.html:65
 #: template/templates/operator/event.html:77
@@ -831,18 +835,18 @@ msgstr "Altro personale coinvolto"
 
 #: pe_management/views/manager.py:554 pe_management/views/operator.py:506
 #: pe_management/views/user.py:491 template/templates/dashboard.html:130
-#: template/templates/event.html:441
+#: template/templates/event.html:450
 #: template/templates/event_structures.html:10
 #: template/templates/manager/event.html:33
 #: template/templates/manager/event.html:115
 #: template/templates/operator/event.html:82
 #: template/templates/operator/event.html:188
 #: template/templates/user/event.html:81 template/templates/user/event.html:275
-msgid "Other involved structures"
-msgstr "Altre strutture coinvolte"
+msgid "Other involved UniCal structures"
+msgstr "Altre strutture UniCal coinvolte"
 
 #: pe_management/views/manager.py:619 pe_management/views/operator.py:435
-#: pe_management/views/user.py:603 template/templates/event.html:456
+#: pe_management/views/user.py:603 template/templates/event.html:465
 #: template/templates/user/event_report.html:9
 msgid "Monitoring data"
 msgstr "Dati di monitoraggio"
@@ -1736,6 +1740,9 @@ msgstr "Dimensione del file troppo grande: {} bytes. Massimo {} bytes"
 msgid "File name length too large: {} characters. Max {} characters"
 msgstr ""
 "Lunghezza del nome file troppo grande: {} caratteri. Massimo {} caratteri"
+
+#~ msgid "If the event is linked to a larger project, indicate which one"
+#~ msgstr "Se l'iniziativa è collegata a un progetto più ampio, indicare quale"
 
 #~ msgid "Monitoring"
 #~ msgstr "Monitoraggio"

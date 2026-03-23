@@ -551,7 +551,7 @@ def event_structures(request, structure_slug, event_id, event=None, structure=No
             "pe_management:manager_event",
             kwargs={"event_id": event_id, "structure_slug": structure_slug},
         ): event.title,
-        "#": _("Other involved structures"),
+        "#": _("Other involved UniCal structures"),
     }
 
     result = management.event_structures(

@@ -719,19 +719,19 @@ class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
     involved_personnel = models.ManyToManyField(
         get_user_model(),
         verbose_name=_(
-            "Other UNICAL staff members involved in organizing/executing the initiative"
+            "Other UniCal staff members involved in organizing/executing the initiative"
         ),
     )
     involved_structure = models.ManyToManyField(
         OrganizationalStructure,
         limit_choices_to={"is_active": True},
         verbose_name=_(
-            "Other UNICAL structures involved in organizing/executing the initiative"
+            "Other UniCal structures involved in organizing/executing the initiative"
         ),
     )
     involved_external_structures = models.TextField(
         _(
-            "Other external (not UNICAL) structures involved in organizing/executing the initiative"
+            "Other external (not UniCal) structures involved in organizing/executing the initiative"
         ),
         default="",
         max_length=500,
