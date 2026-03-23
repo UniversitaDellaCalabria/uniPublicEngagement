@@ -6,7 +6,7 @@
 
 
 {% block top_content %}
-<h2>{% if event %}{{ event.title }}{% else %}Nuova iniziativa{% endif %}</h2>
+<h2>{% if event %}{{ event.title }}{% else %}{% trans "Registration of PE event or activity" %}{% endif %}</h2>
 <h3 style="font-weight: lighter">Informazioni generali</h3>
 
 {% if request.session.referent %}
