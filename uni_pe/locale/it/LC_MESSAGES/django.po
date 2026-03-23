@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-23 12:52+0100\n"
-"PO-Revision-Date: 2026-03-23 12:53+0100\n"
+"PO-Revision-Date: 2026-03-23 12:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -909,7 +909,7 @@ msgstr "Operatore di struttura"
 #: template/templates/patronage/dashboard.html:53
 #: template/templates/patronage/events.html:14
 msgid "Data visualization"
-msgstr ""
+msgstr "Visualizzazione dei dati"
 
 #: pe_management/views/operator.py:236
 msgid "Event handled successfully"
