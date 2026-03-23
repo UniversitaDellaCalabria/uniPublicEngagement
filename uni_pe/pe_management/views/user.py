@@ -488,16 +488,19 @@ def event_structures(request, event_id, event=None):
         reverse("pe_management:dashboard"): _("Home"),
         reverse("pe_management:user_events"): _("Events"),
         reverse("pe_management:user_event", kwargs={"event_id": event_id}): event.title,
-        "#": _("Other involved UniCal structures"),
+        "#": _("Other involved structures"),
     }
 
-    form = PublicEngagementStructureForm()
-
+    form_internal = PublicEngagementStructureForm()
+    form_external = PublicEngagementDataInvolvedExternalStructuresForm(instance=data)
     if request.method == "POST":
-        form = PublicEngagementStructureForm(request.POST)
+        form_internal = PublicEngagementStructureForm(request.POST)
+        form_external = PublicEngagementDataInvolvedExternalStructuresForm(
+            instance=data, data=request.POST
+        )
 
-        if form.is_valid():
-            structure_id = form.cleaned_data["structure"]
+        if form_internal.is_valid():
+            structure_id = form_internal.cleaned_data["structure"]
 
             if not structure_id:
                 messages.add_message(request, messages.ERROR, _("Access denied"))
@@ -531,7 +534,7 @@ def event_structures(request, event_id, event=None):
                     user=request.user,
                     obj=event,
                     flag=CHANGE,
-                    msg="[Referente/Delegato] Altra struttura coinvolta: aggiunto {}".format(
+                    msg="[Referente/Delegato] Altra struttura UniCal coinvolta: aggiunto {}".format(
                         structure
                     ),
                 )
@@ -542,16 +545,48 @@ def event_structures(request, event_id, event=None):
                     "{} {}".format(structure, _("added successfully")),
                 )
             return redirect("pe_management:user_event", event_id=event.pk)
+        elif form_external.is_valid():
+            data.involved_external_structures = form_external.cleaned_data[
+                "involved_external_structures"
+            ]
+            data.modified_by = request.user
+            data.save()
+            event.modified_by = request.user
+            event.save()
+
+            log_action(
+                user=request.user,
+                obj=event,
+                flag=CHANGE,
+                msg="[Referente/Delegato] Strutture esterne coinvolte modificate: {}".format(
+                    form_external.cleaned_data["involved_external_structures"]
+                ),
+            )
+
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                _("Involved external structures added successfully"),
+            )
+
+            return redirect("pe_management:user_event", event_id=event.pk)
         else:
-            for error in form.errors.get_json_data():
-                for message in form.errors.get_json_data()[error]:
-                    messages.add_message(
-                        request,
-                        messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
-                    )
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "<b>{}</b>: {}".format(
+                    _("Alert"), _("the errors in the form below need to be fixed")
+                ),
+            )
     return render(
-        request, template, {"breadcrumbs": breadcrumbs, "event": event, "form": form}
+        request,
+        template,
+        {
+            "breadcrumbs": breadcrumbs,
+            "event": event,
+            "form_internal": form_internal,
+            "form_external": form_external,
+        },
     )
 
 

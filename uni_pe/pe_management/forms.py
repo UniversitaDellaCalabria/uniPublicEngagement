@@ -151,6 +151,7 @@ class PublicEngagementEventDataForm(forms.ModelForm):
             "event",
             "involved_personnel",
             "involved_structure",
+            "involved_external_structures",
             # PROJECT NAME TEMPORARY MOD
             "project_name",
             # END PROJECT NAME TEMPORARY MOD
@@ -231,6 +232,15 @@ class PublicEngagementEventDataForm(forms.ModelForm):
         return cleaned_data
 
 
+class PublicEngagementDataInvolvedExternalStructuresForm(forms.ModelForm):
+    class Meta:
+        model = PublicEngagementEventData
+        fields = ["involved_external_structures"]
+        widgets = {
+            "involved_external_structures": forms.Textarea(attrs={"rows": 2}),
+        }
+
+
 class PublicEngagementEventReportForm(forms.ModelForm):
     # def __init__(self, *args, **kwargs):
     # event = kwargs.pop('event')
@@ -307,7 +317,9 @@ class PublicEngagementEventDisableEnableForm(forms.Form):
 
 class PublicEngagementStructureForm(forms.Form):
     structure = forms.IntegerField(
-        label=_("Structure"),
+        label=_(
+            "Other UniCal structures involved in organizing/executing the initiative"
+        ),
         required=True,
         widget=BootstrapItaliaAPISelectStructureWidget(),
     )

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 13:26+0100\n"
-"PO-Revision-Date: 2026-03-23 13:26+0100\n"
+"POT-Creation-Date: 2026-03-23 16:21+0100\n"
+"PO-Revision-Date: 2026-03-23 16:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -143,7 +143,7 @@ msgstr "Modifica dati utente"
 #: pe_management/views/user.py:39 pe_management/views/user.py:144
 #: pe_management/views/user.py:209 pe_management/views/user.py:228
 #: pe_management/views/user.py:287 pe_management/views/user.py:359
-#: pe_management/views/user.py:488 pe_management/views/user.py:600
+#: pe_management/views/user.py:488 pe_management/views/user.py:636
 msgid "Home"
 msgstr ""
 
@@ -211,9 +211,9 @@ msgstr "Email aggiornata con successo"
 #: pe_management/views/patronage.py:232 pe_management/views/patronage.py:331
 #: pe_management/views/patronage.py:337 pe_management/views/user.py:70
 #: pe_management/views/user.py:369 pe_management/views/user.py:382
-#: pe_management/views/user.py:446 pe_management/views/user.py:503
-#: pe_management/views/user.py:564 pe_management/views/user.py:705
-#: pe_management/views/user.py:772
+#: pe_management/views/user.py:446 pe_management/views/user.py:507
+#: pe_management/views/user.py:600 pe_management/views/user.py:741
+#: pe_management/views/user.py:808
 msgid "Access denied"
 msgstr "Accesso negato"
 
@@ -325,11 +325,11 @@ msgstr ""
 "promozione, ecc...) e la richiesta di patrocinio non sono consentiti se è "
 "già iniziata."
 
-#: pe_management/forms.py:189
+#: pe_management/forms.py:190
 msgid "Make at least one choice if you require patronage"
 msgstr "Effettua almeno una scelta se hai richiesto il patrocinio"
 
-#: pe_management/forms.py:196 pe_management/forms.py:228
+#: pe_management/forms.py:197 pe_management/forms.py:229
 msgid ""
 "Mandatory field if you require the event to be promoted on institutional "
 "communication channels"
@@ -337,30 +337,31 @@ msgstr ""
 "Obbligatorio se si richiede che l'iniziativa sia promossa sui canali di "
 "comunicazione istituzionale"
 
-#: pe_management/forms.py:203
+#: pe_management/forms.py:204
 msgid "Specify the organizing entity"
 msgstr "Specificare l'ente organizzatore"
 
-#: pe_management/forms.py:274
+#: pe_management/forms.py:284
 msgid "Outcome"
 msgstr "Esito"
 
-#: pe_management/forms.py:275
+#: pe_management/forms.py:285
 msgid "Positive"
 msgstr "Positivo"
 
-#: pe_management/forms.py:275
+#: pe_management/forms.py:285
 msgid "Negative"
 msgstr "Negativo"
 
-#: pe_management/forms.py:282 pe_management/forms.py:291
+#: pe_management/forms.py:292 pe_management/forms.py:301
 msgid "Mandatory in case of negative outcome"
 msgstr "Obbligatorio in caso di esito negativo"
 
-#: pe_management/forms.py:310 pe_management/models.py:642
-#: template/templates/events.html:163
-msgid "Structure"
-msgstr "Struttura"
+#: pe_management/forms.py:321 pe_management/models.py:729
+msgid "Other UniCal structures involved in organizing/executing the initiative"
+msgstr ""
+"Altre strutture UniCal coinvolte nell’organizzazione/realizzazione "
+"dell’iniziativa"
 
 #: pe_management/models.py:35 pe_management/models.py:76
 #: template/templates/events.html:60 template/templates/events.html:164
@@ -428,6 +429,10 @@ msgstr "Il monitoraggio per l'anno di riferimento è chiuso"
 msgid "Contact"
 msgstr ""
 
+#: pe_management/models.py:642 template/templates/events.html:163
+msgid "Structure"
+msgstr "Struttura"
+
 #: pe_management/models.py:710 pe_management/settings.py:57
 msgid "Event type"
 msgstr "Tipo iniziativa"
@@ -450,12 +455,6 @@ msgid ""
 msgstr ""
 "Nominativi di altro personale UniCal coinvolto nell’organizzazione/"
 "realizzazione dell’iniziativa"
-
-#: pe_management/models.py:729
-msgid "Other UniCal structures involved in organizing/executing the initiative"
-msgstr ""
-"Altre strutture UniCal coinvolte nell’organizzazione/realizzazione "
-"dell’iniziativa"
 
 #: pe_management/models.py:734
 msgid ""
@@ -656,7 +655,7 @@ msgstr "Non ammissibile"
 #: pe_management/utils.py:259 pe_management/utils.py:260
 #: pe_management/utils.py:261 pe_management/utils.py:296
 #: pe_management/utils.py:330 pe_management/utils.py:332
-#: template/templates/event.html:398
+#: template/templates/event.html:389
 msgid "Yes"
 msgstr "Si"
 
@@ -664,7 +663,7 @@ msgstr "Si"
 #: pe_management/utils.py:259 pe_management/utils.py:260
 #: pe_management/utils.py:261 pe_management/utils.py:296
 #: pe_management/utils.py:330 pe_management/utils.py:332
-#: template/templates/event.html:296 template/templates/event.html:400
+#: template/templates/event.html:296 template/templates/event.html:391
 msgid "No"
 msgstr ""
 
@@ -693,8 +692,8 @@ msgstr "Operatore di struttura coinvolta"
 #: pe_management/views/user.py:161 pe_management/views/user.py:199
 #: pe_management/views/user.py:271 pe_management/views/user.py:337
 #: pe_management/views/user.py:353 pe_management/views/user.py:482
-#: pe_management/views/user.py:551 pe_management/views/user.py:638
-#: pe_management/views/user.py:694 template/templates/event.html:34
+#: pe_management/views/user.py:579 pe_management/views/user.py:674
+#: pe_management/views/user.py:730 template/templates/event.html:34
 msgid "Alert"
 msgstr "Attenzione"
 
@@ -714,7 +713,7 @@ msgstr "Dati aggiornati con successo"
 #: pe_management/views/operator.py:298 pe_management/views/operator.py:608
 #: pe_management/views/operator.py:711 pe_management/views/patronage.py:203
 #: pe_management/views/patronage.py:287 pe_management/views/patronage.py:359
-#: pe_management/views/user.py:672 pe_management/views/user.py:722
+#: pe_management/views/user.py:708 pe_management/views/user.py:758
 msgid "Public engagement"
 msgstr "Public engagement"
 
@@ -737,12 +736,12 @@ msgid "is the event referent"
 msgstr "è il referente dell'iniziativa"
 
 #: pe_management/views/management.py:153 pe_management/views/management.py:287
-#: pe_management/views/user.py:413 pe_management/views/user.py:521
+#: pe_management/views/user.py:413 pe_management/views/user.py:525
 msgid "already exists"
 msgstr "esiste già"
 
 #: pe_management/views/management.py:181 pe_management/views/management.py:315
-#: pe_management/views/user.py:434 pe_management/views/user.py:542
+#: pe_management/views/user.py:434 pe_management/views/user.py:546
 msgid "added successfully"
 msgstr "inserita correttamente"
 
@@ -754,11 +753,11 @@ msgstr "Personale non esistente"
 msgid "Personnel removed successfully"
 msgstr "Personale rimosso correttamente"
 
-#: pe_management/views/management.py:281 pe_management/views/user.py:515
+#: pe_management/views/management.py:281 pe_management/views/user.py:519
 msgid "is the event structure"
 msgstr "è la struttura dell'iniziativa"
 
-#: pe_management/views/management.py:359 pe_management/views/user.py:568
+#: pe_management/views/management.py:359 pe_management/views/user.py:604
 msgid "Structure does not exist"
 msgstr "Struttura non esistente"
 
@@ -824,7 +823,7 @@ msgstr "Informazioni generali modificate correttamente"
 
 #: pe_management/views/manager.py:496 pe_management/views/operator.py:373
 #: pe_management/views/user.py:362 template/templates/dashboard.html:108
-#: template/templates/event.html:434 template/templates/event_people.html:10
+#: template/templates/event.html:425 template/templates/event_people.html:10
 #: template/templates/manager/event.html:28
 #: template/templates/manager/event.html:65
 #: template/templates/operator/event.html:77
@@ -834,25 +833,21 @@ msgid "Other involved personnel"
 msgstr "Altro personale coinvolto"
 
 #: pe_management/views/manager.py:554 pe_management/views/operator.py:506
-#: pe_management/views/user.py:491 template/templates/dashboard.html:130
-#: template/templates/event.html:450
-#: template/templates/event_structures.html:10
+#: pe_management/views/user.py:491 template/templates/event_structures.html:10
 #: template/templates/manager/event.html:33
-#: template/templates/manager/event.html:115
 #: template/templates/operator/event.html:82
-#: template/templates/operator/event.html:188
-#: template/templates/user/event.html:81 template/templates/user/event.html:275
-msgid "Other involved UniCal structures"
-msgstr "Altre strutture UniCal coinvolte"
+#: template/templates/user/event.html:81
+msgid "Other involved structures"
+msgstr "Altre strutture coinvolte"
 
 #: pe_management/views/manager.py:619 pe_management/views/operator.py:435
-#: pe_management/views/user.py:603 template/templates/event.html:465
+#: pe_management/views/user.py:639 template/templates/event.html:472
 #: template/templates/user/event_report.html:9
 msgid "Monitoring data"
 msgstr "Dati di monitoraggio"
 
 #: pe_management/views/manager.py:648 pe_management/views/operator.py:464
-#: pe_management/views/user.py:629
+#: pe_management/views/user.py:665
 msgid "Monitoring data modified successfully"
 msgstr "Dati di monitoraggio modificati correttamente"
 
@@ -986,7 +981,7 @@ msgstr ""
 #: pe_management/views/user.py:145 pe_management/views/user.py:210
 #: pe_management/views/user.py:229 pe_management/views/user.py:288
 #: pe_management/views/user.py:360 pe_management/views/user.py:489
-#: pe_management/views/user.py:601 template/templates/events.html:9
+#: pe_management/views/user.py:637 template/templates/events.html:9
 #: template/templates/involved_personnel/events.html:8
 #: template/templates/manager/events.html:8
 #: template/templates/operator/events.html:8
@@ -1028,43 +1023,53 @@ msgstr "dati dell'iniziativa richiesti"
 msgid "Personnel successfully removed"
 msgstr "Personale rimosso correttamente"
 
-#: pe_management/views/user.py:586
+#: pe_management/views/user.py:570
+#, fuzzy
+#| msgid "Event status modified successfully"
+msgid "Involved external structures added successfully"
+msgstr "Stato dell'iniziativa modificato con successo"
+
+#: pe_management/views/user.py:579
+msgid "the errors in the form below need to be fixed"
+msgstr "ci sono errori nel form che devono essere corretti"
+
+#: pe_management/views/user.py:622
 msgid "Structure successfully removed"
 msgstr "Struttura rimossa correttamente"
 
-#: pe_management/views/user.py:669 pe_management/views/user.py:672
+#: pe_management/views/user.py:705 pe_management/views/user.py:708
 msgid "Evaluation request sent"
 msgstr "Richiesta di validazione inviata"
 
-#: pe_management/views/user.py:676
+#: pe_management/views/user.py:712
 msgid "requested the evaluation of the event"
 msgstr "ha richiesto la validazione dell'iniziativa"
 
-#: pe_management/views/user.py:677
+#: pe_management/views/user.py:713
 msgid "Click here"
 msgstr "Clicca qui"
 
-#: pe_management/views/user.py:694
+#: pe_management/views/user.py:730
 msgid "evaluation conditions are not satisfied"
 msgstr "non sono soddisfatte le condizioni per la validazione"
 
-#: pe_management/views/user.py:719 pe_management/views/user.py:722
+#: pe_management/views/user.py:755 pe_management/views/user.py:758
 msgid "Evaluation request cancelled"
 msgstr "Richiesta di validazione annullata"
 
-#: pe_management/views/user.py:724
+#: pe_management/views/user.py:760
 msgid "has cancelled the evaluation request"
 msgstr "ha annullato la richiesta di validazione"
 
-#: pe_management/views/user.py:762 pe_management/views/user.py:778
+#: pe_management/views/user.py:798 pe_management/views/user.py:814
 msgid "Event"
 msgstr "Iniziativa"
 
-#: pe_management/views/user.py:762
+#: pe_management/views/user.py:798
 msgid "duplicated"
 msgstr "duplicata"
 
-#: pe_management/views/user.py:778
+#: pe_management/views/user.py:814
 msgid "removed"
 msgstr "rimossa"
 
@@ -1187,6 +1192,13 @@ msgstr ""
 msgid "Enter"
 msgstr "Accedi"
 
+#: template/templates/dashboard.html:130 template/templates/event.html:441
+#: template/templates/manager/event.html:115
+#: template/templates/operator/event.html:188
+#: template/templates/user/event.html:275
+msgid "Other involved UniCal structures"
+msgstr "Altre strutture UniCal coinvolte"
+
 #: template/templates/dashboard.html:133
 msgid ""
 "Access the data of the initiatives in which your structure has been involved"
@@ -1274,6 +1286,10 @@ msgstr "Patrocinio negato"
 #: template/templates/event.html:174
 msgid "Patronage granted"
 msgstr "Patrocinio concesso"
+
+#: template/templates/event.html:456
+msgid "Other involved external structures"
+msgstr "Altre strutture esterne coinvolte"
 
 #: template/templates/event_basic_info.html:9
 #: template/templates/event_new.html:9
@@ -1752,9 +1768,6 @@ msgstr ""
 
 #~ msgid "Monitoring"
 #~ msgstr "Monitoraggio"
-
-#~ msgid "the errors in the form below need to be fixed"
-#~ msgstr "ci sono errori nel form che devono essere corretti"
 
 #~ msgid "It is not possible to connect to the same event"
 #~ msgstr "Non è possibile collegare all'evento medesimo"

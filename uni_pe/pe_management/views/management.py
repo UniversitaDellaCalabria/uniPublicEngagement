@@ -264,12 +264,16 @@ def event_structures(
 ):
     data = event.data
     template = "event_structures.html"
-    form = PublicEngagementStructureForm()
+    form_internal = PublicEngagementStructureForm()
+    form_external = PublicEngagementDataInvolvedExternalStructuresForm(instance=data)
 
     if request.method == "POST":
-        form = PublicEngagementStructureForm(request.POST)
-        if form.is_valid():
-            structure_id = form.cleaned_data["structure"]
+        form_internal = PublicEngagementStructureForm(request.POST)
+        form_external = PublicEngagementDataInvolvedExternalStructuresForm(
+            instance=data, data=request.POST
+        )
+        if form_internal.is_valid():
+            structure_id = form_internal.cleaned_data["structure"]
             new_structure = OrganizationalStructure.objects.filter(
                 pk=structure_id, is_active=True
             ).first()
@@ -278,13 +282,13 @@ def event_structures(
                 messages.add_message(
                     request,
                     messages.ERROR,
-                    "{} {}".format(structure, _("is the event structure")),
+                    "{} {}".format(new_structure, _("is the event structure")),
                 )
             elif data.involved_structure.filter(pk=new_structure.pk).exists():
                 messages.add_message(
                     request,
                     messages.ERROR,
-                    "{} {}".format(structure, _("already exists")),
+                    "{} {}".format(new_structure, _("already exists")),
                 )
             else:
                 data.involved_structure.add(new_structure)
@@ -329,21 +333,49 @@ def event_structures(
                     send_email_to_operators(event.structure, subject, body)
 
             return True
+        elif form_external.is_valid():
+            data.involved_external_structures = form_external.cleaned_data[
+                "involved_external_structures"
+            ]
+            data.modified_by = request.user
+            data.save()
+            event.modified_by = request.user
+            event.save()
+
+            if by_manager:
+                msg = "[Operatore di Ateneo] Strutture esterne coinvolte modificate: {}".format(
+                    form_external.cleaned_data["involved_external_structures"]
+                )
+            else:
+                msg = "[Operatore di Struttura] Strutture esterne coinvolte modificate: {}".format(
+                    form_external.cleaned_data["involved_external_structures"]
+                )
+
+            log_action(user=request.user, obj=event, flag=CHANGE, msg=msg)
+
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                _("Involved external structures added successfully"),
+            )
+
+            return True
         else:
-            for error in form.errors.get_json_data():
-                for message in form.errors.get_json_data()[error]:
-                    messages.add_message(
-                        request,
-                        messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
-                    )
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "<b>{}</b>: {}".format(
+                    _("Alert"), _("the errors in the form below need to be fixed")
+                ),
+            )
     return render(
         request,
         template,
         {
             "breadcrumbs": breadcrumbs,
             "event": event,
-            "form": form,
+            "form_internal": form_internal,
+            "form_external": form_external,
             "structure_slug": structure_slug,
         },
     )

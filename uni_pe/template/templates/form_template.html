@@ -27,19 +27,19 @@
 
     {% csrf_token %}
     <div class="d-grid gap-2">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#action">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#action{% if id %}-{{ id }}{% endif %}">
             <svg class="icon icon-sm icon-white">
                 <use xlink:href="{% static 'svg/sprites.svg' %}#it-check-circle"></use>
             </svg>
             {% trans "Save" %}
         </button>
     </div>
-    <div class="it-example-modal">
-       <div class="modal" tabindex="-1" role="dialog" id="action" aria-labelledby="actionTitle">
+    <div class="it-example-modal{% if id %}-{{ id }}{% endif %}">
+       <div class="modal" tabindex="-1" role="dialog" id="action{% if id %}-{{ id }}{% endif %}" aria-labelledby="actionTitle{% if id %}-{{ id }}{% endif %}">
           <div class="modal-dialog" role="document">
              <div class="modal-content">
                 <div class="modal-header">
-                   <h2 class="modal-title h5 " id="actionTitle">{% trans "Confirm" %}</h2>
+                   <h2 class="modal-title h5 " id="actionTitle{% if id %}-{{ id }}{% endif %}">{% trans "Confirm" %}</h2>
                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi finestra modale">
                       <svg class="icon"><use href="{% static 'svg/sprites.svg' %}#it-close"></use></svg>
                    </button>
@@ -50,7 +50,7 @@
                 <div class="modal-footer">
                    <input class="btn btn-success"
                            type="submit"
-                           id="submitForm"
+                           id="submitForm{% if id %}-{{ id }}{% endif %}"
                            value="{% trans 'Yes, proceed' %}">
                 </div>
              </div>

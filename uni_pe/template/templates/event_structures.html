@@ -7,9 +7,11 @@
 
 {% block top_content %}
 <h2>{{ event.title }}</h2>
-<h3 style="font-weight: lighter">{% trans "Other involved UniCal structures" %}</h3>
+<h3 style="font-weight: lighter">{% trans "Other involved structures" %}</h3>
 {% endblock top_content %}
 
 {% block page_content %}
-{% include 'form_template.html' with form=form %}
+{% include 'form_template.html' with form=form_internal id="internal" %}
+<hr class="my-5">
+{% include 'form_template.html' with form=form_external id="external" %}
 {% endblock page_content %}
