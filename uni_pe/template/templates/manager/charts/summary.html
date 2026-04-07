@@ -49,31 +49,39 @@
 <!-- END Ente organizzatore -->
 
 <!-- Canali di promozione -->
+<!--
 <div class="col-12 col-lg-4">
     {% url 'pe_management:api_manager_events_promo_channels' as events_promo_channels_url %}
     {% include "manager/charts/summary/events_promo_channels.html" with api_url=events_promo_channels_url year=request.GET.year %}
 </div>
+-->
 <!-- END Canali di promozione -->
 
 <!-- Richiesta di patrocinio -->
+<!--
 <div class="col-12 col-lg-4">
     {% url 'pe_management:api_manager_events_patronage_requested' as events_patronage_requested_url %}
     {% include "manager/charts/summary/events_patronage_requested.html" with api_url=events_patronage_requested_url year=request.GET.year %}
 </div>
+-->
 <!-- END Richiesta di patrocinio -->
 
 <!-- Dati di monitoraggio presenti -->
+<!--
 <div class="col-12 col-lg-4">
     {% url 'pe_management:api_manager_events_monitoring_data_provided' as events_monitoring_data_provided_url %}
     {% include "manager/charts/summary/events_monitoring_data_provided.html" with api_url=events_monitoring_data_provided_url year=request.GET.year %}
 </div>
+-->
 <!-- END Dati di monitoraggio presenti -->
 
 <!-- Valutazione impatto -->
+<!--
 <div class="col-12 col-lg-4">
     {% url 'pe_management:api_manager_events_impact_evaluation' as events_impact_evaluation_url %}
     {% include "manager/charts/summary/events_impact_evaluation.html" with api_url=events_impact_evaluation_url year=request.GET.year %}
 </div>
+-->
 <!-- END Valutazione impatto -->
 
 <!-- Aree scientifiche -->

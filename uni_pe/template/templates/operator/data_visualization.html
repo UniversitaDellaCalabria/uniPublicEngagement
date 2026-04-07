@@ -100,31 +100,39 @@
     <!-- END Ente organizzatore -->
     
     <!-- Canali di promozione -->
+<!--
     {% if request.GET.i == 'events_promo_channels' %}
     {% url 'pe_management:api_evaluation_operator_events_promo_channels' structure_slug=structure.slug  as events_promo_channels_url %}
     {% include "operator/charts/events_promo_channels.html" with api_url=events_promo_channels_url year=request.GET.year %}
     {% endif %}
+-->
     <!-- END Canali di promozione -->
     
     <!-- Richiesta di patrocinio -->
+<!--
     {% if request.GET.i == 'events_patronage_requested' %}
     {% url 'pe_management:api_evaluation_operator_events_patronage_requested' structure_slug=structure.slug  as events_patronage_requested_url %}
     {% include "operator/charts/events_patronage_requested.html" with api_url=events_patronage_requested_url year=request.GET.year %}
     {% endif %}
+-->
     <!-- END Richiesta di patrocinio -->
     
     <!-- Dati di monitoraggio presenti -->
+<!--
     {% if request.GET.i == 'events_monitoring_data_provided' %}
     {% url 'pe_management:api_evaluation_operator_events_monitoring_data_provided' structure_slug=structure.slug  as events_monitoring_data_provided_url %}
     {% include "operator/charts/events_monitoring_data_provided.html" with api_url=events_monitoring_data_provided_url year=request.GET.year %}
     {% endif %}
+-->
     <!-- END Dati di monitoraggio presenti -->
     
     <!-- Valutazione impatto -->
+<!--
     {% if request.GET.i == 'events_impact_evaluation' %}
     {% url 'pe_management:api_evaluation_operator_events_impact_evaluation' structure_slug=structure.slug  as events_impact_evaluation_url %}
     {% include "operator/charts/events_impact_evaluation.html" with api_url=events_impact_evaluation_url year=request.GET.year %}
     {% endif %}
+-->
     <!-- END Valutazione imopatto -->
     
     <!-- Aree scientifiche -->
