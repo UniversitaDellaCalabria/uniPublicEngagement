@@ -90,3 +90,10 @@
     {% include "manager/charts/summary/events_scientific_areas.html" with api_url=events_scientific_areas_url year=request.GET.year %}
 </div>
 <!-- END Aree scientifiche-->
+
+<!-- Tipologie di collaboratori -->
+<div class="col-12 col-lg-4">
+    {% url 'pe_management:api_manager_events_collaborator_types' as events_collaborator_types_url %}
+    {% include "manager/charts/summary/events_collaborator_types.html" with api_url=events_collaborator_types_url year=request.GET.year %}
+</div>
+<!-- END Tipologie di collaboratori -->

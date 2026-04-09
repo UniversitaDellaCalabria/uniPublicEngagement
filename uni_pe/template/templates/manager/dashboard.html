@@ -115,6 +115,13 @@
     {% endif %}
     <!-- END Ente organizzatore -->
     
+    <!-- Tipologie collaboratori -->
+    {% if request.GET.i == 'events_collaborator_types' %}
+    {% url 'pe_management:api_manager_events_collaborator_types' as events_collaborator_types_url %}
+    {% include "manager/charts/events_collaborator_types.html" with api_url=events_collaborator_types_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Tipologie collaboratori -->
+    
     <!-- Canali di promozione -->
 <!--
     {% if request.GET.i == 'events_promo_channels' %}

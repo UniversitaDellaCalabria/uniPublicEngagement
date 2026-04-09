@@ -1,0 +1,101 @@
+{% load i18n %}
+{% load pe_management_tags %}
+
+{% pem_settings_value "DASHBOARD_MANAGER_KPI_LIST" as titles %}
+<div class="col-12">
+  <div class="card-wrapper card-space">
+    <div class="card card-bg no-after">
+      <div class="card-body">
+        <p class="card-title h5">
+          {% for title in titles %}
+          {% if title.0 == request.GET.i %}
+          {{ title.1 }}
+          {% endif %}
+          {% endfor %}
+        </p>
+        <div id="app_collaborator_types_counters">
+          <div v-if="error">
+            <div class="alert alert-danger" role="alert">
+              {% trans "Data retrieval failed. Please check your search parameters" %}
+            </div>
+          </div>
+          <div id="chart_collaborator_types_counter" v-else></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var options_collaborator_types_counters = {
+    series: [{
+      name: 'Num',
+      data: []
+    }],
+    chart: {
+      height: 350,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: '45%',
+        distributed: true,
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    legend: {
+      show: false
+    },
+    xaxis: {
+      categories: [],
+      labels: {
+        style: {
+          colors: [],
+          fontSize: '12px'
+        }
+      }
+    },
+  };
+  
+  const app_collaborator_types_counters = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data () {
+      return {
+        error: false
+      }
+    },
+    mounted () {
+      this.getCounters()
+    },
+    methods: {
+      myFunction(item) {
+        options_collaborator_types_counters.xaxis.categories.push(item.collaborator_type__description)
+        options_collaborator_types_counters.series[0].data.push(item.num)
+      },
+      getCounters() {
+        axios
+        .get("{{ api_url }}", {
+          params: {
+            year: "{{ year }}"
+          }
+        })
+        .then(response => {
+          this.error_msg = ""
+          this.error_status = null
+          response.data.forEach(this.myFunction)
+          var chart = new ApexCharts(document.querySelector("#chart_collaborator_types_counter"), options_collaborator_types_counters)
+          chart.render()
+        })
+        .catch(error => {
+          if(error) {
+            this.error = true
+            this.error_msg = error.response.data.detail
+            this.error_status = error.response.status
+          }
+        })
+      },
+    }
+  }).mount('#app_collaborator_types_counters')
+</script>

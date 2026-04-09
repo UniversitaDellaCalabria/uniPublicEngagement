@@ -408,6 +408,11 @@ urlpatterns = [
         api_evaluation_operator.PublicEngagementEventsScientificAreasList.as_view(),
         name="api_evaluation_operator_events_scientific_areas",
     ),
+    path(
+        f"{prefix}/{api_prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events-collaborator-types/",
+        api_evaluation_operator.PublicEngagementEventCollaboratorTypesList.as_view(),
+        name="api_evaluation_operator_events_collaborator_types",
+    ),
     # patronage
     path(
         f"{prefix}/{api_prefix}/{operator_prefix}/{patronage_prefix}/<str:structure_slug>/events/",
@@ -484,6 +489,11 @@ urlpatterns = [
         f"{prefix}/{api_prefix}/{manager_prefix}/events-scientific-areas/",
         api_manager.PublicEngagementEventsScientificAreasList.as_view(),
         name="api_manager_events_scientific_areas",
+    ),
+    path(
+        f"{prefix}/{api_prefix}/{manager_prefix}/events-collaborator-types/",
+        api_manager.PublicEngagementEventCollaboratorTypesList.as_view(),
+        name="api_manager_events_collaborator_types",
     ),
     # involved personnel
     path(

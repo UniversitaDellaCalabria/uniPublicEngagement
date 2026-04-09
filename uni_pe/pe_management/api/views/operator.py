@@ -6,6 +6,7 @@ from ...models import (
     PublicEngagementEvent,
     PublicEngagementEventData,
     PublicEngagementEventScientificArea,
+    PublicEngagementEventReport
 )
 from ..permissions import IsStructureEvaluationOperator, IsStructurePatronageOperator
 from .generic import PublicEngagementEventList
@@ -404,6 +405,39 @@ class PublicEngagementEventsScientificAreasList(generics.ListAPIView):
                 ),
             )
         ).values("description", "number")
+
+    def get(self, request, structure_slug):
+        return Response(
+            self.get_queryset(year=request.GET.get("year"), structure=structure_slug)
+        )
+
+
+class PublicEngagementEventCollaboratorTypesList(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
+
+    def get_queryset(self, **kwargs):
+        if not kwargs.get("structure"):
+            return []
+        if not kwargs.get("year"):
+            return []
+        events = (
+            PublicEngagementEventReport.objects.filter(
+                event__structure__slug=kwargs.get("structure"),
+                event__structure__is_active=True,
+                event__is_active=True,
+                event__operator_evaluation_success=True,
+                event__operator_evaluation_date__isnull=False,
+                event__start__year=kwargs["year"],
+                collaborator_type__isnull=False,
+            )
+            .values("collaborator_type__description")
+            .annotate(num=Count("id"))
+            .order_by("collaborator_type__description")
+        )
+        return events
 
     def get(self, request, structure_slug):
         return Response(

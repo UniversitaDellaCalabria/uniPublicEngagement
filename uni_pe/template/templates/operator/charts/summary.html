@@ -83,3 +83,10 @@
     {% include "operator/charts/summary/events_scientific_areas.html" with api_url=events_scientific_areas_url year=request.GET.year %}
 </div>
 <!-- END Aree scientifiche-->
+
+<!-- Tipologie di collaboratori -->
+<div class="col-12 col-lg-4">
+    {% url 'pe_management:api_evaluation_operator_events_collaborator_types' structure_slug=structure.slug  as events_collaborator_types_url %}
+    {% include "operator/charts/summary/events_collaborator_types.html" with api_url=events_collaborator_types_url year=request.GET.year %}
+</div>
+<!-- END Tipologie di collaboratori -->

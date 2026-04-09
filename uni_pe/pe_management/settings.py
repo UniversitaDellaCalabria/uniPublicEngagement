@@ -65,6 +65,7 @@ DASHBOARD_GENERIC_KPI_LIST = getattr(
         # ~ ("events_monitoring_data_provided", _("Monitoring activities")),
         # ~ ("events_impact_evaluation", _("Impact assessment plan")),
         ("events_scientific_areas", _("Scientific areas")),
+        ("events_collaborator_types", _("Collaborators types")),
     ],
 )
 
