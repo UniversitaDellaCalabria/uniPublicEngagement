@@ -51,7 +51,7 @@
             <div class="select-wrapper h-100">
                 <label for="structure">{% trans "Structure" %}</label>
                 <select name="structure" id="structure" class="h-100" onchange="this.form.submit()" style="background: transparent">
-                    <option value="">- {% trans "All" %} -</option>
+                    <option value="">- {% trans "All" context "female" %} -</option>
                     {% for structure in structures %}
                     <option value="{{ structure.unique_code }}" {% if request.GET.structure == structure.unique_code %}selected{% endif %}>
                         {{ structure }}

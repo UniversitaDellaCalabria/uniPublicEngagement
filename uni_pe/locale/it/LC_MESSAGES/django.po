@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-16 16:41+0200\n"
+"POT-Creation-Date: 2026-04-16 16:44+0200\n"
 "PO-Revision-Date: 2026-04-16 14:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1642,10 +1642,10 @@ msgid "select"
 msgstr "seleziona"
 
 #: template/templates/manager/dashboard.html:54
-#, fuzzy
 #| msgid "All"
-msgid "all"
-msgstr "Tutti"
+msgctxt "female"
+msgid "All"
+msgstr "Tutte"
 
 #: template/templates/manager/dashboard.html:228
 #: template/templates/operator/data_visualization.html:201
@@ -1856,6 +1856,11 @@ msgstr "Dimensione del file troppo grande: {} bytes. Massimo {} bytes"
 msgid "File name length too large: {} characters. Max {} characters"
 msgstr ""
 "Lunghezza del nome file troppo grande: {} caratteri. Massimo {} caratteri"
+
+#, fuzzy
+#~| msgid "All"
+#~ msgid "all"
+#~ msgstr "Tutti"
 
 #~ msgid "Promotion channels"
 #~ msgstr "Canali di promozione"
