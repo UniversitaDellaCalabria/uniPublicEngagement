@@ -48,7 +48,7 @@
     </div>
 </form>
 
-{% if request.GET.year %}
+{% if request.GET.year and request.GET.i %}
 <div class="row">
 
     {% comment %}
@@ -196,7 +196,8 @@
 </div>
 {% else %}
 <div class="alert alert-warning" role="alert">
-    {% trans "Select the reference year" %}
+    <h4 class="alert-heading">{% trans "Warning" %}</h4>
+    {% trans "Select the indicator and the reference year" %}
 </div>
 {% endif %}
 {% endblock %}
