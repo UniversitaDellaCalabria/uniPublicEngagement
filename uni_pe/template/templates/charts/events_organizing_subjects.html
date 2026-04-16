@@ -1,25 +1,21 @@
 {% load i18n %}
 {% load pe_management_tags %}
 
-{% pem_settings_value "DASHBOARD_MANAGER_KPI_LIST" as titles %}
 <div class="col-12">
   <div class="card-wrapper card-space">
     <div class="card card-bg no-after">
       <div class="card-body">
         <p class="card-title h5">
-          {% for title in titles %}
-          {% if title.0 == request.GET.i %}
-          {{ title.1 }}
-          {% endif %}
-          {% endfor %}
+          {% trans "Numero delle iniziative per ente organizzatore" %}
+          ({% trans "valori assoluti" %}, {% trans "year" %} {{ request.GET.year }})
         </p>
-        <div id="app_collaborator_types_counters">
+        <div id="app_events_organizing_subjects">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_collaborator_types_counter" v-else></div>
+          <div id="chart_events_organizing_subjects" v-else></div>
         </div>
       </div>
     </div>
@@ -27,7 +23,7 @@
 </div>
 
 <script>
-  var options_collaborator_types_counters = {
+  var options_events_organizing_subjects = {
     series: [{
       name: 'Num',
       data: []
@@ -35,6 +31,11 @@
     chart: {
       height: 350,
       type: 'bar',
+      events: {
+        click: function(chart, w, e) {
+          // console.log(chart, w, e)
+        }
+      }
     },
     plotOptions: {
       bar: {
@@ -56,10 +57,10 @@
           fontSize: '12px'
         }
       }
-    },
+    }
   };
   
-  const app_collaborator_types_counters = Vue.createApp({
+  const app_events_organizing_subjects = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -71,8 +72,8 @@
     },
     methods: {
       myFunction(item) {
-        options_collaborator_types_counters.xaxis.categories.push(item.collaborator_type__description)
-        options_collaborator_types_counters.series[0].data.push(item.num)
+        options_events_organizing_subjects.xaxis.categories.push(item.organizing_subject)
+        options_events_organizing_subjects.series[0].data.push(item.num)
       },
       getCounters() {
         axios
@@ -85,7 +86,7 @@
           this.error_msg = ""
           this.error_status = null
           response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_collaborator_types_counter"), options_collaborator_types_counters)
+          var chart = new ApexCharts(document.querySelector("#chart_events_organizing_subjects"), options_events_organizing_subjects)
           chart.render()
         })
         .catch(error => {
@@ -97,5 +98,5 @@
         })
       },
     }
-  }).mount('#app_collaborator_types_counters')
+  }).mount('#app_events_organizing_subjects')
 </script>

@@ -55,17 +55,23 @@ DASHBOARD_GENERIC_KPI_LIST = getattr(
     "DASHBOARD_GENERIC_KPI_LIST",
     [
         ("events_types", _("Event type")),
-        ("events_recipients", _("Recipients")),
         ("events_goals", _("Sustainable Development Goals (SDGs)")),
-        ("events_methods_of_execution", _("Execution method")),
+        ("events_scientific_areas", _("Scientific areas")),
         ("events_geographical_dimension", _("Geographical dimension")),
+        ("events_methods_of_execution", _("Execution method")),
+        ("events_recipients", _("Recipients")),
+        ("events_audience", _("Participating or reached audience")),
         ("events_organizing_subjects", _("Main organizing entity of the initiative")),
+        ("events_involved_structures", _("Other UniCal involved structures")),
+        ("events_collaborator_types", _("Collaborators types")),
+        ("events_involved_personnel", _("Other UniCal involved personnel")),
+        ("events_referents", _("Referents list")),
+
+        
         # ~ ("events_promo_channels", _("Promotion channels")),
         # ~ ("events_patronage_requested", _("Patronage request")),
         # ~ ("events_monitoring_data_provided", _("Monitoring activities")),
         # ~ ("events_impact_evaluation", _("Impact assessment plan")),
-        ("events_scientific_areas", _("Scientific areas")),
-        ("events_collaborator_types", _("Collaborators types")),
     ],
 )
 

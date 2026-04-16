@@ -1,0 +1,122 @@
+{% load i18n %}
+{% load pe_management_tags %}
+
+
+<div class="col-12">
+  <div class="card-wrapper card-space">
+    <div class="card card-bg no-after">
+      <div class="card-body">
+        <p class="card-title h5">
+          {% trans "Numero delle iniziative PE per dipartimento/centro" %}
+          ({% trans "valori assoluti" %}, {% trans "year" %} {{ request.GET.year }})
+        </p>
+        <div id="app_structure_counters">
+          <div v-if="error">
+            <div class="alert alert-danger" role="alert">
+              {% trans "Data retrieval failed. Please check your search parameters" %}
+            </div>
+          </div>
+          <div id="chart_structure_counter" v-else></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 1. Configurazione base del grafico
+  var options_structure_counters = {
+    series: [{
+      data: []
+    }],
+    chart: {
+      type: 'bar',
+      height: 400 // Altezza iniziale che verrà sovrascritta
+    },
+    plotOptions: {
+      bar: {
+        barHeight: '70%', 
+        distributed: true,
+        horizontal: true,
+      }
+    },
+    colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e', '#f48024', '#69d2e7'],
+    dataLabels: {
+      enabled: false // Disabilitati per coerenza con gli altri grafici
+    },
+    stroke: {
+      width: 1,
+      colors: ['#fff']
+    },
+    xaxis: {
+      categories: [],
+    },
+    yaxis: {
+      labels: {
+        show: true
+      }
+    },
+    tooltip: {
+      theme: 'dark',
+      x: { show: false },
+      y: {
+        title: {
+          formatter: function () { return '' }
+        }
+      }
+    }
+  };
+
+  const app_structure_counters = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        error: false,
+        error_msg: "",
+        error_status: null
+      }
+    },
+    mounted() {
+      this.getCounters()
+    },
+    methods: {
+      myFunction(item) {
+        // Mantengo il toUpperCase() per lo slug della struttura
+        options_structure_counters.xaxis.categories.push(item.structure__slug.toUpperCase())
+        options_structure_counters.series[0].data.push(item.num)
+      },
+      getCounters() {
+        axios
+          .get("{{ api_url }}", {
+            params: { year: "{{ year }}" }
+          })
+          .then(response => {
+            const data = response.data;
+            this.error = false;
+            this.error_msg = "";
+            this.error_status = null;
+            
+            // Popolamento dati tramite la funzione di supporto
+            data.forEach(this.myFunction);
+
+            // 2. CALCOLO ALTEZZA DINAMICA
+            // 45px per ogni struttura + 100px di padding per assi/legenda
+            const dynamicHeight = (data.length * 45) + 100;
+            options_structure_counters.chart.height = Math.max(dynamicHeight, 300);
+
+            // 3. Rendering del grafico
+            var chart = new ApexCharts(document.querySelector("#chart_structure_counter"), options_structure_counters);
+            chart.render();
+          })
+          .catch(error => {
+            if (error.response) {
+              this.error = true;
+              console.log(error);
+              this.error_msg = error.response.data.detail;
+              this.error_status = error.response.status;
+            }
+          });
+      },
+    }
+  }).mount('#app_structure_counters')
+</script>

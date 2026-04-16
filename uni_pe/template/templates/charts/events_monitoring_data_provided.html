@@ -8,18 +8,18 @@
       <div class="card-body">
         <p class="card-title h5">
           {% for title in titles %}
-          {% if title.0 == request.GET.i %}
+          {% if title.0 == request.GET.i or title.0 == "events_monitoring_data_provided" %}
           {{ title.1 }}
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_events_patronage_requested">
+        <div id="app_events_monitoring_data_provided">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_events_patronage_requested" v-else></div>
+          <div id="chart_events_monitoring_data_provided" v-else></div>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
 </div>
 
 <script>
-  var options_events_patronage_requested = {
+  var options_events_monitoring_data_provided = {
        series: [{
       data: []
     }],
@@ -109,7 +109,7 @@
     }],
   };
   
-  const app_events_patronage_requested = Vue.createApp({
+  const app_events_monitoring_data_provided = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -127,8 +127,8 @@
           if(key == 'no') {
             label = "No"
           }
-          options_events_patronage_requested.xaxis.categories.push(label.toUpperCase())
-          options_events_patronage_requested.series[0].data.push(num)
+          options_events_monitoring_data_provided.xaxis.categories.push(label.toUpperCase())
+          options_events_monitoring_data_provided.series[0].data.push(num)
         }
       },
       getCounters() {
@@ -142,18 +142,19 @@
           this.error_msg = ""
           this.error_status = null
           this.myFunction(response.data)
-          var chart = new ApexCharts(document.querySelector("#chart_events_patronage_requested"), options_events_patronage_requested)
+          var chart = new ApexCharts(document.querySelector("#chart_events_monitoring_data_provided"), options_events_monitoring_data_provided)
           chart.render()
         })
         .catch(error => {
           if(error) {
             this.error = true
-            this.error_msg = error.response.data.detail
-            this.error_status = error.response.status
+            console.log(error)
+            {% comment %} this.error_msg = error.response.data.detail
+            this.error_status = error.response.status {% endcomment %}
           }
         })
       },
     }
-  }).mount('#app_events_patronage_requested')
+  }).mount('#app_events_monitoring_data_provided')
   
 </script>

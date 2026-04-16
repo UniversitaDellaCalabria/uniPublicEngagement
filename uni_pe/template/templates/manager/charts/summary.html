@@ -1,99 +1,118 @@
 <!-- Numero progetti per ogni struttura-->
-<div class="col-12 col-lg-4">
+<div class="col-12 col-lg-6">
     {% url 'pe_management:api_manager_structure_counters' as structure_counters_url %}
-    {% include "manager/charts/summary/structure_counters.html" with api_url=structure_counters_url year=request.GET.year %}
+    {% include "charts/structure_counters.html" with api_url=structure_counters_url year=request.GET.year %}
 </div>
 <!-- END Numero progetti per ogni struttura-->
 
-<!-- Destinatari -->
-<div class="col-12 col-lg-4">
-    {% url 'pe_management:api_manager_events_recipients' as events_recipients_url %}
-    {% include "manager/charts/summary/events_recipients.html" with api_url=events_recipients_url year=request.GET.year %}
-</div>
-<!-- END Destinatari -->
-
 <!-- Tipologie iniziative -->
-<div class="col-12 col-lg-4">
+<div class="col-12 col-lg-6">
     {% url 'pe_management:api_manager_events_types' as events_types_url %}
-    {% include "manager/charts/summary/events_types.html" with api_url=events_types_url year=request.GET.year %}
+    {% include "charts/events_types.html" with api_url=events_types_url year=request.GET.year %}
 </div>
 <!-- END Tipologie iniziative -->
 
 <!-- Obiettivi -->
-<div class="col-12 col-lg-4">
+<div class="col-12 col-lg-6">
     {% url 'pe_management:api_manager_events_targets' as events_targets_url %}
-    {% include "manager/charts/summary/events_targets.html" with api_url=events_targets_url year=request.GET.year %}
+    {% include "charts/events_targets.html" with api_url=events_targets_url year=request.GET.year %}
 </div>
-
 <!-- END Obiettivi -->
 
-<!-- Modalità di svolgimento -->
-<div class="col-12 col-lg-4">
-    {% url 'pe_management:api_manager_events_methods_of_execution' as events_methods_of_execution_url %}
-    {% include "manager/charts/summary/events_methods_of_execution.html" with api_url=events_methods_of_execution_url year=request.GET.year %}
+<!-- Aree scientifiche -->
+<div class="col-12 col-lg-6">
+    {% url 'pe_management:api_manager_events_scientific_areas' as events_scientific_areas_url %}
+    {% include "charts/events_scientific_areas.html" with api_url=events_scientific_areas_url year=request.GET.year %}
 </div>
-<!-- END Modalità di svolgimento -->
+<!-- END Aree scientifiche-->
 
 <!-- Dimensione geografica -->
-<div class="col-12 col-lg-4">
+<div class="col-12 col-lg-6">
     {% url 'pe_management:api_manager_events_geographical_dimension' as events_geographical_dimension_url %}
-    {% include "manager/charts/summary/events_geographical_dimension.html" with api_url=events_geographical_dimension_url year=request.GET.year %}
+    {% include "charts/events_geographical_dimension.html" with api_url=events_geographical_dimension_url year=request.GET.year %}
 </div>
 <!-- END Dimensione geografica -->
 
+<!-- Modalità di svolgimento -->
+<div class="col-12 col-lg-6">
+    {% url 'pe_management:api_manager_events_methods_of_execution' as events_methods_of_execution_url %}
+    {% include "charts/events_methods_of_execution.html" with api_url=events_methods_of_execution_url year=request.GET.year %}
+</div>
+<!-- END Modalità di svolgimento -->
+
+<!-- Destinatari -->
+<div class="col-12 col-lg-6">
+    {% url 'pe_management:api_manager_events_recipients' as events_recipients_url %}
+    {% include "charts/events_recipients.html" with api_url=events_recipients_url year=request.GET.year %}
+</div>
+<!-- END Destinatari -->
+
 <!-- Ente organizzatore -->
-<div class="col-12 col-lg-4">
+<div class="col-12 col-lg-6">
     {% url 'pe_management:api_manager_events_organizing_subject' as events_organizing_subject_url %}
-    {% include "manager/charts/summary/events_organizing_subjects.html" with api_url=events_organizing_subject_url year=request.GET.year %}
+    {% include "charts/events_organizing_subjects.html" with api_url=events_organizing_subject_url year=request.GET.year %}
 </div>
 <!-- END Ente organizzatore -->
 
+<!-- Altre strutture Unical coinvolto -->
+<div class="col-12 col-lg-6">
+    {% url 'pe_management:api_manager_events_involved_structures' as events_involved_structures_url %}
+    {% include "charts/events_involved_structures.html" with api_url=events_involved_structures_url year=request.GET.year %}
+</div>
+<!-- END Altre strutture Unical coinvolto -->
+
+<!-- Tipologie di collaboratori -->
+<div class="col-12 col-lg-6">
+    {% url 'pe_management:api_manager_events_collaborator_types' as events_collaborator_types_url %}
+    {% include "charts/events_collaborator_types.html" with api_url=events_collaborator_types_url year=request.GET.year %}
+</div>
+<!-- END Tipologie di collaboratori -->
+
+<!-- Altro personale Unical coinvolto -->
+<div class="col-12 col-lg-6">
+    {% url 'pe_management:api_manager_events_involved_personnel' as events_involved_personnel_url %}
+    {% include "charts/events_involved_personnel.html" with api_url=events_involved_personnel_url year=request.GET.year %}
+</div>
+<!-- END Altro personale Unical coinvolto -->
+
+
+
 <!-- Canali di promozione -->
 <!--
-<div class="col-12 col-lg-4">
+<div class="col-12 col-lg-6">
     {% url 'pe_management:api_manager_events_promo_channels' as events_promo_channels_url %}
-    {% include "manager/charts/summary/events_promo_channels.html" with api_url=events_promo_channels_url year=request.GET.year %}
+    {% include "charts/events_promo_channels.html" with api_url=events_promo_channels_url year=request.GET.year %}
 </div>
 -->
 <!-- END Canali di promozione -->
 
 <!-- Richiesta di patrocinio -->
 <!--
-<div class="col-12 col-lg-4">
+<div class="col-12 col-lg-6">
     {% url 'pe_management:api_manager_events_patronage_requested' as events_patronage_requested_url %}
-    {% include "manager/charts/summary/events_patronage_requested.html" with api_url=events_patronage_requested_url year=request.GET.year %}
+    {% include "charts/events_patronage_requested.html" with api_url=events_patronage_requested_url year=request.GET.year %}
 </div>
 -->
 <!-- END Richiesta di patrocinio -->
 
 <!-- Dati di monitoraggio presenti -->
 <!--
-<div class="col-12 col-lg-4">
+<div class="col-12 col-lg-6">
     {% url 'pe_management:api_manager_events_monitoring_data_provided' as events_monitoring_data_provided_url %}
-    {% include "manager/charts/summary/events_monitoring_data_provided.html" with api_url=events_monitoring_data_provided_url year=request.GET.year %}
+    {% include "charts/events_monitoring_data_provided.html" with api_url=events_monitoring_data_provided_url year=request.GET.year %}
 </div>
 -->
 <!-- END Dati di monitoraggio presenti -->
 
 <!-- Valutazione impatto -->
 <!--
-<div class="col-12 col-lg-4">
+<div class="col-12 col-lg-6">
     {% url 'pe_management:api_manager_events_impact_evaluation' as events_impact_evaluation_url %}
-    {% include "manager/charts/summary/events_impact_evaluation.html" with api_url=events_impact_evaluation_url year=request.GET.year %}
+    {% include "charts/events_impact_evaluation.html" with api_url=events_impact_evaluation_url year=request.GET.year %}
 </div>
 -->
 <!-- END Valutazione impatto -->
 
-<!-- Aree scientifiche -->
-<div class="col-12 col-lg-4">
-    {% url 'pe_management:api_manager_events_scientific_areas' as events_scientific_areas_url %}
-    {% include "manager/charts/summary/events_scientific_areas.html" with api_url=events_scientific_areas_url year=request.GET.year %}
-</div>
-<!-- END Aree scientifiche-->
 
-<!-- Tipologie di collaboratori -->
-<div class="col-12 col-lg-4">
-    {% url 'pe_management:api_manager_events_collaborator_types' as events_collaborator_types_url %}
-    {% include "manager/charts/summary/events_collaborator_types.html" with api_url=events_collaborator_types_url year=request.GET.year %}
-</div>
-<!-- END Tipologie di collaboratori -->
+
+

@@ -8,31 +8,32 @@
       <div class="card-body">
         <p class="card-title h5">
           {% for title in titles %}
-          {% if title.0 == request.GET.i %}
+          {% if title.0 == request.GET.i or title.0 == "events_patronage_requested" %}
           {{ title.1 }}
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_events_recipients">
+        <div id="app_events_patronage_requested">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
-              {% trans "Data retrieval failed. Please check your search parameters" %}            
+              {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_events_recipients" v-else></div>
+          <div id="chart_events_patronage_requested" v-else></div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <script>
-  var options_events_recipients = {
-    series: [{
+  var options_events_patronage_requested = {
+       series: [{
       data: []
     }],
     chart: {
       type: 'bar',
-      height: 400
+      height: 200
     },
     plotOptions: {
       bar: {
@@ -108,7 +109,7 @@
     }],
   };
   
-  const app_events_recipients = Vue.createApp({
+  const app_events_patronage_requested = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -120,8 +121,15 @@
     },
     methods: {
       myFunction(item) {
-        options_events_recipients.xaxis.categories.push(item.recipient__description)
-        options_events_recipients.series[0].data.push(item.num)
+        for (const [key, value] of Object.entries(item)) {
+          let label = "Si"
+          let num = value
+          if(key == 'no') {
+            label = "No"
+          }
+          options_events_patronage_requested.xaxis.categories.push(label.toUpperCase())
+          options_events_patronage_requested.series[0].data.push(num)
+        }
       },
       getCounters() {
         axios
@@ -133,8 +141,8 @@
         .then(response => {
           this.error_msg = ""
           this.error_status = null
-          response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_events_recipients"), options_events_recipients)
+          this.myFunction(response.data)
+          var chart = new ApexCharts(document.querySelector("#chart_events_patronage_requested"), options_events_patronage_requested)
           chart.render()
         })
         .catch(error => {
@@ -146,6 +154,6 @@
         })
       },
     }
-  }).mount('#app_events_recipients')
+  }).mount('#app_events_patronage_requested')
   
 </script>

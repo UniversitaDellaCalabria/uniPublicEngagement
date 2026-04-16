@@ -1,0 +1,117 @@
+{% load i18n %}
+{% load pe_management_tags %}
+
+<div class="col-12">
+  <div class="card-wrapper card-space">
+    <div class="card card-bg no-after">
+      <div class="card-body">
+        <p class="card-title h5">
+          {% trans "Elenco di altre strutture Unical coinvolte nelle iniziative/attività di PE" %}
+          ({% trans "year" %} {{ request.GET.year }})
+        </p>
+        <div id="app_events_involved_structures">
+          <div v-if="error">
+            <div class="alert alert-danger" role="alert">
+              {% trans "Data retrieval failed. Please check your search parameters" %}
+            </div>
+          </div>
+          <div id="chart_events_involved_structures" v-else></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 1. Configurazione base senza altezze fisse o percentuali
+  var options_events_involved_structures = {
+    series: [{
+      data: []
+    }],
+    chart: {
+      type: 'bar',
+      height: 400 // Altezza di default iniziale
+    },
+    plotOptions: {
+      bar: {
+        barHeight: '70%', // Spazio tra le barre ottimale
+        distributed: true,
+        horizontal: true,
+      }
+    },
+    colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e', '#f48024', '#69d2e7'],
+    dataLabels: {
+      enabled: false // Disabilitati per pulizia estetica
+    },
+    stroke: {
+      width: 1,
+      colors: ['#fff']
+    },
+    xaxis: {
+      categories: [],
+    },
+    yaxis: {
+      labels: {
+        show: true
+      }
+    },
+    tooltip: {
+      theme: 'dark',
+      x: { show: false },
+      y: {
+        title: {
+          formatter: function () { return '' }
+        }
+      }
+    }
+  };
+
+  const app_events_involved_structures = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        error: false,
+        error_msg: "",
+        error_status: null
+      }
+    },
+    mounted() {
+      this.getCounters()
+    },
+    methods: {
+      myFunction(item) {
+        options_events_involved_structures.xaxis.categories.push(item.involved_structure__name)
+        options_events_involved_structures.series[0].data.push(item.num)
+      },
+      getCounters() {
+        axios
+          .get("{{ api_url }}", {
+            params: { year: "{{ year }}" }
+          })
+          .then(response => {
+            const data = response.data;
+            this.error = false;
+
+            // Popoliamo i dati
+            data.forEach(this.myFunction);
+
+            // 2. CALCOLO ALTEZZA DINAMICA
+            // 45 pixel per struttura + 100 pixel per asse X e margini
+            const dynamicHeight = (data.length * 45) + 100;
+            options_events_involved_structures.chart.height = Math.max(dynamicHeight, 350);
+
+            // 3. Rendering finale
+            var chart = new ApexCharts(document.querySelector("#chart_events_involved_structures"), options_events_involved_structures);
+            chart.render();
+          })
+          .catch(error => {
+            if (error.response) {
+              this.error = true;
+              this.error_msg = error.response.data.detail;
+              this.error_status = error.response.status;
+            }
+          });
+      },
+    }
+  }).mount('#app_events_involved_structures')
+</script>

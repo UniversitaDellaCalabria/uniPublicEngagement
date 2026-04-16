@@ -8,18 +8,18 @@
       <div class="card-body">
         <p class="card-title h5">
           {% for title in titles %}
-          {% if title.0 == request.GET.i %}
+          {% if title.0 == request.GET.i or title.0 == "events_impact_evaluation" %}
           {{ title.1 }}
           {% endif %}
           {% endfor %}
         </p>
-        <div id="app_events_methods_of_execution">
+        <div id="app_events_impact_evaluation">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_events_methods_of_execution" v-else></div>
+          <div id="chart_events_impact_evaluation" v-else></div>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
 </div>
 
 <script>
-  var options_events_methods_of_execution = {
+  var options_events_impact_evaluation = {
     series: [{
       data: []
     }],
@@ -89,9 +89,27 @@
         }
       }
     },
+    responsive: [{
+      breakpoint: 768, // Sotto i 768px (tablet/mobile)
+      options: {
+        chart: {
+          height: 600 // Aumenta l'altezza per far respirare le barre
+        },
+        yaxis: {
+          labels: {
+            show: true
+          }
+        },
+        plotOptions: {
+          bar: {
+            barHeight: '80%', // Riduci leggermente per dare spazio tra le barre
+          }
+        }
+      }
+    }],
   };
   
-  const app_events_methods_of_execution = Vue.createApp({
+  const app_events_impact_evaluation = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -103,8 +121,15 @@
     },
     methods: {
       myFunction(item) {
-        options_events_methods_of_execution.xaxis.categories.push(item.method_of_execution__description)
-        options_events_methods_of_execution.series[0].data.push(item.num)
+        for (const [key, value] of Object.entries(item)) {
+          let label = "Si"
+          let num = value
+          if(key == 'no') {
+            label = "No"
+          }
+          options_events_impact_evaluation.xaxis.categories.push(label.toUpperCase())
+          options_events_impact_evaluation.series[0].data.push(num)
+        }
       },
       getCounters() {
         axios
@@ -116,18 +141,20 @@
         .then(response => {
           this.error_msg = ""
           this.error_status = null
-          response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_events_methods_of_execution"), options_events_methods_of_execution)
+          this.myFunction(response.data)
+          var chart = new ApexCharts(document.querySelector("#chart_events_impact_evaluation"), options_events_impact_evaluation)
           chart.render()
         })
         .catch(error => {
           if(error) {
             this.error = true
-            this.error_msg = error.response.data.detail
-            this.error_status = error.response.status
+            console.log(error)
+            {% comment %} this.error_msg = error.response.data.detail
+            this.error_status = error.response.status {% endcomment %}
           }
         })
       },
     }
-  }).mount('#app_events_methods_of_execution')
+  }).mount('#app_events_impact_evaluation')
+  
 </script>

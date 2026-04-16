@@ -1,0 +1,117 @@
+{% load i18n %}
+{% load pe_management_tags %}
+
+<div class="col-12">
+  <div class="card-wrapper card-space">
+    <div class="card card-bg no-after">
+      <div class="card-body">
+        <p class="card-title h5">
+          {% trans "Numero delle iniziative per categoria di PE prevalenti dalla tassonomia ANVUR" %}
+          ({% trans "valori assoluti" %}, {% trans "year" %} {{ request.GET.year }})
+        </p>
+        <div id="app_events_types">
+          <div v-if="error">
+            <div class="alert alert-danger" role="alert">
+              {% trans "Data retrieval failed. Please check your search parameters" %}
+            </div>
+          </div>
+          <div id="chart_events_types" v-else></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // Configurazione base del grafico
+  var options_events_types = {
+    series: [{
+      data: []
+    }],
+    chart: {
+      type: 'bar',
+      height: 400 // Altezza iniziale, verrà sovrascritta dinamicamente
+    },
+    plotOptions: {
+      bar: {
+        barHeight: '70%', 
+        distributed: true,
+        horizontal: true,
+      }
+    },
+    colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e', '#f48024', '#69d2e7'],
+    // DATA LABELS DISABILITATI
+    dataLabels: {
+      enabled: false 
+    },
+    stroke: {
+      width: 1,
+      colors: ['#fff']
+    },
+    xaxis: {
+      categories: [],
+    },
+    yaxis: {
+      labels: {
+        show: true
+      }
+    },
+    tooltip: {
+      theme: 'dark',
+      x: { show: false },
+      y: {
+        title: {
+          formatter: function () { return '' }
+        }
+      }
+    }
+  };
+
+  const app_events_types = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        error: false,
+        error_msg: "",
+        error_status: null
+      }
+    },
+    mounted() {
+      this.getCounters()
+    },
+    methods: {
+      myFunction(item) {
+        options_events_types.xaxis.categories.push(item.event_type__description)
+        options_events_types.series[0].data.push(item.num)
+      },
+      getCounters() {
+        axios
+          .get("{{ api_url }}", {
+            params: { year: "{{ year }}" }
+          })
+          .then(response => {
+            const data = response.data;
+            
+            // Svuota dati precedenti se necessario e popola
+            data.forEach(this.myFunction);
+
+            // Calcolo altezza dinamica: 45px per ogni categoria + 100px di spazio per asse X
+            const dynamicHeight = (data.length * 45) + 100;
+            options_events_types.chart.height = Math.max(dynamicHeight, 300); // Minimo 300px
+
+            // Inizializzazione e rendering
+            var chart = new ApexCharts(document.querySelector("#chart_events_types"), options_events_types);
+            chart.render();
+          })
+          .catch(error => {
+            if (error.response) {
+              this.error_msg = error.response.data.detail;
+              this.error_status = error.response.status;
+            }
+          });
+      },
+    }
+  }).mount('#app_events_types')
+</script>
+

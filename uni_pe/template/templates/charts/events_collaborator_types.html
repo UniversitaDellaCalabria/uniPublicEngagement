@@ -1,25 +1,21 @@
 {% load i18n %}
 {% load pe_management_tags %}
 
-{% pem_settings_value "DASHBOARD_OPERATOR_KPI_LIST" as titles %}
 <div class="col-12">
   <div class="card-wrapper card-space">
     <div class="card card-bg no-after">
       <div class="card-body">
         <p class="card-title h5">
-          {% for title in titles %}
-          {% if title.0 == "events_organizing_subjects" %}
-          {{ title.1 }}
-          {% endif %}
-          {% endfor %}
+          {% trans "Numero di iniziative per tipo di collaboratori coinvolti nell’organizzazione/gestione delle iniziative/attività di PE" %}
+          ({% trans "year" %} {{ request.GET.year }})
         </p>
-        <div id="app_events_organizing_subjects">
+        <div id="app_collaborator_types_counters">
           <div v-if="error">
             <div class="alert alert-danger" role="alert">
               {% trans "Data retrieval failed. Please check your search parameters" %}
             </div>
           </div>
-          <div id="chart_events_organizing_subjects" v-else></div>
+          <div id="chart_collaborator_types_counter" v-else></div>
         </div>
       </div>
     </div>
@@ -27,31 +23,39 @@
 </div>
 
 <script>
-  var options_events_organizing_subjects = {
-    labels: [],
-    series: [],
+  var options_collaborator_types_counters = {
+    series: [{
+      name: 'Num',
+      data: []
+    }],
     chart: {
-      type: 'donut',
+      height: 350,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: '45%',
+        distributed: true,
+      }
+    },
+    dataLabels: {
+      enabled: false
     },
     legend: {
-      position: 'right',
-      verticalAlign: 'middle',
-      width: 200,
-      
+      show: false
     },
-    responsive: [{
-      breakpoint: 480,
-      options: {
-        
-        legend: {
-          position: 'bottom',
-          width: "100%"
+    xaxis: {
+      categories: [],
+      labels: {
+        style: {
+          colors: [],
+          fontSize: '12px'
         }
       }
-    }]
+    },
   };
   
-  const app_events_organizing_subjects = Vue.createApp({
+  const app_collaborator_types_counters = Vue.createApp({
     delimiters: ['[[', ']]'],
     data () {
       return {
@@ -63,8 +67,8 @@
     },
     methods: {
       myFunction(item) {
-        options_events_organizing_subjects.labels.push(item.organizing_subject)
-        options_events_organizing_subjects.series.push(item.num)
+        options_collaborator_types_counters.xaxis.categories.push(item.collaborator_type__description)
+        options_collaborator_types_counters.series[0].data.push(item.num)
       },
       getCounters() {
         axios
@@ -77,7 +81,7 @@
           this.error_msg = ""
           this.error_status = null
           response.data.forEach(this.myFunction)
-          var chart = new ApexCharts(document.querySelector("#chart_events_organizing_subjects"), options_events_organizing_subjects)
+          var chart = new ApexCharts(document.querySelector("#chart_collaborator_types_counter"), options_collaborator_types_counters)
           chart.render()
         })
         .catch(error => {
@@ -89,5 +93,5 @@
         })
       },
     }
-  }).mount('#app_events_organizing_subjects')
+  }).mount('#app_collaborator_types_counters')
 </script>

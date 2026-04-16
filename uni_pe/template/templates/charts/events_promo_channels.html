@@ -1,14 +1,14 @@
 {% load i18n %}
 {% load pe_management_tags %}
 
-{% pem_settings_value "DASHBOARD_OPERATOR_KPI_LIST" as titles %}
+{% pem_settings_value "DASHBOARD_MANAGER_KPI_LIST" as titles %}
 <div class="col-12">
   <div class="card-wrapper card-space">
     <div class="card card-bg no-after">
       <div class="card-body">
         <p class="card-title h5">
           {% for title in titles %}
-          {% if title.0 == request.GET.i %}
+          {% if title.0 == request.GET.i or title.0 == "events_promo_channels" %}
           {{ title.1 }}
           {% endif %}
           {% endfor %}

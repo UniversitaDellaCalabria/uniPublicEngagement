@@ -1,0 +1,60 @@
+{% load i18n %}
+{% load pe_management_tags %}
+
+<div class="col-12">
+  <div class="card-wrapper card-space">
+    <div class="card card-bg no-after">
+      <div class="card-body">
+        <p class="card-title h5">
+          {% trans "Numero medio di pubblico non accademico partecipante all’iniziativa o pubblico raggiunto attraverso risorse web/social, pubblicazioni divulgative" %}
+          ({% trans "year" %} {{ request.GET.year }})
+        </p>
+        <div id="app_audience">
+          <div v-if="error">
+            <div class="alert alert-danger" role="alert">
+              {% trans "Data retrieval failed. Please check your search parameters" %}
+            </div>
+          </div>
+          <div id="chart_audience" v-else><p class="h1">[[ value ]]</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const app_audience = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data () {
+      return {
+        error: false,
+        value: 0
+      }
+    },
+    mounted () {
+      this.getAudience()
+    },
+    methods: {
+      getAudience() {
+        axios
+        .get("{{ api_url }}", {
+          params: {
+            year: "{{ year }}"
+          }
+        })
+        .then(response => {
+          this.error_msg = ""
+          this.error_status = null
+          this.value = response.data["value"]
+        })
+        .catch(error => {
+          if(error) {
+            this.error = true
+            this.error_msg = error.response.data.detail
+            this.error_status = error.response.status
+          }
+        })
+      },
+    }
+  }).mount('#app_audience')
+</script>

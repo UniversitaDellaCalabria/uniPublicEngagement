@@ -1,17 +1,13 @@
 {% load i18n %}
 {% load pe_management_tags %}
 
-{% pem_settings_value "DASHBOARD_MANAGER_KPI_LIST" as titles %}
 <div class="col-12">
   <div class="card-wrapper card-space">
     <div class="card card-bg no-after">
       <div class="card-body">
         <p class="card-title h5">
-          {% for title in titles %}
-          {% if title.0 == request.GET.i %}
-          {{ title.1 }}
-          {% endif %}
-          {% endfor %}
+          {% trans "Numero delle iniziative per dimensione geografica" %}
+          ({% trans "valori assoluti" %}, {% trans "year" %} {{ request.GET.year }})
         </p>
         <div id="app_geographical_dimension_counters">
           <div v-if="error">

@@ -413,6 +413,26 @@ urlpatterns = [
         api_evaluation_operator.PublicEngagementEventCollaboratorTypesList.as_view(),
         name="api_evaluation_operator_events_collaborator_types",
     ),
+    path(
+        f"{prefix}/{api_prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events-involved-personnel/",
+        api_evaluation_operator.PublicEngagementEventInvolvedPersonnelList.as_view(),
+        name="api_evaluation_operator_events_involved_personnel",
+    ),
+    path(
+        f"{prefix}/{api_prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events-involved-structures/",
+        api_evaluation_operator.PublicEngagementEventInvolvedStructuresList.as_view(),
+        name="api_evaluation_operator_events_involved_structures",
+    ),
+    path(
+        f"{prefix}/{api_prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events-audience/",
+        api_evaluation_operator.PublicEngagementEventAudience.as_view(),
+        name="api_evaluation_operator_events_audience",
+    ),
+    path(
+        f"{prefix}/{api_prefix}/{operator_prefix}/{validator_prefix}/<str:structure_slug>/events-referents/",
+        api_evaluation_operator.PublicEngagementEventRerefentsList.as_view(),
+        name="api_evaluation_operator_events_referents",
+    ),
     # patronage
     path(
         f"{prefix}/{api_prefix}/{operator_prefix}/{patronage_prefix}/<str:structure_slug>/events/",
@@ -494,6 +514,26 @@ urlpatterns = [
         f"{prefix}/{api_prefix}/{manager_prefix}/events-collaborator-types/",
         api_manager.PublicEngagementEventCollaboratorTypesList.as_view(),
         name="api_manager_events_collaborator_types",
+    ),
+    path(
+        f"{prefix}/{api_prefix}/{manager_prefix}/events-involved-personnel/",
+        api_manager.PublicEngagementEventInvolvedPersonnelList.as_view(),
+        name="api_manager_events_involved_personnel",
+    ),
+    path(
+        f"{prefix}/{api_prefix}/{manager_prefix}/events-involved-structures/",
+        api_manager.PublicEngagementEventInvolvedStructuresList.as_view(),
+        name="api_manager_events_involved_structures",
+    ),
+    path(
+        f"{prefix}/{api_prefix}/{manager_prefix}/events-audience/",
+        api_manager.PublicEngagementEventAudience.as_view(),
+        name="api_manager_events_audience",
+    ),
+    path(
+        f"{prefix}/{api_prefix}/{manager_prefix}/events-referents/",
+        api_manager.PublicEngagementEventRerefentsList.as_view(),
+        name="api_manager_events_referents",
     ),
     # involved personnel
     path(

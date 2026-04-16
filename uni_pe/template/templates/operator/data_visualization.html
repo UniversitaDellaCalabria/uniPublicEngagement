@@ -20,7 +20,7 @@
             <div class="select-wrapper h-100">
                 <label for="i">{% trans "Indicator" %}</label>
                 <select name="i" id="i" onchange="this.form.submit()" class="h-100" style="background: transparent">
-                    <option value="">- {% trans "All" %} -</option>
+                    <option value="">- {% trans "select" %} -</option>
                     {% for kpi in dashboard_kpi_list %}
                     <option value="{{ kpi.0 }}" {% if request.GET.i == kpi.0 %}selected{% endif %}>{{ kpi.1 }}</option>
                     {% endfor %}
@@ -50,67 +50,97 @@
 
 {% if request.GET.year %}
 <div class="row">
-    
+
+    {% comment %}
     <!-- Riepilogo di tutti gli indicatori-->
     {% if not request.GET.i %}
     {% include "operator/charts/summary.html" with year=request.GET.year %}
     {% endif %}
     <!-- END Riepilogo di tutti gli indicatori-->
-
+    {% endcomment %}
+    
     <!-- Destinatari -->
     {% if request.GET.i == 'events_recipients' %}
     {% url 'pe_management:api_evaluation_operator_events_recipients' structure_slug=structure.slug as events_recipients_url %}
-    {% include "operator/charts/events_recipients.html" with api_url=events_recipients_url year=request.GET.year %}
+    {% include "charts/events_recipients.html" with api_url=events_recipients_url year=request.GET.year %}
     {% endif %}
     <!-- END Destinatari -->
     
     <!-- Tipologie iniziative -->
     {% if request.GET.i == 'events_types' %}
     {% url 'pe_management:api_evaluation_operator_events_types' structure_slug=structure.slug as events_types_url %}
-    {% include "operator/charts/events_types.html" with api_url=events_types_url year=request.GET.year %}
+    {% include "charts/events_types.html" with api_url=events_types_url year=request.GET.year %}
     {% endif %}
     <!-- END Tipologie iniziative -->
     
     <!-- Obiettivi -->
     {% if request.GET.i == 'events_goals' %}
     {% url 'pe_management:api_evaluation_operator_events_targets' structure_slug=structure.slug as events_targets_url %}
-    {% include "operator/charts/events_targets.html" with api_url=events_targets_url year=request.GET.year %}
+    {% include "charts/events_targets.html" with api_url=events_targets_url year=request.GET.year %}
     {% endif %}
     <!-- END Obiettivi -->
     
     <!-- Modalità di svolgimento -->
     {% if request.GET.i == 'events_methods_of_execution' %}
     {% url 'pe_management:api_evaluation_operator_events_methods_of_execution' structure_slug=structure.slug as events_methods_of_execution_url %}
-    {% include "operator/charts/events_methods_of_execution.html" with api_url=events_methods_of_execution_url year=request.GET.year %}
+    {% include "charts/events_methods_of_execution.html" with api_url=events_methods_of_execution_url year=request.GET.year %}
     {% endif %}
     <!-- END Modalità di svolgimento -->
     
     <!-- Dimensione geografica -->
     {% if request.GET.i == 'events_geographical_dimension' %}
     {% url 'pe_management:api_evaluation_operator_events_geographical_dimension' structure_slug=structure.slug as events_geographical_dimension_url %}
-    {% include "operator/charts/events_geographical_dimension.html" with api_url=events_geographical_dimension_url year=request.GET.year %}
+    {% include "charts/events_geographical_dimension.html" with api_url=events_geographical_dimension_url year=request.GET.year %}
     {% endif %}
     <!-- END Dimensione geografica -->
     
     <!-- Ente organizzatore -->
     {% if request.GET.i == 'events_organizing_subjects' %}
     {% url 'pe_management:api_evaluation_operator_events_organizing_subject' structure_slug=structure.slug as events_organizing_subject_url %}
-    {% include "operator/charts/events_organizing_subjects.html" with api_url=events_organizing_subject_url year=request.GET.year %}
+    {% include "charts/events_organizing_subjects.html" with api_url=events_organizing_subject_url year=request.GET.year %}
     {% endif %}
     <!-- END Ente organizzatore -->
 
     <!-- Tipologie collaboratori -->
     {% if request.GET.i == 'events_collaborator_types' %}
     {% url 'pe_management:api_evaluation_operator_events_collaborator_types' structure_slug=structure.slug as events_collaborator_types_url %}
-    {% include "operator/charts/events_collaborator_types.html" with api_url=events_collaborator_types_url year=request.GET.year %}
+    {% include "charts/events_collaborator_types.html" with api_url=events_collaborator_types_url year=request.GET.year %}
     {% endif %}
     <!-- END Tipologie collaboratori -->
+
+    <!-- Altro personale Unical coinvolto -->
+    {% if request.GET.i == 'events_involved_personnel' %}
+    {% url 'pe_management:api_evaluation_operator_events_involved_personnel' structure_slug=structure.slug as events_involved_personnel_url %}
+    {% include "charts/events_involved_personnel.html" with api_url=events_involved_personnel_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Altro personale Unical coinvolto -->
+    
+    <!-- Altre strutture Unical coinvolto -->
+    {% if request.GET.i == 'events_involved_structures' %}
+    {% url 'pe_management:api_evaluation_operator_events_involved_structures' structure_slug=structure.slug as events_involved_structures_url %}
+    {% include "charts/events_involved_structures.html" with api_url=events_involved_structures_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Altre strutture Unical coinvolto -->
+
+    <!-- Referenti -->
+    {% if request.GET.i == 'events_referents' %}
+    {% url 'pe_management:api_evaluation_operator_events_referents' structure_slug=structure.slug as events_referents_url %}
+    {% include "charts/events_referents.html" with api_url=events_referents_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Referenti -->
+
+    <!-- Pubblico partecipante -->
+    {% if request.GET.i == 'events_audience' %}
+    {% url 'pe_management:api_evaluation_operator_events_audience' structure_slug=structure.slug as events_audience_url %}
+    {% include "charts/events_audience.html" with api_url=events_audience_url year=request.GET.year %}
+    {% endif %}
+    <!-- END Pubblico partecipante -->
     
     <!-- Canali di promozione -->
 <!--
     {% if request.GET.i == 'events_promo_channels' %}
     {% url 'pe_management:api_evaluation_operator_events_promo_channels' structure_slug=structure.slug as events_promo_channels_url %}
-    {% include "operator/charts/events_promo_channels.html" with api_url=events_promo_channels_url year=request.GET.year %}
+    {% include "charts/events_promo_channels.html" with api_url=events_promo_channels_url year=request.GET.year %}
     {% endif %}
 -->
     <!-- END Canali di promozione -->
@@ -119,7 +149,7 @@
 <!--
     {% if request.GET.i == 'events_patronage_requested' %}
     {% url 'pe_management:api_evaluation_operator_events_patronage_requested' structure_slug=structure.slug as events_patronage_requested_url %}
-    {% include "operator/charts/events_patronage_requested.html" with api_url=events_patronage_requested_url year=request.GET.year %}
+    {% include "charts/events_patronage_requested.html" with api_url=events_patronage_requested_url year=request.GET.year %}
     {% endif %}
 -->
     <!-- END Richiesta di patrocinio -->
@@ -128,7 +158,7 @@
 <!--
     {% if request.GET.i == 'events_monitoring_data_provided' %}
     {% url 'pe_management:api_evaluation_operator_events_monitoring_data_provided' structure_slug=structure.slug as events_monitoring_data_provided_url %}
-    {% include "operator/charts/events_monitoring_data_provided.html" with api_url=events_monitoring_data_provided_url year=request.GET.year %}
+    {% include "charts/events_monitoring_data_provided.html" with api_url=events_monitoring_data_provided_url year=request.GET.year %}
     {% endif %}
 -->
     <!-- END Dati di monitoraggio presenti -->
@@ -137,7 +167,7 @@
 <!--
     {% if request.GET.i == 'events_impact_evaluation' %}
     {% url 'pe_management:api_evaluation_operator_events_impact_evaluation' structure_slug=structure.slug as events_impact_evaluation_url %}
-    {% include "operator/charts/events_impact_evaluation.html" with api_url=events_impact_evaluation_url year=request.GET.year %}
+    {% include "charts/events_impact_evaluation.html" with api_url=events_impact_evaluation_url year=request.GET.year %}
     {% endif %}
 -->
     <!-- END Valutazione imopatto -->
@@ -145,7 +175,7 @@
     <!-- Aree scientifiche -->
     {% if request.GET.i == 'events_scientific_areas' %}
     {% url 'pe_management:api_evaluation_operator_events_scientific_areas' structure_slug=structure.slug as events_scientific_areas_url %}
-    {% include "operator/charts/events_scientific_areas.html" with api_url=events_scientific_areas_url year=request.GET.year %}
+    {% include "charts/events_scientific_areas.html" with api_url=events_scientific_areas_url year=request.GET.year %}
     {% endif %}
     <!-- END Aree scientifiche-->
     
@@ -157,7 +187,7 @@
     <div class="card-body">
     <p class="card-title h5"> ipsum</p>
     {% url 'pe_management:api_evaluation_operator_main_projects' structure_slug=structure.slug as main_projects_url %}
-    {% include "operator/charts/main_projects.html" with api_url=main_projects_url year=request.GET.year %}
+    {% include "charts/main_projects.html" with api_url=main_projects_url year=request.GET.year %}
     </div>
     </div>
     </div>

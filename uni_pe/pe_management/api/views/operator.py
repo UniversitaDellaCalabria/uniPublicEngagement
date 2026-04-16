@@ -1,4 +1,5 @@
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Avg
+from django.db.models.functions import Round
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 
@@ -436,6 +437,142 @@ class PublicEngagementEventCollaboratorTypesList(generics.ListAPIView):
             .values("collaborator_type__description")
             .annotate(num=Count("id"))
             .order_by("collaborator_type__description")
+        )
+        return events
+
+    def get(self, request, structure_slug):
+        return Response(
+            self.get_queryset(year=request.GET.get("year"), structure=structure_slug)
+        )
+
+
+class PublicEngagementEventInvolvedPersonnelList(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
+        
+    def get_queryset(self, **kwargs):
+        if not kwargs.get("structure"):
+            return []
+        if not kwargs.get("year"):
+            return []
+        events = (
+            PublicEngagementEventData.objects.filter(
+                event__structure__slug=kwargs.get("structure"),
+                event__structure__is_active=True,
+                event__is_active=True,
+                event__operator_evaluation_success=True,
+                event__operator_evaluation_date__isnull=False,
+                event__start__year=kwargs["year"],
+                involved_personnel__isnull=False,
+            )
+            .values(
+                "involved_personnel__last_name",
+                "involved_personnel__first_name", 
+            )
+            .annotate(num=Count("id"))
+            .order_by("-num", "involved_personnel__last_name")
+        )
+        return events
+
+    def get(self, request, structure_slug):
+        return Response(
+            self.get_queryset(year=request.GET.get("year"), structure=structure_slug)
+        )
+
+        
+class PublicEngagementEventInvolvedStructuresList(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
+        
+    def get_queryset(self, **kwargs):
+        if not kwargs.get("structure"):
+            return []
+        if not kwargs.get("year"):
+            return []
+        events = (
+            PublicEngagementEventData.objects.filter(
+                event__structure__slug=kwargs.get("structure"),
+                event__structure__is_active=True,
+                event__is_active=True,
+                event__operator_evaluation_success=True,
+                event__operator_evaluation_date__isnull=False,
+                event__start__year=kwargs["year"],
+                involved_structure__isnull=False,
+            )
+            .values(
+                "involved_structure__name", 
+            )
+            .annotate(num=Count("id"))
+            .order_by("-num", "involved_structure__name")
+        )
+        return events
+
+    def get(self, request, structure_slug):
+        return Response(
+            self.get_queryset(year=request.GET.get("year"), structure=structure_slug)
+        )
+
+
+class PublicEngagementEventAudience(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
+        
+    def get_queryset(self, **kwargs):
+        if not kwargs.get("structure"):
+            return []
+        if not kwargs.get("year"):
+            return []
+        events = (
+            PublicEngagementEventReport.objects.filter(
+                event__structure__slug=kwargs.get("structure"),
+                event__structure__is_active=True,
+                event__is_active=True,
+                event__operator_evaluation_success=True,
+                event__operator_evaluation_date__isnull=False,
+                event__start__year=kwargs["year"],
+            )
+            .aggregate(value=Round(Avg('participants')))
+        )
+        return events
+
+    def get(self, request, structure_slug):
+        return Response(
+            self.get_queryset(year=request.GET.get("year"), structure=structure_slug)
+        )
+
+
+class PublicEngagementEventRerefentsList(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsStructureEvaluationOperator | IsStructurePatronageOperator,
+    ]
+        
+    def get_queryset(self, **kwargs):
+        if not kwargs.get("structure"):
+            return []
+        if not kwargs.get("year"):
+            return []
+        events = (
+            PublicEngagementEvent.objects.filter(
+                structure__slug=kwargs.get("structure"),
+                structure__is_active=True,
+                is_active=True,
+                operator_evaluation_success=True,
+                operator_evaluation_date__isnull=False,
+                start__year=kwargs["year"],
+            )
+            .values(
+                "referent__last_name",
+                "referent__first_name", 
+            )
+            .annotate(num=Count("id"))
+            .order_by("-num", "referent__last_name")
         )
         return events
 
