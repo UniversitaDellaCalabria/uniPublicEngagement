@@ -7,7 +7,7 @@
       <div class="card-body">
         <p class="card-title h5">
           {% trans "Numero di iniziative per tipo di collaboratori coinvolti nell’organizzazione/gestione delle iniziative/attività di PE" %}
-          ({% trans "year" %} {{ request.GET.year }})
+          ({% trans "valori assoluti" %}, {% trans "year" %} {{ request.GET.year }})
         </p>
         <div id="app_collaborator_types_counters">
           <div v-if="error">

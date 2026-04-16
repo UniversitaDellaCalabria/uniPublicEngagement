@@ -7,7 +7,7 @@
       <div class="card-body">
         <p class="card-title h5">
           {% trans "Elenco dei nominativi di altro personale Unical coinvolto nelle iniziative di PE" %}
-          ({% trans "year" %} {{ request.GET.year }})
+          ({% trans "valori assoluti" %}, {% trans "year" %} {{ request.GET.year }})
         </p>
         <div id="app_events_involved_personnel">
           <div v-if="error">
