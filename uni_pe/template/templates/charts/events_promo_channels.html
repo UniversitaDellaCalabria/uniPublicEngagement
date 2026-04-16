@@ -120,7 +120,7 @@
         axios
         .get("{{ api_url }}", {
           params: {
-            year: "{{ year }}"
+            year: "{{ year }}", structure: "{{ structure }}"
           }
         })
         .then(response => {

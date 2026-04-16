@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-16 14:07+0200\n"
+"POT-Creation-Date: 2026-04-16 16:41+0200\n"
 "PO-Revision-Date: 2026-04-16 14:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -125,13 +125,13 @@ msgstr "Modifica dati utente"
 #: pe_management/views/involved_structures.py:31
 #: pe_management/views/involved_structures.py:43
 #: pe_management/views/involved_structures.py:63
-#: pe_management/views/manager.py:26 pe_management/views/manager.py:49
-#: pe_management/views/manager.py:122 pe_management/views/manager.py:147
-#: pe_management/views/manager.py:248 pe_management/views/manager.py:334
-#: pe_management/views/manager.py:364 pe_management/views/manager.py:449
-#: pe_management/views/manager.py:485 pe_management/views/manager.py:543
-#: pe_management/views/manager.py:609 pe_management/views/manager.py:683
-#: pe_management/views/manager.py:774 pe_management/views/operator.py:31
+#: pe_management/views/manager.py:26 pe_management/views/manager.py:50
+#: pe_management/views/manager.py:123 pe_management/views/manager.py:148
+#: pe_management/views/manager.py:249 pe_management/views/manager.py:335
+#: pe_management/views/manager.py:365 pe_management/views/manager.py:450
+#: pe_management/views/manager.py:486 pe_management/views/manager.py:544
+#: pe_management/views/manager.py:610 pe_management/views/manager.py:684
+#: pe_management/views/manager.py:775 pe_management/views/operator.py:31
 #: pe_management/views/operator.py:144 pe_management/views/operator.py:161
 #: pe_management/views/operator.py:195 pe_management/views/operator.py:260
 #: pe_management/views/operator.py:330 pe_management/views/operator.py:363
@@ -202,8 +202,8 @@ msgstr "Email aggiornata con successo"
 #: pe_management/decorators/patronage.py:26
 #: pe_management/decorators/patronage.py:46
 #: pe_management/decorators/patronage.py:69 pe_management/decorators/user.py:40
-#: pe_management/decorators/user.py:59 pe_management/views/manager.py:163
-#: pe_management/views/manager.py:176 pe_management/views/manager.py:216
+#: pe_management/decorators/user.py:59 pe_management/views/manager.py:164
+#: pe_management/views/manager.py:177 pe_management/views/manager.py:217
 #: pe_management/views/operator.py:229 pe_management/views/operator.py:554
 #: pe_management/views/operator.py:558 pe_management/views/operator.py:685
 #: pe_management/views/operator.py:689 pe_management/views/patronage.py:176
@@ -430,6 +430,7 @@ msgid "Contact"
 msgstr ""
 
 #: pe_management/models.py:642 template/templates/events.html:163
+#: template/templates/manager/dashboard.html:52
 msgid "Structure"
 msgstr "Struttura"
 
@@ -562,7 +563,7 @@ msgstr ""
 msgid "Poster attached"
 msgstr "Locandina allegata"
 
-#: pe_management/models.py:840 pe_management/views/manager.py:460
+#: pe_management/models.py:840 pe_management/views/manager.py:461
 #: pe_management/views/operator.py:340 pe_management/views/user.py:290
 #: template/templates/event.html:256 template/templates/manager/event.html:20
 #: template/templates/operator/event.html:69
@@ -613,7 +614,7 @@ msgstr ""
 msgid "Initiative’s website"
 msgstr "Sito web dell'iniziativa"
 
-#: pe_management/models.py:885 pe_management/views/manager.py:715
+#: pe_management/models.py:885 pe_management/views/manager.py:716
 #: pe_management/views/operator.py:614 pe_management/views/patronage.py:293
 msgid "Notes"
 msgstr "Note"
@@ -688,8 +689,8 @@ msgstr "Operatore di struttura coinvolta"
 
 #: pe_management/views/involved_structures.py:59
 #: pe_management/views/management.py:83 pe_management/views/management.py:368
-#: pe_management/views/manager.py:317 pe_management/views/manager.py:437
-#: pe_management/views/manager.py:661 pe_management/views/manager.py:755
+#: pe_management/views/manager.py:318 pe_management/views/manager.py:438
+#: pe_management/views/manager.py:662 pe_management/views/manager.py:756
 #: pe_management/views/operator.py:190 pe_management/views/operator.py:318
 #: pe_management/views/operator.py:477 pe_management/views/operator.py:663
 #: pe_management/views/patronage.py:130 pe_management/views/patronage.py:310
@@ -712,8 +713,8 @@ msgstr "Dati aggiornati con successo"
 
 #: pe_management/views/management.py:64 pe_management/views/management.py:186
 #: pe_management/views/management.py:242 pe_management/views/management.py:324
-#: pe_management/views/management.py:423 pe_management/views/manager.py:414
-#: pe_management/views/manager.py:709 pe_management/views/operator.py:246
+#: pe_management/views/management.py:423 pe_management/views/manager.py:415
+#: pe_management/views/manager.py:710 pe_management/views/operator.py:246
 #: pe_management/views/operator.py:298 pe_management/views/operator.py:608
 #: pe_management/views/operator.py:711 pe_management/views/patronage.py:203
 #: pe_management/views/patronage.py:287 pe_management/views/patronage.py:359
@@ -723,14 +724,14 @@ msgstr "Public engagement"
 
 #: pe_management/views/management.py:64 pe_management/views/management.py:186
 #: pe_management/views/management.py:242 pe_management/views/management.py:324
-#: pe_management/views/management.py:423 pe_management/views/manager.py:414
+#: pe_management/views/management.py:423 pe_management/views/manager.py:415
 #: pe_management/views/operator.py:298
 msgid "Data modified"
 msgstr "Dati modificati"
 
 #: pe_management/views/management.py:67 pe_management/views/management.py:189
 #: pe_management/views/management.py:245 pe_management/views/management.py:327
-#: pe_management/views/management.py:426 pe_management/views/manager.py:417
+#: pe_management/views/management.py:426 pe_management/views/manager.py:418
 #: pe_management/views/operator.py:301
 msgid "has modified the data of the event"
 msgstr "ha modificato i dati dell'iniziativa"
@@ -777,41 +778,41 @@ msgstr "Struttura non esistente"
 msgid "Structure removed successfully"
 msgstr "Struttura rimossa correttamente"
 
-#: pe_management/views/manager.py:26 pe_management/views/manager.py:50
-#: pe_management/views/manager.py:123 pe_management/views/manager.py:148
-#: pe_management/views/manager.py:249 pe_management/views/manager.py:335
-#: pe_management/views/manager.py:365 pe_management/views/manager.py:450
-#: pe_management/views/manager.py:486 pe_management/views/manager.py:544
-#: pe_management/views/manager.py:610 pe_management/views/manager.py:684
-#: pe_management/views/manager.py:775 template/templates/dashboard.html:78
+#: pe_management/views/manager.py:26 pe_management/views/manager.py:51
+#: pe_management/views/manager.py:124 pe_management/views/manager.py:149
+#: pe_management/views/manager.py:250 pe_management/views/manager.py:336
+#: pe_management/views/manager.py:366 pe_management/views/manager.py:451
+#: pe_management/views/manager.py:487 pe_management/views/manager.py:545
+#: pe_management/views/manager.py:611 pe_management/views/manager.py:685
+#: pe_management/views/manager.py:776 template/templates/dashboard.html:78
 msgid "Manager"
 msgstr "Operatore di Ateneo"
 
-#: pe_management/views/manager.py:51 pe_management/views/manager.py:124
-#: pe_management/views/manager.py:149 pe_management/views/manager.py:250
-#: pe_management/views/manager.py:336 pe_management/views/manager.py:366
-#: pe_management/views/manager.py:451 pe_management/views/manager.py:487
-#: pe_management/views/manager.py:545 pe_management/views/manager.py:611
-#: pe_management/views/manager.py:685 pe_management/views/manager.py:776
+#: pe_management/views/manager.py:52 pe_management/views/manager.py:125
+#: pe_management/views/manager.py:150 pe_management/views/manager.py:251
+#: pe_management/views/manager.py:337 pe_management/views/manager.py:367
+#: pe_management/views/manager.py:452 pe_management/views/manager.py:488
+#: pe_management/views/manager.py:546 pe_management/views/manager.py:612
+#: pe_management/views/manager.py:686 pe_management/views/manager.py:777
 #: template/templates/manager/dashboard.html:20
 #: template/templates/manager/management.html:9
 msgid "Management"
 msgstr "Gestione"
 
-#: pe_management/views/manager.py:153 pe_management/views/manager.py:257
+#: pe_management/views/manager.py:154 pe_management/views/manager.py:258
 #: pe_management/views/user.py:41 pe_management/views/user.py:146
 msgid "New"
 msgstr "Nuova"
 
-#: pe_management/views/manager.py:185
+#: pe_management/views/manager.py:186
 msgid "The person selected does not have an email"
 msgstr "La persona selezionata non possiede un indirizzo email"
 
-#: pe_management/views/manager.py:236 pe_management/views/user.py:137
+#: pe_management/views/manager.py:237 pe_management/views/user.py:137
 msgid "Event referent is mandatory"
 msgstr "Referente iniziativa obbligatorio"
 
-#: pe_management/views/manager.py:258 pe_management/views/manager.py:374
+#: pe_management/views/manager.py:259 pe_management/views/manager.py:375
 #: pe_management/views/operator.py:269 pe_management/views/user.py:147
 #: pe_management/views/user.py:231 template/templates/event.html:220
 #: template/templates/manager/event.html:15
@@ -820,20 +821,20 @@ msgstr "Referente iniziativa obbligatorio"
 msgid "General informations"
 msgstr "Informazioni generali"
 
-#: pe_management/views/manager.py:279 pe_management/views/manager.py:388
+#: pe_management/views/manager.py:280 pe_management/views/manager.py:389
 msgid "It is possible to add only ex-post events"
 msgstr ""
 
-#: pe_management/views/manager.py:301 pe_management/views/user.py:187
+#: pe_management/views/manager.py:302 pe_management/views/user.py:187
 msgid "First step completed successfully. Now proceed to enter the data"
 msgstr "Primo step completato. Ora procedi all'inserimento dei dati"
 
-#: pe_management/views/manager.py:409 pe_management/views/operator.py:293
+#: pe_management/views/manager.py:410 pe_management/views/operator.py:293
 #: pe_management/views/user.py:262
 msgid "Modified general informations successfully"
 msgstr "Informazioni generali modificate correttamente"
 
-#: pe_management/views/manager.py:496 pe_management/views/operator.py:373
+#: pe_management/views/manager.py:497 pe_management/views/operator.py:373
 #: pe_management/views/user.py:362 template/templates/dashboard.html:108
 #: template/templates/event.html:425 template/templates/event_people.html:10
 #: template/templates/manager/event.html:28
@@ -844,7 +845,7 @@ msgstr "Informazioni generali modificate correttamente"
 msgid "Other involved personnel"
 msgstr "Altro personale coinvolto"
 
-#: pe_management/views/manager.py:554 pe_management/views/operator.py:506
+#: pe_management/views/manager.py:555 pe_management/views/operator.py:506
 #: pe_management/views/user.py:491 template/templates/event_structures.html:10
 #: template/templates/manager/event.html:33
 #: template/templates/operator/event.html:82
@@ -852,54 +853,54 @@ msgstr "Altro personale coinvolto"
 msgid "Other involved structures"
 msgstr "Altre strutture coinvolte"
 
-#: pe_management/views/manager.py:619 pe_management/views/operator.py:435
+#: pe_management/views/manager.py:620 pe_management/views/operator.py:435
 #: pe_management/views/user.py:638 template/templates/event.html:472
 #: template/templates/user/event_report.html:9
 msgid "Monitoring data"
 msgstr "Dati di monitoraggio"
 
-#: pe_management/views/manager.py:648 pe_management/views/operator.py:464
+#: pe_management/views/manager.py:649 pe_management/views/operator.py:464
 #: pe_management/views/user.py:664
 msgid "Monitoring data modified successfully"
 msgstr "Dati di monitoraggio modificati correttamente"
 
-#: pe_management/views/manager.py:693
+#: pe_management/views/manager.py:694
 msgid "Change status"
 msgstr ""
 
-#: pe_management/views/manager.py:707
+#: pe_management/views/manager.py:708
 msgid "Disabled"
 msgstr "Disabilitato"
 
-#: pe_management/views/manager.py:707
+#: pe_management/views/manager.py:708
 msgid "Enabled"
 msgstr "Abilitato"
 
-#: pe_management/views/manager.py:712
+#: pe_management/views/manager.py:713
 msgid "has changed the status of the event"
 msgstr "ha modificato lo stato dell'iniziativa"
 
-#: pe_management/views/manager.py:724 pe_management/views/operator.py:623
+#: pe_management/views/manager.py:725 pe_management/views/operator.py:623
 #: pe_management/views/operator.py:723
 msgid "Notification for operators of involved structure"
 msgstr "Notifica per gli operatori delle strutture coinvolte"
 
-#: pe_management/views/manager.py:741
+#: pe_management/views/manager.py:742
 msgid "Event status modified successfully"
 msgstr "Stato dell'iniziativa modificato con successo"
 
-#: pe_management/views/manager.py:777 pe_management/views/operator.py:749
+#: pe_management/views/manager.py:778 pe_management/views/operator.py:749
 #: template/templates/export.html:9
 #: template/templates/manager/management.html:23
 #: template/templates/operator/events.html:19
 msgid "Export"
 msgstr "Esporta"
 
-#: pe_management/views/manager.py:783 pe_management/views/operator.py:755
+#: pe_management/views/manager.py:784 pe_management/views/operator.py:755
 msgid "Year is mandatory"
 msgstr "L'anno è obbligatorio"
 
-#: pe_management/views/manager.py:809 pe_management/views/operator.py:789
+#: pe_management/views/manager.py:810 pe_management/views/operator.py:789
 msgid "No results for year"
 msgstr "Nessun risultato per l'anno"
 
@@ -1180,11 +1181,10 @@ msgid ""
 "gestione delle iniziative/attività di PE"
 msgstr ""
 
-#: template/templates/charts/events_geographical_dimension.html:9
-msgid "Numero delle iniziative per dimensione geografica"
-msgstr ""
-
+#: template/templates/charts/events_collaborator_types.html:10
 #: template/templates/charts/events_geographical_dimension.html:10
+#: template/templates/charts/events_involved_personnel.html:10
+#: template/templates/charts/events_involved_structures.html:10
 #: template/templates/charts/events_methods_of_execution.html:10
 #: template/templates/charts/events_organizing_subjects.html:10
 #: template/templates/charts/events_recipients.html:10
@@ -1194,6 +1194,10 @@ msgstr ""
 #: template/templates/charts/events_types.html:10
 #: template/templates/charts/structure_counters.html:11
 msgid "valori assoluti"
+msgstr ""
+
+#: template/templates/charts/events_geographical_dimension.html:9
+msgid "Numero delle iniziative per dimensione geografica"
 msgstr ""
 
 #: template/templates/charts/events_involved_personnel.html:9
@@ -1637,12 +1641,19 @@ msgstr "Indicatore"
 msgid "select"
 msgstr "seleziona"
 
-#: template/templates/manager/dashboard.html:215
+#: template/templates/manager/dashboard.html:54
+#, fuzzy
+#| msgid "All"
+msgid "all"
+msgstr "Tutti"
+
+#: template/templates/manager/dashboard.html:228
 #: template/templates/operator/data_visualization.html:201
 msgid "Warning"
 msgstr "Attenzione"
 
-#: template/templates/manager/dashboard.html:216
+#: template/templates/manager/dashboard.html:229
+#: template/templates/operator/data_visualization.html:202
 msgid "Select the indicator and the reference year"
 msgstr "Seleziona l'indicatore e l'anno di riferimento"
 
@@ -1715,7 +1726,6 @@ msgstr ""
 "I contatori prendono in carico solo le iniziative per le quali l'anno di "
 "monitoraggio è ancora attivo"
 
-#: template/templates/operator/data_visualization.html:202
 #: template/templates/operator/data_visualization_donuts.html:170
 msgid "Select the reference year"
 msgstr "Seleziona l'anno di riferimento"

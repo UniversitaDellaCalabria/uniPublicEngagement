@@ -85,7 +85,7 @@
       getCounters() {
         axios
           .get("{{ api_url }}", {
-            params: { year: "{{ year }}" }
+            params: { year: "{{ year }}", structure: "{{ structure }}"}
           })
           .then(response => {
             const data = response.data;

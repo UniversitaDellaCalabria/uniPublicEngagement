@@ -24,7 +24,7 @@ from ..utils import *
 def dashboard(request):
     template = "manager/dashboard.html"
     breadcrumbs = {reverse("pe_management:dashboard"): _("Home"), "#": _("Manager")}
-
+    structures = OrganizationalStructure.objects.filter(is_active=True)
     monitoring_years = (
         PublicEngagementAnnualMonitoring.objects.all()
         .order_by("-year")
@@ -36,6 +36,7 @@ def dashboard(request):
         template,
         {
             "breadcrumbs": breadcrumbs,
+            "structures": structures,
             "years": monitoring_years,
         },
     )

@@ -23,13 +23,18 @@ class PublicEngagementEventStructureCounterList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEvent.objects.filter(
+            is_active=True,
+            operator_evaluation_success=True,
+            operator_evaluation_date__isnull=False,
+            start__year=kwargs["year"],
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEvent.objects.filter(
-                is_active=True,
-                operator_evaluation_success=True,
-                operator_evaluation_date__isnull=False,
-                start__year=kwargs["year"],
-            )
+            events
             .values("structure__slug")
             .annotate(num=Count("id"))
             .order_by("-num")
@@ -37,7 +42,7 @@ class PublicEngagementEventStructureCounterList(generics.ListAPIView):
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventTypesList(generics.ListAPIView):
@@ -46,13 +51,18 @@ class PublicEngagementEventTypesList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-            )
+            events
             .values("event_type__description")
             .annotate(num=Count("id"))
             .order_by("-num")
@@ -60,7 +70,7 @@ class PublicEngagementEventTypesList(generics.ListAPIView):
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementMainProjectsList(generics.ListAPIView):
@@ -69,17 +79,22 @@ class PublicEngagementMainProjectsList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+            # PROJECT NAME TEMPORARY MOD
+            # project_name__isnull=False,
+            project_full_name__isnull=False,
+            # END PROJECT NAME TEMPORARY MOD
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-                # PROJECT NAME TEMPORARY MOD
-                # project_name__isnull=False,
-                project_full_name__isnull=False,
-                # END PROJECT NAME TEMPORARY MOD
-            )
+            events
             # PROJECT NAME TEMPORARY MOD
             # .values("project_name__title")
             # .annotate(num=Count("id"))
@@ -91,7 +106,7 @@ class PublicEngagementMainProjectsList(generics.ListAPIView):
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsRecipientsList(generics.ListAPIView):
@@ -100,13 +115,18 @@ class PublicEngagementEventsRecipientsList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-            )
+            events
             .values("recipient__description")
             .annotate(num=Count("id"))
             .order_by("-num")
@@ -114,7 +134,7 @@ class PublicEngagementEventsRecipientsList(generics.ListAPIView):
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsTargetsList(generics.ListAPIView):
@@ -123,14 +143,21 @@ class PublicEngagementEventsTargetsList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+            target__isnull=False,
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
+
+        print(kwargs)
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-                target__isnull=False,
-            )
+            events
             .values("target__description")
             .annotate(num=Count("id"))
             .order_by("target__id")
@@ -138,7 +165,7 @@ class PublicEngagementEventsTargetsList(generics.ListAPIView):
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsMethodsOfExecutionList(generics.ListAPIView):
@@ -147,14 +174,19 @@ class PublicEngagementEventsMethodsOfExecutionList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+            method_of_execution__isnull=False,
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-                method_of_execution__isnull=False,
-            )
+            events
             .values("method_of_execution__description")
             .annotate(num=Count("id"))
             .order_by("-num")
@@ -162,7 +194,7 @@ class PublicEngagementEventsMethodsOfExecutionList(generics.ListAPIView):
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsGeographicalDimensionList(generics.ListAPIView):
@@ -171,14 +203,19 @@ class PublicEngagementEventsGeographicalDimensionList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+            geographical_dimension__isnull=False,
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-                geographical_dimension__isnull=False,
-            )
+            events
             .values("geographical_dimension")
             .annotate(num=Count("id"))
             .order_by("geographical_dimension")
@@ -186,7 +223,7 @@ class PublicEngagementEventsGeographicalDimensionList(generics.ListAPIView):
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsOrganizingSubjectList(generics.ListAPIView):
@@ -195,14 +232,19 @@ class PublicEngagementEventsOrganizingSubjectList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+            organizing_subject__isnull=False,
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-                organizing_subject__isnull=False,
-            )
+            events
             .values("organizing_subject")
             .annotate(num=Count("id"))
             .order_by("organizing_subject")
@@ -210,7 +252,7 @@ class PublicEngagementEventsOrganizingSubjectList(generics.ListAPIView):
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsPromoChannelList(generics.ListAPIView):
@@ -219,21 +261,26 @@ class PublicEngagementEventsPromoChannelList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-            )
-            .values("promo_channel__description")
+            events.values("promo_channel__description")
             .annotate(num=Count("id"))
             .order_by("promo_channel__description")
         )
+        
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsPatronageRequestedList(generics.ListAPIView):
@@ -242,18 +289,27 @@ class PublicEngagementEventsPatronageRequestedList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
-        return PublicEngagementEventData.objects.filter(
+        events = PublicEngagementEventData.objects.filter(
             event__is_active=True,
             event__operator_evaluation_success=True,
             event__operator_evaluation_date__isnull=False,
             event__start__year=kwargs["year"],
-        ).aggregate(
-            yes=Count("id", filter=Q(patronage_requested=True), distinct=True),
-            no=Count("id", filter=Q(patronage_requested=False)),
         )
 
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
+        events = (
+            events.aggregate(
+                yes=Count("id", filter=Q(patronage_requested=True), distinct=True),
+                no=Count("id", filter=Q(patronage_requested=False)),
+            )
+        )
+
+        return events
+
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsMonitoringDataProvidedList(generics.ListAPIView):
@@ -262,18 +318,27 @@ class PublicEngagementEventsMonitoringDataProvidedList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
-        return PublicEngagementEvent.objects.filter(
+        events = PublicEngagementEvent.objects.filter(
             is_active=True,
             operator_evaluation_success=True,
             operator_evaluation_date__isnull=False,
             start__year=kwargs["year"],
-        ).aggregate(
-            yes=Count("id", filter=Q(report__isnull=False), distinct=True),
-            no=Count("id", filter=Q(report__isnull=True)),
         )
 
+        if kwargs.get("structure"):
+            events = events.filter(structure__unique_code=kwargs["structure"])
+
+        events = (
+            events.aggregate(
+                yes=Count("id", filter=Q(report__isnull=False), distinct=True),
+                no=Count("id", filter=Q(report__isnull=True)),
+            )
+        )
+
+        return events
+
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsImpactEvaluationList(generics.ListAPIView):
@@ -282,26 +347,35 @@ class PublicEngagementEventsImpactEvaluationList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
-        return PublicEngagementEvent.objects.filter(
+        events = PublicEngagementEvent.objects.filter(
             is_active=True,
             operator_evaluation_success=True,
             operator_evaluation_date__isnull=False,
             start__year=kwargs["year"],
-        ).aggregate(
-            yes=Count(
-                "id",
-                filter=Q(report__isnull=False, report__impact_evaluation=True),
-                distinct=True,
-            ),
-            no=Count(
-                "id",
-                filter=Q(report__isnull=True)
-                | Q(report__isnull=False, report__impact_evaluation=False),
-            ),
         )
 
+        if kwargs.get("structure"):
+            events = events.filter(structure__unique_code=kwargs["structure"])
+            
+        events = (
+            events.aggregate(
+                yes=Count(
+                    "id",
+                    filter=Q(report__isnull=False, report__impact_evaluation=True),
+                    distinct=True,
+                ),
+                no=Count(
+                    "id",
+                    filter=Q(report__isnull=True)
+                    | Q(report__isnull=False, report__impact_evaluation=False),
+                ),
+            )
+        )
+
+        return events
+
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventsScientificAreasList(generics.ListAPIView):
@@ -310,20 +384,28 @@ class PublicEngagementEventsScientificAreasList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
-        return PublicEngagementEventScientificArea.objects.annotate(
+
+        qfilter = Q(
+            publicengagementeventreport__event__is_active=True,
+            publicengagementeventreport__event__operator_evaluation_success=True,
+            publicengagementeventreport__event__operator_evaluation_date__isnull=False,
+            publicengagementeventreport__event__start__year=kwargs["year"],
+        )
+        
+        if kwargs.get("structure"):
+            qfilter &= Q(publicengagementeventreport__event__structure__unique_code=kwargs["structure"])
+            
+        events = PublicEngagementEventScientificArea.objects.annotate(
             number=Count(
                 "publicengagementeventreport",
-                filter=Q(
-                    publicengagementeventreport__event__is_active=True,
-                    publicengagementeventreport__event__operator_evaluation_success=True,
-                    publicengagementeventreport__event__operator_evaluation_date__isnull=False,
-                    publicengagementeventreport__event__start__year=kwargs["year"],
-                ),
+                filter=qfilter
             )
         ).values("description", "number")
 
+        return events
+
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventCollaboratorTypesList(generics.ListAPIView):
@@ -332,22 +414,28 @@ class PublicEngagementEventCollaboratorTypesList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+            
+        events = PublicEngagementEventReport.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+            collaborator_type__isnull=False,
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEventReport.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-                collaborator_type__isnull=False,
-            )
-            .values("collaborator_type__description")
+            events.values("collaborator_type__description")
             .annotate(num=Count("id"))
             .order_by("collaborator_type__description")
         )
+
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
         
 class PublicEngagementEventInvolvedPersonnelList(generics.ListAPIView):
@@ -356,25 +444,30 @@ class PublicEngagementEventInvolvedPersonnelList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+            involved_personnel__isnull=False,
+        )
+
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+            
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-                involved_personnel__isnull=False,
-            )
-            .values(
+            events.values(
                 "involved_personnel__last_name",
                 "involved_personnel__first_name", 
             )
             .annotate(num=Count("id"))
             .order_by("-num", "involved_personnel__last_name")
         )
+
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
         
 class PublicEngagementEventInvolvedStructuresList(generics.ListAPIView):
@@ -383,24 +476,28 @@ class PublicEngagementEventInvolvedStructuresList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+            
+        events = PublicEngagementEventData.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
+            involved_structure__isnull=False,
+        )
+        
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
         events = (
-            PublicEngagementEventData.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-                involved_structure__isnull=False,
-            )
-            .values(
-                "involved_structure__name", 
-            )
+            events.values("involved_structure__name")
             .annotate(num=Count("id"))
             .order_by("-num", "involved_structure__name")
         )
+
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventAudience(generics.ListAPIView):
@@ -409,19 +506,22 @@ class PublicEngagementEventAudience(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
-        events = (
-            PublicEngagementEventReport.objects.filter(
-                event__is_active=True,
-                event__operator_evaluation_success=True,
-                event__operator_evaluation_date__isnull=False,
-                event__start__year=kwargs["year"],
-            )
-            .aggregate(value=Round(Avg('participants')))
+        events = PublicEngagementEventReport.objects.filter(
+            event__is_active=True,
+            event__operator_evaluation_success=True,
+            event__operator_evaluation_date__isnull=False,
+            event__start__year=kwargs["year"],
         )
+        
+        if kwargs.get("structure"):
+            events = events.filter(event__structure__unique_code=kwargs["structure"])
+
+        events = events.aggregate(value=Round(Avg('participants')))
+        
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(self.get_queryset(year=request.GET.get("year"), structure=request.GET.get("structure")))
 
 
 class PublicEngagementEventRerefentsList(generics.ListAPIView):
@@ -430,21 +530,30 @@ class PublicEngagementEventRerefentsList(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         if not kwargs.get("year"):
             return []
+        events = PublicEngagementEvent.objects.filter(
+            is_active=True,
+            operator_evaluation_success=True,
+            operator_evaluation_date__isnull=False,
+            start__year=kwargs["year"],
+        )
+        if kwargs.get("structure"):
+            events = events.filter(structure__unique_code=kwargs["structure"])
+        
         events = (
-            PublicEngagementEvent.objects.filter(
-                is_active=True,
-                operator_evaluation_success=True,
-                operator_evaluation_date__isnull=False,
-                start__year=kwargs["year"],
-            )
-            .values(
+            events.values(
                 "referent__last_name",
-                "referent__first_name", 
+                "referent__first_name",
             )
             .annotate(num=Count("id"))
             .order_by("-num", "referent__last_name")
         )
+
         return events
 
     def get(self, request):
-        return Response(self.get_queryset(year=request.GET.get("year")))
+        return Response(
+            self.get_queryset(
+                year=request.GET.get("year"),
+                structure=request.GET.get("structure")
+            )
+        )
