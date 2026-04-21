@@ -2,6 +2,7 @@ import sys
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -851,9 +852,13 @@ class PublicEngagementEventReport(CreatedModifiedBy, TimeStampedModel):
     participants = models.IntegerField(
         _(
             "Non-academic audience participating in the initiative or reached via web/social resources, or outreach publications"
-        )
+        ),
+        validators=[MinValueValidator(1)]
     )
-    budget = models.FloatField(_("Total budget (in Euro)"))
+    budget = models.FloatField(
+        _("Total budget (in Euro)"),
+        validators=[MinValueValidator(0.0)]
+    )
     monitoring_activity = models.BooleanField(
         _(
             "Is the initiative accompanied by monitoring activities (e.g., collection of information on activities, attendance, satisfaction, etc.)?"
