@@ -61,6 +61,19 @@ si articola in poche basilari operazioni:
 ----------
 
 
+Visualizzazione dei dati
+****************************
+
+Tramite il menu a tendina, l’utente ha la possibilità di selezionare la tipologia di indicatore e l’anno di riferimento (a partire dal 2019).
+
+Selezionando la tipologia di indicatore da visualizzare, verrà mostrato il grafico con il relativo dettaglio. Per ciascun indicatore è stato scelto un grafico specifico, al fine di garantire una corretta visualizzazione del dato:
+
+  .. image:: images/operatore_struttura/chart.png
+
+
+----------
+
+
 Gestione richiesta di patrocinio
 ********************************
 
@@ -73,7 +86,7 @@ L'operatore addetto non ha diritto di modificare i dati inseriti dal referente.
 
 Prevede esclusivamente:
 
-* la presa in carico dell'inziativa
+* la presa in carico dell'iniziativa
 
   .. image:: images/operatore_struttura/buttons_handle.png
 

@@ -13,3 +13,5 @@ git+https://github.com/UniversitaDellaCalabria/django-unical-bootstrap-italia.gi
 django-filter
 python-magic
 cryptojwt
+
+openpyxl

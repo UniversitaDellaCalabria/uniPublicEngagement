@@ -1,12 +1,13 @@
 import csv
 
 from django.conf import settings
-
 # from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.utils import timezone
+from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy as _
+from openpyxl import Workbook
 from organizational_area.models import *
 from organizational_area.utils import user_in_office
 from template.settings import MSG_FOOTER, MSG_HEADER
@@ -140,14 +141,7 @@ def send_email_to_promoters(
     )
 
 
-def export_csv(events, file_name):
-    response = HttpResponse(
-        content_type="text/csv",
-        headers={"Content-Disposition": f'attachment; filename="{file_name}.csv"'},
-    )
-
-    writer = csv.writer(response)
-
+def _get_header():
     # header
     header = [
         PublicEngagementEvent._meta.get_field("id").verbose_name,
@@ -220,8 +214,12 @@ def export_csv(events, file_name):
         PublicEngagementEventReport._meta.get_field("edited_by_manager").verbose_name,
     ]
 
-    writer.writerow(header)
+    cleaned_header = [force_str(item) for item in header]
+    return cleaned_header
 
+
+def _get_data(events):
+    result = []
     for event in events:
         evaluation_request_date = (
             timezone.localtime(event.evaluation_request_date)
@@ -353,7 +351,42 @@ def export_csv(events, file_name):
                     event.report.edited_by_manager,
                 ]
             )
+            
+        cleaned_data = [force_str(item) for item in data]
+        result.append(cleaned_data)
+    return result
+    
 
+def export_csv(events, file_name):
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={"Content-Disposition": f'attachment; filename="{file_name}.csv"'},
+    )
+
+    writer = csv.writer(response)
+    writer.writerow(_get_header())
+
+    for data in _get_data(events):
         writer.writerow(data)
 
+    return response
+
+    
+def export_xlsx(events, file_name):
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": f'attachment; filename="{file_name}.xlsx"'},
+    )
+
+    # 2. Creiamo il file Excel in memoria
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Dati Report"
+
+    ws.append(_get_header())
+    
+    for data in _get_data(events):
+        ws.append(data)
+
+    wb.save(response)
     return response

@@ -13,7 +13,7 @@ La presente piattaforma di gestione e monitoraggio è finalizzata alla ricostruz
 
 Un’attività di PE può essere un’iniziativa istituzionale o personale.
 
-Un’iniziativa di PE istituzionale presenta una o più delle seguenti condizioni:
+**Un’iniziativa di PE istituzionale presenta una o più delle seguenti condizioni:**
 
 * è organizzata da Ateneo/Dipartimento/Centro Unical;
 * ha ricevuto il Patrocinio di Ateneo/Dipartimento/Centro Unical;
@@ -22,17 +22,17 @@ Un’iniziativa di PE istituzionale presenta una o più delle seguenti condizion
 
 Un'iniziativa di PE ha carattere personale quando è realizzatada uno o più docenti/ricercatori senza coinvolgere esplicitamente il Dipartimento.
 
-Le iniziative di PE a carattere personale possono essere registrate e considerate ai fini del monitoraggio se i docenti/ricercatori:
+**Le iniziative di PE a carattere personale possono essere registrate e considerate ai fini del monitoraggio se i docenti/ricercatori:**
 
 * partecipano all’iniziativa in qualità di esperti e indicando l’affiliazione all'Unical o a una delle sue strutture su materiale/canali di comunicazione;
 * registrano l’iniziativa sulla presente piattaforma.
 
 Inoltre, è fortemente consigliato che l’iniziativa venga è pubblicata sui canali di comunicazione di Ateneo, Dipartimento o Centro.
 
-La piattaforma consente di registrare un’iniziativa:
+**La piattaforma consente di registrare un’iniziativa:**
 
 * in due fasi, una ex ante - prima della data dell’inizio delle attività, potendo richiedere contestualmente il patrocinio della propria struttura o segnalare l’iniziativa ai canali di comunicazione Unical - e una ex post, dopo la conclusione delle attività per inserire le informazioni aggiuntive;
-* in una unica fase, dopo la conclusione delle attività, inserendo tutte le informazioni relative all’iniziativa stessa.
+* in un'unica fase, dopo la conclusione delle attività, inserendo tutte le informazioni relative all’iniziativa stessa.
 
 In entrambi i casi, l’iniziativa è soggetta a validazione da parte dell’operatore della struttura di riferimento (es. delegato docente o PTA che è referente del Public engagement del dipartimento).
 

@@ -12,7 +12,7 @@
 {% block page_content %}
 <form method="post">
     <div class="row">
-        <div class="col-12 mt-4">
+        <div class="col-12 col-lg-6 mt-4">
             <div class="select-wrapper">
                 <label for="year">{% trans "Year" %}</label>
                 <select id="year" name="year">
@@ -20,6 +20,15 @@
                     {% for year in year_list %}
                     <option value="{{ year }}">{{ year }}</option>
                     {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 mt-4">
+            <div class="select-wrapper">
+                <label for="file_format">{% trans "Format" %}</label>
+                <select id="file_format" name="file_format">
+                    <option value="csv">CSV</option>
+                    <option value="xlsx">Excel</option>
                 </select>
             </div>
         </div>

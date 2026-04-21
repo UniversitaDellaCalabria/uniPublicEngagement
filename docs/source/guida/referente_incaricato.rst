@@ -6,9 +6,9 @@
 Guida per il referente dell'iniziativa o suo incaricato
 =======================================================
 
-Il referente è il docente/ricercatore/pta Unical che è responsabile dell’iniziativa di PE. Il suo incaricato è una persona delegata dal responsabile a caricare i dati di monitoraggio.
+Il referente è il docente/ricercatore/PTA Unical che è responsabile dell’iniziativa di PE. Il suo incaricato è una persona delegata dal responsabile a caricare i dati di monitoraggio.
 
-Una volta inseriti i dati può richiederne la validazione agli operatori della struttura. Per validazione si intende il processo di verifica
+Una volta inseriti i dati può richiederne la validazione agli operatori della struttura. Per validazione si intende il processo di verifica dei dati inseriti.
 
 
 Accesso all'area dedicata
@@ -52,7 +52,7 @@ Se l’operazione di inserimento avviene prima dell’inizio dell’iniziativa, 
 
 * può scegliere di richiedere il patrocinio della struttura. Per patrocinio si intende il processo di accreditamento dell’iniziativa da parte del Dipartimento (es. Consiglio di Dipartimento/Direttore) per il rilascio formale dell’uso del logo di dipartimento;
 * può scegliere di richiedere la promozione sui canali istituzionali;
-* una volta inseriti i dati può richiederne la validazione agli operatori della struttura. Per validazione si intende il processo di verificare che il delegato di struttura fa per accertare che l’iniziativa rientri nella categoria del PE secondo i criteri definitori di ANVUR, riportati nella sezione iniziale della Guida;
+* una volta inseriti i dati può richiederne la validazione agli operatori della struttura. Per validazione si intende il processo di verifica che il delegato di struttura fa per accertare che l’iniziativa rientri nella categoria del PE secondo i criteri definitori di ANVUR, riportati nella sezione iniziale della Guida;
 * può procedere all’inserimento dei dati di monitoraggio dopo il termine dell’iniziativa, solo se quest’ultima è stata validata con successo
 
 
@@ -127,7 +127,7 @@ richiesta di validazione attiva
 I dati di monitoraggio possono essere modificati in qualsiasi momento
 fino alla chiusura dei termini per l’anno di riferimento
 
-.. image:: images/referente/buttons_monitoring_edit.png
+.. image:: images/referente/buttons_monitoring.png
 
 
 ----------
