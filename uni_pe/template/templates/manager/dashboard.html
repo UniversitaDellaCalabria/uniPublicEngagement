@@ -47,6 +47,7 @@
                 </select>
             </div>        
         </div>
+        {% if not request.GET.i == "structure_counters" %}
         <div class="col-12 col-lg-5 mt-4 mt-lg-0">
             <div class="select-wrapper h-100">
                 <label for="structure">{% trans "Structure" %}</label>
@@ -60,6 +61,7 @@
                 </select>
             </div>        
         </div>
+        {% endif %}
         <div class="col-12 col-lg-auto mt-3 mt-lg-0">
             <a href="{% url 'pe_management:manager_dashboard' %}" class="btn btn-xs btn-outline-danger" title="Reset">
                 <svg class="icon icon-sm icon-danger">
