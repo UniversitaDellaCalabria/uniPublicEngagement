@@ -307,7 +307,7 @@ def event_evaluation(request, structure_slug, event_id, structure=None):
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(
         request,

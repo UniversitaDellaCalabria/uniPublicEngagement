@@ -315,7 +315,7 @@ def new_event_basic_info(request, structure_slug, structure=None):
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(request, template, {"breadcrumbs": breadcrumbs, "form": form})
 
@@ -435,7 +435,7 @@ def event_basic_info(request, structure_slug, event_id, event=None, structure=No
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(
         request, template, {"breadcrumbs": breadcrumbs, "event": event, "form": form}
@@ -659,7 +659,7 @@ def event_report(request, structure_slug, event_id, structure=None):
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(
         request,
@@ -753,7 +753,7 @@ def event_enable_disable(request, structure_slug, event_id, event=None, structur
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(
         request,

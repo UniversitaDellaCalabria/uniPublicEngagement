@@ -196,7 +196,7 @@ def new_event_basic_info(request):
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(request, template, {"breadcrumbs": breadcrumbs, "form": form})
 
@@ -268,7 +268,7 @@ def event_basic_info(request, event_id, event=None):
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(
         request, template, {"breadcrumbs": breadcrumbs, "event": event, "form": form}
@@ -334,7 +334,7 @@ def event_data(request, event_id, event=None):
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(
         request, template, {"breadcrumbs": breadcrumbs, "event": event, "form": form}
@@ -670,7 +670,7 @@ def event_report(request, event_id, event=None):
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(
         request, template, {"breadcrumbs": breadcrumbs, "event": event, "form": form}

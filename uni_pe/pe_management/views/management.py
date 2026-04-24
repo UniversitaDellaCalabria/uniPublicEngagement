@@ -80,7 +80,7 @@ def event_data(
                     messages.add_message(
                         request,
                         messages.ERROR,
-                        "<b>{}</b>: {}".format(_("Alert"), message["message"]),
+                        "<b>{}</b>: {}".format(form.fields[error].label, message["message"]),
                     )
     return render(
         request,
