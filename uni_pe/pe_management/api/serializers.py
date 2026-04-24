@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.urls import reverse
 from organizational_area.api.serializers import OrganizationalStructureSerializer
 from rest_framework import serializers
 
@@ -73,4 +75,5 @@ class PublicEngagementEventDetailLiteSerializer(serializers.ModelSerializer):
         data["involved_personnel"] = [
             str(r) for r in instance.data.involved_personnel.all()
         ]
+        data["poster"] = reverse('pe_management:download_event_poster', kwargs={'event_id': instance.pk})
         return data
