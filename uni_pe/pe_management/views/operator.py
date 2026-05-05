@@ -750,6 +750,7 @@ def export(request, structure_slug, structure=None):
     }
 
     if request.method == "POST":
+        file_format = request.POST.get("file_format", "csv")
         year = request.POST.get("year", timezone.localtime().year)
         if not year:
             messages.add_message(request, messages.ERROR, _("Year is mandatory"))
@@ -794,7 +795,8 @@ def export(request, structure_slug, structure=None):
                 {"breadcrumbs": breadcrumbs, "structure_slug": structure_slug},
             )
 
-        response = export_csv(events, f"{structure_slug}_{year}")
+        if file_format == "csv": response = export_csv(events, f"{structure_slug}_{year}")
+        elif file_format == "xlsx": response = export_xlsx(events, f"{structure_slug}_{year}")
         return response
 
     return render(
