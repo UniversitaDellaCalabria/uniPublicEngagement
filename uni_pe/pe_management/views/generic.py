@@ -22,52 +22,58 @@ def dashboard(request):
     return render(request, template, {"breadcrumbs": breadcrumbs})
 
 
-@login_required
 def download_event_poster(request, event_id):
+
     event = get_object_or_404(PublicEngagementEvent, pk=event_id)
+    data = getattr(event, "data", None)
+    
     permission_granted = False
 
-    if request.user.is_superuser:
-        permission_granted = True
-    elif request.user == event.referent:
-        permission_granted = True
-    elif request.user == event.created_by:
-        permission_granted = True
-
-    data = getattr(event, "data", None)
-    if (
-        data
-        and data.involved_personnel == request.user
-        and event.operator_evaluation_date
-        and event.operator_evaluation_success
-    ):
+    if event.is_active and event.has_been_approved():
         permission_granted = True
 
     if not permission_granted:
-        is_manager = user_in_office(
-            user=request.user, office_slug_list=[MANAGER_OFFICE]
-        )
-        if is_manager:
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
+        
+        if request.user.is_superuser:
+            permission_granted = True
+        elif request.user == event.referent:
+            permission_granted = True
+        elif request.user == event.created_by:
+            permission_granted = True
+        elif data and data.involved_personnel == request.user:
             permission_granted = True
 
-    if not permission_granted:
-        is_operator = user_in_office(
-            user=request.user,
-            office_slug_list=[OPERATOR_OFFICE, PATRONAGE_OFFICE],
-            structure=event.structure,
-        )
-        if is_operator:
-            permission_granted = True
+        if not permission_granted:
+            is_manager = user_in_office(
+                user=request.user,
+                office_slug_list=[MANAGER_OFFICE]
+            )
+            if is_manager:
+                permission_granted = True
 
-    if not permission_granted:
-        raise PermissionDenied()
+        if not permission_granted:
+            is_operator = user_in_office(
+                user=request.user,
+                office_slug_list=[OPERATOR_OFFICE, PATRONAGE_OFFICE],
+                structure=event.structure,
+            )
+            if is_operator:
+                permission_granted = True
 
-    data = getattr(event, "data", None)
+        if not permission_granted:
+            raise PermissionDenied()
+
     if data and data.poster:
         # get folder path
         folder_path = "{}/public-engagement/events/{}".format(
-            settings.MEDIA_ROOT, event.id
+            settings.MEDIA_ROOT,
+            event.id
         )
         # get file
-        return download_file(folder_path, os.path.basename(data.poster.name))
+        return download_file(
+            folder_path,
+            os.path.basename(data.poster.name)
+        )
     raise Http404
