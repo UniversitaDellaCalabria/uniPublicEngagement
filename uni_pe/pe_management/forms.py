@@ -275,6 +275,38 @@ class PublicEngagementEventReportForm(forms.ModelForm):
             # 'other_structure': "Rispondere solo se l’ente organizzatore è “Università della Calabria"
         }
 
+    def clean_budget(self):
+        data = self.cleaned_data['budget']
+        
+        # 1. Tentiamo di convertirlo in float per assicurarci che sia un numero
+        try:
+            budget_float = float(data)
+        except ValueError:
+            raise ValidationError("Inserisci un numero valido (es. 1250.50).")
+
+        # 2. Applichiamo la validazione del valore minimo (MinValueValidator(0.0))
+        if budget_float < 0.0:
+            raise ValidationError("Il budget non può essere inferiore a 0.")
+
+        # Restituiamo la stringa originale (o formattata) per salvarla nel CharField
+        return data
+        
+    def clean_participants(self):
+        data = self.cleaned_data['participants']
+        
+        # 1. Tentiamo di convertirlo in float per assicurarci che sia un numero
+        try:
+            participants_int = int(data)
+        except ValueError:
+            raise ValidationError("Inserisci un numero valido (es. 20).")
+
+        # 2. Applichiamo la validazione del valore minimo (MinValueValidator(0.0))
+        if participants_int < 1:
+            raise ValidationError("Il budget non può essere inferiore a 1.")
+
+        # Restituiamo la stringa originale (o formattata) per salvarla nel CharField
+        return data
+        
     class Media:
         js = ("js/textarea-autosize.js",)
 
