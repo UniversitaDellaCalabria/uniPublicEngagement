@@ -853,7 +853,9 @@ class PublicEngagementEventReport(CreatedModifiedBy, TimeStampedModel):
         _(
             "Non-academic audience participating in the initiative or reached via web/social resources, or outreach publications"
         ),
-        max_length=10
+        max_length=10,
+        null=True,
+        blank=True
     )
     # ~ participants = models.IntegerField(
         # ~ _(
@@ -863,7 +865,9 @@ class PublicEngagementEventReport(CreatedModifiedBy, TimeStampedModel):
     # ~ )
     budget = models.CharField(
         _("Total budget (in Euro)"),
-        max_length=15
+        max_length=15,
+        null=True,
+        blank=True
     )
     # ~ budget = models.FloatField(
         # ~ _("Total budget (in Euro)"),
