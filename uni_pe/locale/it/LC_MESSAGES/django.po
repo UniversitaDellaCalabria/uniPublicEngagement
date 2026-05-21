@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-21 15:58+0200\n"
-"PO-Revision-Date: 2026-04-21 15:59+0200\n"
+"POT-Creation-Date: 2026-05-21 11:33+0200\n"
+"PO-Revision-Date: 2026-05-21 11:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -341,23 +341,23 @@ msgstr ""
 msgid "Specify the organizing entity"
 msgstr "Specificare l'ente organizzatore"
 
-#: pe_management/forms.py:284
+#: pe_management/forms.py:316
 msgid "Outcome"
 msgstr "Esito"
 
-#: pe_management/forms.py:285
+#: pe_management/forms.py:317
 msgid "Positive"
 msgstr "Positivo"
 
-#: pe_management/forms.py:285
+#: pe_management/forms.py:317
 msgid "Negative"
 msgstr "Negativo"
 
-#: pe_management/forms.py:292 pe_management/forms.py:301
+#: pe_management/forms.py:324 pe_management/forms.py:333
 msgid "Mandatory in case of negative outcome"
 msgstr "Obbligatorio in caso di esito negativo"
 
-#: pe_management/forms.py:321 pe_management/models.py:730
+#: pe_management/forms.py:353 pe_management/models.py:730
 msgid "Other UniCal structures involved in organizing/executing the initiative"
 msgstr ""
 "Altre strutture UniCal coinvolte nell’organizzazione/realizzazione "
@@ -430,7 +430,7 @@ msgid "Contact"
 msgstr ""
 
 #: pe_management/models.py:643 template/templates/events.html:163
-#: template/templates/manager/dashboard.html:52
+#: template/templates/manager/dashboard.html:53
 msgid "Structure"
 msgstr "Struttura"
 
@@ -528,7 +528,7 @@ msgstr "Struttura privata"
 
 #: pe_management/models.py:801
 msgid "Third Sector entity"
-msgstr ""
+msgstr "Ente del Terzo Settore"
 
 #: pe_management/models.py:802
 msgid "Other (specify)"
@@ -583,11 +583,11 @@ msgstr ""
 "Pubblico non accademico partecipante all'iniziativa o pubblico raggiunto "
 "attraverso risorse web/social, pubblicazioni divulgative"
 
-#: pe_management/models.py:859
+#: pe_management/models.py:867
 msgid "Total budget (in Euro)"
 msgstr "Budget complessivo (in Euro)"
 
-#: pe_management/models.py:864
+#: pe_management/models.py:878
 msgid ""
 "Is the initiative accompanied by monitoring activities (e.g., collection of "
 "information on activities, attendance, satisfaction, etc.)?"
@@ -595,35 +595,35 @@ msgstr ""
 "L’iniziativa è accompagnata da attività di monitoraggio (es. raccolta di "
 "informazioni sulle attività, sulle presenze, sul gradimento, ecc.)?"
 
-#: pe_management/models.py:869
+#: pe_management/models.py:883
 msgid "Is the initiative accompanied by an impact evaluation plan?"
 msgstr "L’iniziativa è accompagnata da un piano per la valutazione d’impatto?"
 
-#: pe_management/models.py:879 pe_management/settings.py:59
+#: pe_management/models.py:893 pe_management/settings.py:59
 msgid "Scientific areas"
 msgstr "Aree scientifiche"
 
-#: pe_management/models.py:885
+#: pe_management/models.py:899
 msgid ""
 "Which collaborators were involved in organizing/managing the initiative?"
 msgstr ""
 "All’organizzazione/gestione dell’iniziativa sono stati coinvolti in qualità "
 "di collaboratori?"
 
-#: pe_management/models.py:889
+#: pe_management/models.py:903
 msgid "Initiative’s website"
 msgstr "Sito web dell'iniziativa"
 
-#: pe_management/models.py:890 pe_management/views/manager.py:716
+#: pe_management/models.py:904 pe_management/views/manager.py:716
 #: pe_management/views/operator.py:614 pe_management/views/patronage.py:293
 msgid "Notes"
 msgstr "Note"
 
-#: pe_management/models.py:895
+#: pe_management/models.py:909
 msgid "Event monitoring"
 msgstr "Monitoraggio iniziativa"
 
-#: pe_management/models.py:896
+#: pe_management/models.py:910
 msgid "Event monitoring records"
 msgstr "Monitoraggio iniziativa"
 
@@ -688,17 +688,11 @@ msgid "Involved structure operator"
 msgstr "Operatore di struttura coinvolta"
 
 #: pe_management/views/involved_structures.py:59
-#: pe_management/views/management.py:83 pe_management/views/management.py:368
-#: pe_management/views/manager.py:318 pe_management/views/manager.py:438
-#: pe_management/views/manager.py:662 pe_management/views/manager.py:756
-#: pe_management/views/operator.py:190 pe_management/views/operator.py:318
-#: pe_management/views/operator.py:477 pe_management/views/operator.py:663
-#: pe_management/views/patronage.py:130 pe_management/views/patronage.py:310
-#: pe_management/views/user.py:161 pe_management/views/user.py:199
-#: pe_management/views/user.py:271 pe_management/views/user.py:337
+#: pe_management/views/management.py:368 pe_management/views/operator.py:190
+#: pe_management/views/patronage.py:130 pe_management/views/user.py:161
 #: pe_management/views/user.py:353 pe_management/views/user.py:482
-#: pe_management/views/user.py:578 pe_management/views/user.py:673
-#: pe_management/views/user.py:729 template/templates/event.html:34
+#: pe_management/views/user.py:578 pe_management/views/user.py:729
+#: template/templates/event.html:34
 msgid "Alert"
 msgstr "Attenzione"
 
@@ -896,11 +890,11 @@ msgstr "Stato dell'iniziativa modificato con successo"
 msgid "Export"
 msgstr "Esporta"
 
-#: pe_management/views/manager.py:785 pe_management/views/operator.py:755
+#: pe_management/views/manager.py:785 pe_management/views/operator.py:756
 msgid "Year is mandatory"
 msgstr "L'anno è obbligatorio"
 
-#: pe_management/views/manager.py:811 pe_management/views/operator.py:789
+#: pe_management/views/manager.py:811 pe_management/views/operator.py:790
 msgid "No results for year"
 msgstr "Nessun risultato per l'anno"
 
@@ -1442,6 +1436,10 @@ msgstr "Prosegui"
 msgid "Surname"
 msgstr "Cognome"
 
+#: template/templates/event_new.html:89 template/templates/search_bar.html:15
+msgid "Search"
+msgstr "Cerca"
+
 #: template/templates/events.html:32
 msgid "Search..."
 msgstr "Cerca..."
@@ -1645,17 +1643,17 @@ msgstr "Indicatore"
 msgid "select"
 msgstr "seleziona"
 
-#: template/templates/manager/dashboard.html:54
+#: template/templates/manager/dashboard.html:55
 msgctxt "female"
 msgid "All"
 msgstr "Tutte"
 
-#: template/templates/manager/dashboard.html:228
+#: template/templates/manager/dashboard.html:230
 #: template/templates/operator/data_visualization.html:201
 msgid "Warning"
 msgstr "Attenzione"
 
-#: template/templates/manager/dashboard.html:229
+#: template/templates/manager/dashboard.html:231
 #: template/templates/operator/data_visualization.html:202
 msgid "Select the indicator and the reference year"
 msgstr "Seleziona l'indicatore e l'anno di riferimento"
@@ -1789,10 +1787,6 @@ msgstr "Patrocinio concesso"
 #: template/templates/search_bar.html:12
 msgid "Write here..."
 msgstr "Scrivi qui..."
-
-#: template/templates/search_bar.html:15
-msgid "Search"
-msgstr "Cerca"
 
 #: template/templates/user/event.html:16
 msgid "Event data missing"
