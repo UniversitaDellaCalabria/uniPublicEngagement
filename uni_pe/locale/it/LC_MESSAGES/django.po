@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-21 11:33+0200\n"
-"PO-Revision-Date: 2026-05-21 11:33+0200\n"
+"PO-Revision-Date: 2026-05-21 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -524,7 +524,7 @@ msgstr "Altro ente pubblico"
 
 #: pe_management/models.py:800
 msgid "Private entity"
-msgstr "Struttura privata"
+msgstr "Ente privato"
 
 #: pe_management/models.py:801
 msgid "Third Sector entity"
