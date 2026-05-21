@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-21 11:33+0200\n"
+"POT-Creation-Date: 2026-05-21 11:40+0200\n"
 "PO-Revision-Date: 2026-05-21 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1661,8 +1661,8 @@ msgstr "Seleziona l'indicatore e l'anno di riferimento"
 #: template/templates/manager/event.html:41
 #: template/templates/operator/event.html:129
 #: template/templates/user/event.html:89
-msgid "Final report"
-msgstr "Rendiconto finale"
+msgid "Monitoring"
+msgstr "Monitoraggio"
 
 #: template/templates/manager/event.html:50
 msgid "Disable"
@@ -1854,6 +1854,9 @@ msgid "File name length too large: {} characters. Max {} characters"
 msgstr ""
 "Lunghezza del nome file troppo grande: {} caratteri. Massimo {} caratteri"
 
+#~ msgid "Final report"
+#~ msgstr "Rendiconto finale"
+
 #, fuzzy
 #~| msgid "All"
 #~ msgid "all"
@@ -1879,9 +1882,6 @@ msgstr ""
 
 #~ msgid "If the event is linked to a larger project, indicate which one"
 #~ msgstr "Se l'iniziativa è collegata a un progetto più ampio, indicare quale"
-
-#~ msgid "Monitoring"
-#~ msgstr "Monitoraggio"
 
 #~ msgid "It is not possible to connect to the same event"
 #~ msgstr "Non è possibile collegare all'evento medesimo"
