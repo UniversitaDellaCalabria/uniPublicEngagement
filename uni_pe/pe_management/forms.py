@@ -281,12 +281,17 @@ class PublicEngagementEventReportForm(forms.ModelForm):
         # 1. Tentiamo di convertirlo in float per assicurarci che sia un numero
         try:
             budget_float = float(data)
-        except ValueError:
-            raise ValidationError("Inserisci un numero valido (es. 1250.50).")
-
-        # 2. Applichiamo la validazione del valore minimo (MinValueValidator(0.0))
-        if budget_float < 0.0:
-            raise ValidationError("Il budget non può essere inferiore a 0.")
+            if budget_float < 0.0:
+                self.add_error(
+                    "budget",
+                    "Il budget non può essere inferiore a 0."
+                )
+                # raise ValidationError("Il budget non può essere inferiore a 0.")
+        except Exception:
+            self.add_error(
+                "budget",
+                "Inserisci un numero valido (es. 1250.50)."
+            )
 
         # Restituiamo la stringa originale (o formattata) per salvarla nel CharField
         return data
@@ -294,15 +299,20 @@ class PublicEngagementEventReportForm(forms.ModelForm):
     def clean_participants(self):
         data = self.cleaned_data['participants']
         
-        # 1. Tentiamo di convertirlo in float per assicurarci che sia un numero
+        # 1. Tentiamo di convertirlo in int per assicurarci che sia un numero
         try:
             participants_int = int(data)
-        except ValueError:
-            raise ValidationError("Inserisci un numero valido (es. 20).")
-
-        # 2. Applichiamo la validazione del valore minimo (MinValueValidator(0.0))
-        if participants_int < 1:
-            raise ValidationError("Il budget non può essere inferiore a 1.")
+            if participants_int < 1:
+                self.add_error(
+                    "participants",
+                    "Il numero di partecipanti non può essere inferiore a 1."
+                )
+                # raise ValidationError("Il budget non può essere inferiore a 0.")
+        except Exception:
+            self.add_error(
+                "participants",
+                "Inserisci un numero valido (es. 20)."
+            )
 
         # Restituiamo la stringa originale (o formattata) per salvarla nel CharField
         return data
