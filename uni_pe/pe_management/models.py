@@ -855,7 +855,7 @@ class PublicEngagementEventReport(CreatedModifiedBy, TimeStampedModel):
         ),
         max_length=10,
         null=True,
-        blank=True
+        blank=False
     )
     # ~ participants = models.IntegerField(
         # ~ _(
@@ -867,7 +867,7 @@ class PublicEngagementEventReport(CreatedModifiedBy, TimeStampedModel):
         _("Total budget (in Euro)"),
         max_length=15,
         null=True,
-        blank=True
+        blank=False
     )
     # ~ budget = models.FloatField(
         # ~ _("Total budget (in Euro)"),
