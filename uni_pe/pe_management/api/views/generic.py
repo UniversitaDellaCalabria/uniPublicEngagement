@@ -7,6 +7,7 @@ from template.api.pagination import CustomPagination
 from ...utils import *
 from ..filters import PublicEngagementEventFilter
 from ..serializers import *
+from ..settings import PE_EVENTS_YEAR_TO_SHOW
 
 
 class PublicEngagementEventList(generics.ListAPIView):
@@ -28,7 +29,8 @@ class PublicEngagementEventList(generics.ListAPIView):
             PublicEngagementEvent.objects.prefetch_related("data", "report")
             .select_related("referent", "structure")
             .filter(
-                structure__slug=self.kwargs["structure_slug"], structure__is_active=True
+                structure__slug=self.kwargs["structure_slug"], 
+                structure__is_active=True
             )
         )
 
@@ -92,6 +94,7 @@ class PublicEngagementApprovedEventList(PublicEngagementEventList):
                 is_active=True,
                 structure__is_active=True,
                 operator_evaluation_success=True,
+                start__year__lte=PE_EVENTS_YEAR_TO_SHOW
             )
         )
 
@@ -108,6 +111,7 @@ class PublicEngagementApprovedEventDetail(generics.RetrieveAPIView):
             is_active=True,
             structure__is_active=True,
             operator_evaluation_success=True,
+            start__year__lte=PE_EVENTS_YEAR_TO_SHOW
         )
     )
 

@@ -79,6 +79,7 @@ def new_event_choose_referent(request):
             "{}{}/".format(API_ADDRESSBOOK_FULL, referent_id.zfill(6)),
             headers={"Authorization": "Token {}".format(settings.STORAGE_TOKEN)},
         )
+
         if response.status_code != 200:
             messages.add_message(
                 request,

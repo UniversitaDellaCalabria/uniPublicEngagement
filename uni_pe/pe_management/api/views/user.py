@@ -17,7 +17,7 @@ class PublicEngagementEventList(PublicEngagementEventList):
             .select_related("referent", "structure")
             .filter(
                 Q(referent=self.request.user) | Q(created_by=self.request.user),
-                structure__is_active=True,
+                structure__is_active=True
             )
         )
 
