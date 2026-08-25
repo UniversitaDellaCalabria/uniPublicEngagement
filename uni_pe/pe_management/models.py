@@ -10,8 +10,8 @@ from organizational_area.models import *
 from template.models import *
 from template.validators import validate_file_size
 
-from .settings import EVALUATION_TIME_DELTA
-from .validators import validate_poster_extension
+from pe_management.settings import EVALUATION_TIME_DELTA
+from pe_management.validators import validate_poster_extension
 
 
 def _get_year_choices():

@@ -1,13 +1,13 @@
 from django.urls import path
 
-from .api.views import generic as api_generic
-from .api.views import involved_personnel as api_involved_personnel
-from .api.views import involved_structures as api_involved_structures
-from .api.views import manager as api_manager
-from .api.views import operator as api_evaluation_operator
-from .api.views import patronage as api_patronage_operator
-from .api.views import user as api_user
-from .views import (
+from pe_management.api.views import generic as api_generic
+from pe_management.api.views import involved_personnel as api_involved_personnel
+from pe_management.api.views import involved_structures as api_involved_structures
+from pe_management.api.views import manager as api_manager
+from pe_management.api.views import operator as api_evaluation_operator
+from pe_management.api.views import patronage as api_patronage_operator
+from pe_management.api.views import user as api_user
+from pe_management.views import (
     generic,
     involved_personnel,
     involved_structures,

@@ -3,9 +3,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import gettext_lazy as _
 from organizational_area.models import *
 
-from ..models import *
-from ..settings import *
-from ..utils import *
+from pe_management.models import *
+from pe_management.settings import *
+from pe_management.utils import *
 
 
 def is_manager(func_to_decorate):

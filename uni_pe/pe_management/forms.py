@@ -5,14 +5,14 @@ from django.utils.translation import gettext_lazy as _
 from organizational_area.models import *
 from template.widgets import *
 
-from .models import (
+from pe_management.models import (
     PublicEngagementAnnualMonitoring,
     PublicEngagementEvent,
     PublicEngagementEventData,
     PublicEngagementEventReport,
 )
-from .settings import *
-from .widgets import *
+from pe_management.settings import *
+from pe_management.widgets import *
 
 
 class PublicEngagementReferentForm(forms.Form):

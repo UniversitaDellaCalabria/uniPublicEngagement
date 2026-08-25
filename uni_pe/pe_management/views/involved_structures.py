@@ -12,13 +12,13 @@ from organizational_area.models import *
 
 from template.utils import *
 
-from .. decorators.generic import *
-from .. decorators.operator import *
-from .. forms import *
-from .. models import *
-from .. settings import *
-from .. utils import *
-from .. views import management
+from pe_management.decorators.generic import *
+from pe_management.decorators.operator import *
+from pe_management.forms import *
+from pe_management.models import *
+from pe_management.settings import *
+from pe_management.utils import *
+from pe_management.views import management
 
 
 @login_required

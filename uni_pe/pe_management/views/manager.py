@@ -1,3 +1,5 @@
+import requests
+
 from django.contrib import messages
 from django.contrib.admin.models import ADDITION, CHANGE, LogEntry
 from django.contrib.auth.decorators import login_required
@@ -11,12 +13,12 @@ from organizational_area.models import *
 from pe_management.views import management
 from template.utils import *
 
-from ..decorators.generic import *
-from ..decorators.manager import *
-from ..forms import *
-from ..models import *
-from ..settings import *
-from ..utils import *
+from pe_management.decorators.generic import *
+from pe_management.decorators.manager import *
+from pe_management.forms import *
+from pe_management.models import *
+from pe_management.settings import *
+from pe_management.utils import *
 
 
 @login_required

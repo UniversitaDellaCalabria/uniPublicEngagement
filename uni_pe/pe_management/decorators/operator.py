@@ -4,9 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from organizational_area.models import *
 from organizational_area.utils import user_office_structures
 
-from ..models import *
-from ..settings import *
-from ..utils import *
+from pe_management.models import *
+from pe_management.settings import *
+from pe_management.utils import *
 
 
 def evaluation_operator_structures(func_to_decorate):
@@ -19,7 +19,7 @@ def evaluation_operator_structures(func_to_decorate):
     def new_func(*original_args, **original_kwargs):
         request = original_args[0]
         structures = user_office_structures(
-            user=request.user, office_slug_list=[OPERATOR_OFFICE]
+            user=request.user, office_slug_list=[STRUCTURE_OP_OFFICE]
         )
         if structures:
             original_kwargs["structures"] = structures

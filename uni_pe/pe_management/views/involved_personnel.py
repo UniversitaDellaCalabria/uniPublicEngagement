@@ -18,12 +18,12 @@ from organizational_area.utils import user_in_office
 
 from template.utils import *
 
-from .. decorators.generic import *
-from .. decorators.user import *
-from .. forms import *
-from .. models import *
-from .. settings import *
-from .. utils import *
+from pe_management.decorators.generic import *
+from pe_management.decorators.user import *
+from pe_management.forms import *
+from pe_management.models import *
+from pe_management.settings import *
+from pe_management.utils import *
 
 
 @login_required

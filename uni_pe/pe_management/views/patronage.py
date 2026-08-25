@@ -10,13 +10,13 @@ from django.views.decorators.http import require_POST
 from organizational_area.models import *
 from template.utils import *
 
-from ..decorators.generic import *
-from ..decorators.patronage import *
-from ..forms import *
-from ..models import *
-from ..settings import *
-from ..utils import *
-from .operator import data_visualization
+from pe_management.decorators.generic import *
+from pe_management.decorators.patronage import *
+from pe_management.forms import *
+from pe_management.models import *
+from pe_management.settings import *
+from pe_management.utils import *
+from pe_management.views.operator import data_visualization
 
 
 @login_required

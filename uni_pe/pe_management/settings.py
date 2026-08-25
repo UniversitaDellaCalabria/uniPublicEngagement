@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
+
 API_TEACHER_URL = getattr(
     settings,
     "API_TEACHER_URL",
@@ -31,11 +32,16 @@ API_ENCRYPTED_ID = getattr(
     "https://storage.portale.unical.it/api/ricerca/get-person-id/",
 )
 
-OPERATOR_OFFICE = getattr(settings, "OPERATOR_OFFICE", "public-engagement-operator")
-
-PATRONAGE_OFFICE = getattr(settings, "PATRONAGE_OFFICE", "public-engagement-patronage")
-
+# operatori di struttura
+STRUCTURE_OP_OFFICE = getattr(settings, "STRUCTURE_OP_OFFICE", "public-engagement-operator")
+# operatori di struttura delegati alla verifica del patrocinio
+STRUCTURE_PATRONAGE_OP_OFFICE = getattr(settings, "STRUCTURE_PATRONAGE_OP_OFFICE", "public-engagement-patronage")
+# operatori di ateneo
 MANAGER_OFFICE = getattr(settings, "MANAGER_OFFICE", "public-engagement-manager")
+# membri degli organi di ateneo (CdA, Senato)
+GOVERNING_BODIES_OFFICE = getattr(settings, "GOVERNING_BODIES_OFFICE", "public-engagement-government")
+# delegati del Rettore
+DELEGATES_OFFICE = getattr(settings, "DELEGATES_OFFICE", "public-engagement-delegates")
 
 EVALUATION_TIME_DELTA = getattr(settings, "EVALUATION_TIME_DELTA", 0)
 

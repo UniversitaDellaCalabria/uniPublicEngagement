@@ -3,9 +3,11 @@ from organizational_area.models import OrganizationalStructure
 
 from rest_framework.permissions import BasePermission
 
-from .. utils import (user_is_operator,
-                      user_is_patronage_operator,
-                      user_is_manager)
+from pe_management.utils import (
+    user_is_operator,
+    user_is_patronage_operator,
+    user_is_manager
+)
 
 
 class IsStructureEvaluationOperator(BasePermission):

@@ -12,8 +12,8 @@ from organizational_area.models import *
 from organizational_area.utils import user_in_office
 from template.settings import MSG_FOOTER, MSG_HEADER
 
-from .models import *
-from .settings import *
+from pe_management.models import *
+from pe_management.settings import *
 
 # def user_is_teacher(matricola='', encrypted=False):
 # if not matricola:
@@ -34,13 +34,13 @@ from .settings import *
 
 def user_is_operator(user, structure=None):
     return user_in_office(
-        user=user, office_slug_list=[OPERATOR_OFFICE], structure=structure
+        user=user, office_slug_list=[STRUCTURE_OP_OFFICE], structure=structure
     )
 
 
 def user_is_patronage_operator(user, structure=None):
     return user_in_office(
-        user=user, office_slug_list=[PATRONAGE_OFFICE], structure=structure
+        user=user, office_slug_list=[STRUCTURE_PATRONAGE_OP_OFFICE], structure=structure
     )
 
 
@@ -71,7 +71,7 @@ def send_email_to_operators(structure, subject, body):
     recipients = OrganizationalStructureOfficeEmployee.objects.filter(
         employee__is_active=True,
         office__is_active=True,
-        office__slug=OPERATOR_OFFICE,
+        office__slug=STRUCTURE_OP_OFFICE,
         office__organizational_structure=structure,
         office__organizational_structure__is_active=True,
     ).values_list("employee__email", flat=True)
@@ -82,7 +82,7 @@ def send_email_to_patronage_operators(structure, subject, body):
     recipients = OrganizationalStructureOfficeEmployee.objects.filter(
         employee__is_active=True,
         office__is_active=True,
-        office__slug=PATRONAGE_OFFICE,
+        office__slug=STRUCTURE_PATRONAGE_OP_OFFICE,
         office__organizational_structure=structure,
         office__organizational_structure__is_active=True,
     ).values_list("employee__email", flat=True)

@@ -9,10 +9,10 @@ from django.utils.translation import gettext_lazy as _
 from organizational_area.models import OrganizationalStructure
 from template.utils import *
 
-from ..forms import *
-from ..models import *
-from ..settings import *
-from ..utils import *
+from pe_management.forms import *
+from pe_management.models import *
+from pe_management.settings import *
+from pe_management.utils import *
 
 
 def event_data(
