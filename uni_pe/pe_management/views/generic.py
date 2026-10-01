@@ -1,5 +1,3 @@
-from pe_management.settings import STRUCTURE_PATRONAGE_OP_OFFICE
-from pe_management.settings import STRUCTURE_OP_OFFICE
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied

@@ -154,8 +154,6 @@ class PublicEngagementEventsTargetsList(generics.ListAPIView):
         if kwargs.get("structure"):
             events = events.filter(event__structure__unique_code=kwargs["structure"])
 
-
-        print(kwargs)
         events = (
             events
             .values("target__description")
