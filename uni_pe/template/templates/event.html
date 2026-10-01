@@ -271,6 +271,25 @@
             </td>
             <td>{{ event.data.description }}</td>
         </tr>
+        {% comment %}
+        # STRATEGIC ACTION TEMPORARY MOD
+        {% endcomment %}
+        <tr>
+            <td>
+                {% get_field_label event.data 'strategic_action' as field_label %}
+                {{ field_label }}
+            </td>
+            <td>
+                {% if event.data.strategic_action %}
+                {{ event.data.strategic_action }}
+                {% else %}
+                {% trans "No" %}
+                {% endif %}
+            </td>
+        </tr>
+        {% comment %}
+        # END STRATEGIC ACTION TEMPORARY MOD
+        {% endcomment %}
         <tr>
             <td>
                 {% comment %}

@@ -170,6 +170,7 @@ class PublicEngagementEventDataForm(forms.ModelForm):
             # END PROJECT NAME TEMPORARY MOD
             "patronage_requested": BootstrapItaliaToggleWidget(),
             "description": forms.Textarea(attrs={"rows": 2}),
+            "strategic_action": BootstrapItaliaSelectWidget(),
         }
 
     class Media:
@@ -213,7 +214,7 @@ class PublicEngagementEventDataForm(forms.ModelForm):
             # "project_name", _("It is not possible to connect to the same event")
             # )
             # END PROJECT NAME TEMPORARY MOD
-
+            
             # se la richiesta di patrocinio viene modificata ma
             # l'operatore di patrocinio aveva già preso in carico l'iniziativa
             # ~ if self.instance.event.patronage_operator_taken_date and not patronage_requested:

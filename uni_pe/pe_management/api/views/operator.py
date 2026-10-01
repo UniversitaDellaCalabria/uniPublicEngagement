@@ -76,8 +76,8 @@ class PublicEngagementMainProjectsList(generics.ListAPIView):
             # PROJECT NAME TEMPORARY MOD
             # .values("project_name__title")
             # .annotate(num=Count("id"))
-            .values("project_name")
-            .annotate(num=Count("project_name"))
+            .values("project_full_name")
+            .annotate(num=Count("project_full_name"))
             # END PROJECT NAME TEMPORARY MOD
             .order_by("-num")
         )

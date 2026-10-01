@@ -183,6 +183,9 @@ def _get_header():
         PublicEngagementEventData._meta.get_field("description").verbose_name,
         PublicEngagementEventData._meta.get_field("involved_personnel").verbose_name,
         PublicEngagementEventData._meta.get_field("involved_structure").verbose_name,
+        # STRATREGIC ACTION TEMPORARY MOD
+        PublicEngagementEventData._meta.get_field("strategic_action").verbose_name,
+        # ENDSTRATREGIC ACTION TEMPORARY MOD
         # PROJECT NAME TEMPORARY MOD
         # PublicEngagementEventData._meta.get_field("project_name").verbose_name,
         PublicEngagementEventData._meta.get_field("project_full_name").verbose_name,
@@ -300,6 +303,9 @@ def _get_data(events):
                     event.data.description,
                     ", ".join(str(p) for p in event.data.involved_personnel.all()),
                     ", ".join(str(s) for s in event.data.involved_structure.all()),
+                    # STRATEGIC ACTION TEMPORARY MOD
+                    event.data.strategic_action,
+                    # END STRATEGIC ACTION TEMPORARY MOD
                     # PROJECT NAME TEMPORARY MOD
                     # event.data.project_name,
                     event.data.project_full_name,

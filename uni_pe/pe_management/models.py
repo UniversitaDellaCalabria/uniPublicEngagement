@@ -29,6 +29,21 @@ def _poster_directory_path(instance, filename):
     return "public-engagement/events/{0}/{1}".format(instance.event.id, filename)
 
 
+class PublicEngagementStrategicAction(
+    ActivableModel, CreatedModifiedBy, TimeStampedModel
+):
+    description = models.CharField(max_length=254)
+    order = models.IntegerField(default=10)
+
+    class Meta:
+        verbose_name = "Azione strategica di Ateneo"
+        verbose_name_plural = "Azioni strategiche di Ateneo"
+        ordering = ("order",)
+
+    def __str__(self):
+        return self.description
+
+    
 class PublicEngagementAnnualMonitoring(
     ActivableModel, CreatedModifiedBy, TimeStampedModel
 ):
@@ -746,6 +761,19 @@ class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
             "If the event is linked to a larger project or event, indicate which one"
         ),
     )
+    # STRATREGIC ACTION TEMPORARY MOD
+    strategic_action = models.ForeignKey(
+        PublicEngagementStrategicAction,
+        on_delete=models.PROTECT,
+        limit_choices_to={'is_active': True},
+        null=True,
+        blank=True,
+        verbose_name=_(
+            "If the initiative/activity is linked to an action within the University’s "
+            "Strategic Plan, select the corresponding one from the drop-down menu"
+        ),
+    )
+    # END STRATREGIC ACTION TEMPORARY MOD
     # PROJECT NAME TEMPORARY MOD
     project_full_name = models.CharField(
         _("If the event is linked to a larger project or event, indicate which one"),

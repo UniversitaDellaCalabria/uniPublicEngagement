@@ -77,3 +77,8 @@ class PublicEngagementEventScientificAreaAdmin(admin.ModelAdmin):
 @admin.register(PublicEngagementEventCollaboratorType)
 class PublicEngagementEventCollaboratorTypeAdmin(admin.ModelAdmin):
     list_display = ("description", "is_active")
+
+
+@admin.register(PublicEngagementStrategicAction)
+class PublicEngagementStrategicActionAdmin(admin.ModelAdmin):
+    list_display = ("description", "order", "is_active")
