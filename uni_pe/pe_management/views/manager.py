@@ -65,8 +65,11 @@ def structures_management(request):
     for year in active_years:
         years_query |= Q(start__year=year)
 
+    filter_conditions = get_user_filter_queryset(user=request.user)
+
     event_counts = (
         PublicEngagementEvent.objects.filter(
+            filter_conditions,
             structure__pk__in=structures,
         )
         .values("structure__id")
@@ -785,6 +788,8 @@ def export(request):
             messages.add_message(request, messages.ERROR, _("Year is mandatory"))
             return render(request, template, {"breadcrumbs": breadcrumbs})
 
+        filter_conditions = get_user_filter_queryset(user=request.user)
+        
         events = (
             PublicEngagementEvent.objects.select_related("referent", "structure")
             .select_related("data__method_of_execution")
@@ -802,10 +807,14 @@ def export(request):
                 "report__scientific_area",
                 "report__collaborator_type",
             )
-            .filter(structure__is_active=True, start__year=year)
+            .filter(
+                filter_conditions,
+                structure__is_active=True, 
+                start__year=year
+            )
             .order_by("start", "title")
         )
-
+        
         if not events.exists():
             messages.add_message(
                 request, messages.ERROR, "{} {}".format(_("No results for year"), year)

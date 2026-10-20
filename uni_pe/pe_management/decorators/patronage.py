@@ -63,7 +63,7 @@ def is_editable_by_patronage_operator(func_to_decorate):
             PublicEngagementEvent,
             pk=event_id,
             structure__slug=structure_slug)
-        if event.is_ready_for_patronage_check():
+        if event.is_ready_for_patronage_check() and event.check_user_filters(request.user):
             original_kwargs['event'] = event
             return func_to_decorate(*original_args, **original_kwargs)
         messages.add_message(request, messages.ERROR, _('Access denied'))

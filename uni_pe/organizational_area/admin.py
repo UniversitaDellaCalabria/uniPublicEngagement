@@ -1,3 +1,5 @@
+import nested_admin
+
 from django.contrib import admin
 
 from .admin_inlines import *
@@ -34,7 +36,7 @@ class OrganizationalStructureAdmin(AbstractAdmin):
 
 
 @admin.register(OrganizationalStructureOffice)
-class OrganizationalStructureOfficeAdmin(AbstractAdmin):
+class OrganizationalStructureOfficeAdmin(nested_admin.NestedModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     list_display = ('name', 'organizational_structure', 'is_active')
 

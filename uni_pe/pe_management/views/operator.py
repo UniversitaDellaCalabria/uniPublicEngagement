@@ -37,8 +37,11 @@ def dashboard(request, structures=None):
     for year in active_years:
         years_query |= Q(start__year=year)
 
+    filter_conditions = get_user_filter_queryset(user=request.user)
+
     event_counts = (
         PublicEngagementEvent.objects.filter(
+            filter_conditions,
             structure__pk__in=structures,
             created_by_manager=False,
         )
@@ -760,6 +763,8 @@ def export(request, structure_slug, structure=None):
                 {"breadcrumbs": breadcrumbs, "structure_slug": structure_slug},
             )
 
+        filter_conditions = get_user_filter_queryset(user=request.user)
+
         events = (
             PublicEngagementEvent.objects.select_related("referent", "structure")
             .select_related("data__method_of_execution")
@@ -778,6 +783,7 @@ def export(request, structure_slug, structure=None):
                 "report__collaborator_type",
             )
             .filter(
+                filter_conditions,
                 structure__slug=structure_slug,
                 structure__is_active=True,
                 start__year=year,

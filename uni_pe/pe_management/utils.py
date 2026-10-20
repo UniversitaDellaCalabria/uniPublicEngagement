@@ -3,6 +3,7 @@ import csv
 from django.conf import settings
 # from django.core.mail import send_mail
 from django.core.mail import EmailMessage
+from django.db.models import Q
 from django.http import HttpResponse
 from django.utils import timezone
 from django.utils.encoding import force_str
@@ -45,7 +46,10 @@ def user_is_patronage_operator(user, structure=None):
 
 
 def user_is_manager(user):
-    return user_in_office(user=user, office_slug_list=[MANAGER_OFFICE])
+    return user_in_office(
+        user=user, 
+        office_slug_list=[MANAGER_OFFICE]
+    )
 
 
 def _send_email(subject, body, attachment=None, recipients=[]):
@@ -396,3 +400,23 @@ def export_xlsx(events, file_name):
 
     wb.save(response)
     return response
+
+
+def get_user_filter_queryset(user):
+    user_filters = OrganizationalStructureOfficeEmployeeFilter.objects.filter(
+        office_employee__employee=user
+    )
+
+    filter_conditions = Q()
+
+    if user_filters.exists():
+        for user_filter in user_filters:
+
+            if user_filter.event_type_id:
+                filter_conditions |= Q(data__event_type_id=user_filter.event_type_id)
+
+            if user_filter.event_strategic_action_id:
+                filter_conditions |= Q(data__strategic_action_id=user_filter.event_strategic_action_id)
+
+        return Q(data__isnull=False) & filter_conditions
+    return filter_conditions

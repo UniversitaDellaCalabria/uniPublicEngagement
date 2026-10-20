@@ -25,10 +25,13 @@ class PublicEngagementEventList(generics.ListAPIView):
     ordering = ["-start"]
 
     def get_queryset(self, **kwargs):
+        filter_conditions = get_user_filter_queryset(user=self.request.user)
+
         events = (
             PublicEngagementEvent.objects.prefetch_related("data", "report")
             .select_related("referent", "structure")
             .filter(
+                filter_conditions,
                 structure__slug=self.kwargs["structure_slug"], 
                 structure__is_active=True
             )

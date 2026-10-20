@@ -1,3 +1,5 @@
+import nested_admin
+
 from django import forms
 from django.contrib import admin
 
@@ -32,6 +34,20 @@ class OrganizationalStructureLocationInline(admin.TabularInline):
     extra = 0
 
 
+# Office employe filter on events
+class OrganizationalStructureOfficeEmployeeFilterModelForm(forms.ModelForm):
+    class Meta:
+        model = OrganizationalStructureOfficeEmployeeFilter
+        fields = ('__all__')
+
+
+class OrganizationalStructureOfficeEmployeeFilterInline(nested_admin.NestedTabularInline):
+    model = OrganizationalStructureOfficeEmployeeFilter
+    form = OrganizationalStructureOfficeEmployeeFilterModelForm
+    extra = 0
+    #autocomplete_fields = ('user',)
+
+
 # Structure Office Employee
 class OrganizationalStructureOfficeEmployeeModelForm(forms.ModelForm):
 
@@ -40,11 +56,12 @@ class OrganizationalStructureOfficeEmployeeModelForm(forms.ModelForm):
         fields = ('__all__')
 
 
-class OrganizationalStructureOfficeEmployeeInline(admin.TabularInline):
+class OrganizationalStructureOfficeEmployeeInline(nested_admin.NestedTabularInline):
     model = OrganizationalStructureOfficeEmployee
     form = OrganizationalStructureOfficeEmployeeModelForm
     extra = 0
     autocomplete_fields = ('employee',)
+    inlines = [OrganizationalStructureOfficeEmployeeFilterInline,]
 
 
 # Structure Location
@@ -55,7 +72,7 @@ class OrganizationalStructureOfficeLocationModelForm(forms.ModelForm):
         fields = ('__all__')
 
 
-class OrganizationalStructureOfficeLocationInline(admin.TabularInline):
+class OrganizationalStructureOfficeLocationInline(nested_admin.NestedTabularInline):
     model = OrganizationalStructureOfficeLocation
     form = OrganizationalStructureOfficeLocationModelForm
     extra = 0
@@ -73,3 +90,4 @@ class UserManageOrganizationalStructureInline(admin.TabularInline):
     form = UserManageOrganizationalStructureModelForm
     extra = 0
     autocomplete_fields = ('user',)
+

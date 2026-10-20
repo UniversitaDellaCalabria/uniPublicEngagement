@@ -596,6 +596,23 @@ class PublicEngagementEvent(ActivableModel, CreatedModifiedBy, TimeStampedModel)
             self.data.patronage_requested = False
             self.data.save(update_fields=["patronage_requested"])
 
+    def check_user_filters(self, user):
+        if not user or not self.data: return False
+        filters = OrganizationalStructureOfficeEmployeeFilter.objects.filter(
+            office_employee__employee=user
+        )
+        if not filters.exists(): return True
+        if not self.data: return False
+        return filters.filter(
+            models.Q(
+                event_type__isnull=False, 
+                event_type=self.data.event_type
+            ) | models.Q(
+                event_strategic_action__isnull=False, 
+                event_strategic_action=self.data.strategic_action
+            )
+        ).exists()
+
 
 class PublicEngagementEventMethodOfExecution(
     ActivableModel, CreatedModifiedBy, TimeStampedModel

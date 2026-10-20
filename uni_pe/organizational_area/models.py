@@ -261,3 +261,32 @@ class UserManageOrganizationalStructure(models.Model):
     class Meta:
         unique_together = ("user", "organizational_structure")
         ordering = ["user"]
+
+
+class OrganizationalStructureOfficeEmployeeFilter(models.Model):
+    office_employee = models.ForeignKey(
+        OrganizationalStructureOfficeEmployee,
+        on_delete=models.CASCADE,)
+    event_type = models.ForeignKey(
+        'pe_management.PublicEngagementEventType',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+    event_strategic_action = models.ForeignKey(
+        'pe_management.PublicEngagementStrategicAction',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=(
+                    models.Q(event_type__isnull=False) | 
+                    models.Q(event_strategic_action__isnull=False)
+                ),
+                name="at_least_one_field_not_null"
+            )
+        ]
