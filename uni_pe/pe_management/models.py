@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from organizational_area.models import *
 from template.models import *
-from template.validators import validate_file_size
+from template.validators import validate_file_size, validate_file_length
 
 from .settings import EVALUATION_TIME_DELTA
 from .validators import validate_poster_extension
@@ -879,7 +879,12 @@ class PublicEngagementEventData(CreatedModifiedBy, TimeStampedModel):
         upload_to=_poster_directory_path,
         null=True,
         blank=True,
-        validators=[validate_poster_extension, validate_file_size],
+        max_length=255,
+        validators=[
+            validate_poster_extension, 
+            validate_file_size, 
+            validate_file_length
+        ],
     )
 
     class Meta:
